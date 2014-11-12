@@ -80,14 +80,14 @@ public class VimeoRetriever extends SocialMediaRetriever {
 
 	@Override
 	public void stop() {
-		// TODO Auto-generated method stub	
+		
 	}
 
 	@Override
 	public List<Item> retrieveKeywordsFeeds(KeywordsFeed feed) throws Exception {
 		return new ArrayList<Item>();
 	}
-
+	
 	@Override
 	public List<Item> retrieveUserFeeds(SourceFeed feed) throws Exception {
 		return new ArrayList<Item>();
@@ -100,13 +100,43 @@ public class VimeoRetriever extends SocialMediaRetriever {
 
 	@Override
 	public StreamUser getStreamUser(String uid) {
-		// TODO Auto-generated method stub
+
 		return null;
 	}
 
 	@Override
 	public List<Item> retrieveListsFeeds(ListFeed feed) {
 		return new ArrayList<Item>();
+	}
+
+	@Override
+	public List<Item> retrieve(Feed feed, Integer maxRequests,
+			Integer maxResults) {
+		return null;
+	}
+
+	@Override
+	public List<Item> retrieveKeywordsFeeds(KeywordsFeed feed,
+			Integer maxRequests, Integer maxResults) throws Exception {
+		return null;
+	}
+
+	@Override
+	public List<Item> retrieveUserFeeds(SourceFeed feed, Integer maxRequests,
+			Integer maxResults) throws Exception {
+		return null;
+	}
+
+	@Override
+	public List<Item> retrieveLocationFeeds(LocationFeed feed,
+			Integer maxRequests, Integer maxResults) throws Exception {
+		return null;
+	}
+
+	@Override
+	public List<Item> retrieveListsFeeds(ListFeed feed, Integer maxRequests,
+			Integer maxResults) {
+		return null;
 	}
 
 }

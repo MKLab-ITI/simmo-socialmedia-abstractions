@@ -25,9 +25,9 @@ import com.google.gdata.data.youtube.YouTubeMediaGroup;
 import com.google.gdata.data.youtube.YtStatistics;
 import com.google.gdata.util.ServiceException;
 
+import gr.iti.mklab.framework.Credentials;
 import gr.iti.mklab.framework.abstractions.socialmedia.items.YoutubeItem;
 import gr.iti.mklab.framework.abstractions.socialmedia.users.YoutubeStreamUser;
-import gr.iti.mklab.framework.common.domain.Feed;
 import gr.iti.mklab.framework.common.domain.Item;
 import gr.iti.mklab.framework.common.domain.Keyword;
 import gr.iti.mklab.framework.common.domain.MediaItem;
@@ -56,27 +56,14 @@ public class YoutubeRetriever extends SocialMediaRetriever {
 	
 	private YouTubeService service;
 	
-	private int results_threshold;
-	private int request_threshold;
-	
-	private long maxRunningTime;
-	
-	public YoutubeRetriever(String clientId, String developerKey) {	
-		
-		super(null);
-		
-		this.service = new YouTubeService(clientId, developerKey);
+	public YoutubeRetriever(Credentials credentials) {			
+		super(credentials);	
+		this.service = new YouTubeService(credentials.getClientId(), credentials.getKey());
 	}
-	
-	public YoutubeRetriever(String clientId, String developerKey, Integer maxResults, Integer maxRequests, Long maxRunningTime) {	
-		this(clientId, developerKey);
-		this.results_threshold = maxResults;
-		this.request_threshold = maxRequests;
-		this.maxRunningTime = maxRunningTime;
-	}
+
 	
 	@Override
-	public List<Item> retrieveUserFeeds(SourceFeed feed) {
+	public List<Item> retrieveUserFeeds(SourceFeed feed, Integer maxResults, Integer maxRequests) {
 		
 		List<Item> items = new ArrayList<Item>();
 		
@@ -132,7 +119,7 @@ public class YoutubeRetriever extends SocialMediaRetriever {
 						items.add(ytItem);
 					}
 					
-					if(items.size()>results_threshold || numberOfRequests > request_threshold) {
+					if(items.size() > maxResults || numberOfRequests > maxRequests) {
 						isFinished = true;
 						break;
 					}
@@ -161,7 +148,7 @@ public class YoutubeRetriever extends SocialMediaRetriever {
 	}
 	
 	@Override
-	public List<Item> retrieveKeywordsFeeds(KeywordsFeed feed) {
+	public List<Item> retrieveKeywordsFeeds(KeywordsFeed feed, Integer maxRequests, Integer maxResults) throws Exception {
 		
 		List<Item> items = new ArrayList<Item>();
 		
@@ -169,11 +156,9 @@ public class YoutubeRetriever extends SocialMediaRetriever {
 		String label = feed.getLabel();
 		
 		int startIndex = 1;
-		int maxResults = 25;
+		int numPerPage = 25;
 		int currResults = 0;
 		int numberOfRequests = 0;
-		
-		long currRunningTime = System.currentTimeMillis();
 		
 		boolean isFinished = false;
 		
@@ -218,7 +203,7 @@ public class YoutubeRetriever extends SocialMediaRetriever {
 		query.setOrderBy(YouTubeQuery.OrderBy.PUBLISHED);
 		query.setFullTextQuery(tags);
 		query.setSafeSearch(YouTubeQuery.SafeSearch.NONE);
-		query.setMaxResults(maxResults);
+		query.setMaxResults(numPerPage);
 		
 		VideoFeed videoFeed = new VideoFeed();
 		
@@ -253,7 +238,7 @@ public class YoutubeRetriever extends SocialMediaRetriever {
 						items.add(ytItem);
 					}
 					
-					if(items.size()>results_threshold || numberOfRequests >= request_threshold || (System.currentTimeMillis() - currRunningTime) > maxRunningTime) {
+					if(items.size() > maxResults || numberOfRequests >= maxRequests) {
 						isFinished = true;
 						break;
 					}
@@ -284,44 +269,13 @@ public class YoutubeRetriever extends SocialMediaRetriever {
 	}
 	
 	@Override
-	public List<Item> retrieveLocationFeeds(LocationFeed feed){
+	public List<Item> retrieveLocationFeeds(LocationFeed feed, Integer maxResults, Integer maxRequests) {
 		return new ArrayList<Item>();
     }
 	
 	@Override
-	public List<Item> retrieveListsFeeds(ListFeed feed) {
+	public List<Item> retrieveListsFeeds(ListFeed feed, Integer maxResults, Integer maxRequests) {
 		return new ArrayList<Item>();
-	}
-	
-	@Override
-	public List<Item> retrieve (Feed feed) {
-		switch(feed.getFeedtype()) {
-			case SOURCE:
-				SourceFeed userFeed = (SourceFeed) feed;
-				if(!userFeed.getSource().getNetwork().equals("Youtube"))
-					return new ArrayList<Item>();
-				
-				return retrieveUserFeeds(userFeed);
-				
-			case KEYWORDS:
-				KeywordsFeed keyFeed = (KeywordsFeed) feed;
-				return retrieveKeywordsFeeds(keyFeed);
-				
-			case LOCATION:
-				LocationFeed locationFeed = (LocationFeed) feed;
-				
-				return retrieveLocationFeeds(locationFeed);
-			
-			case LIST:
-				ListFeed listFeed = (ListFeed) feed;
-				
-				return retrieveListsFeeds(listFeed);
-			default:
-				logger.error("Unkonwn Feed Type: " + feed.toJSONString());
-				break;	
-		}
-		 
-		return null;
 	}
 
 	public void stop(){

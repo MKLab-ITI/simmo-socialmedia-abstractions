@@ -22,9 +22,9 @@ import com.restfb.types.Post;
 import com.restfb.types.Post.Comments;
 import com.restfb.types.User;
 
+import gr.iti.mklab.framework.Credentials;
 import gr.iti.mklab.framework.abstractions.socialmedia.items.FacebookItem;
 import gr.iti.mklab.framework.abstractions.socialmedia.users.FacebookStreamUser;
-import gr.iti.mklab.framework.common.domain.Feed;
 import gr.iti.mklab.framework.common.domain.Item;
 import gr.iti.mklab.framework.common.domain.Keyword;
 import gr.iti.mklab.framework.common.domain.MediaItem;
@@ -44,40 +44,20 @@ import gr.iti.mklab.framework.common.domain.feeds.SourceFeed;
  * 
  */
 public class FacebookRetriever extends SocialMediaRetriever {
-	
-	//private RateLimitsMonitor rateLimitsMonitor;
 			
 	private FacebookClient facebookClient;
-	
-	private int maxResults;
-	private int maxRequests;
-	
-	private long maxRunningTime;
-	private long currRunningTime = 0L;
 	
 	private Logger  logger = Logger.getLogger(FacebookRetriever.class);
 	private boolean loggingEnabled = false;
 	
-	public FacebookRetriever(String  facebookAccessToken) {
-		super(null);
+	public FacebookRetriever(Credentials credentials) {
+		super(credentials);
 		
-		this.facebookClient = new DefaultFacebookClient(facebookAccessToken);
+		this.facebookClient = new DefaultFacebookClient(credentials.getAccessToken());
 	}
-	
-	public FacebookRetriever(FacebookClient facebookClient, int maxRequests, long minInterval, Integer maxResults, long maxRunningTime) {
-		
-		super(null);
-		
-		this.facebookClient = facebookClient;		
-		//this.rateLimitsMonitor = new RateLimitsMonitor(maxRequests, minInterval);
-		this.maxResults = maxResults;
-		this.maxRequests = maxRequests;
-		this.maxRunningTime = maxRunningTime;
-	}
-	
 
 	@Override
-	public List<Item> retrieveUserFeeds(SourceFeed feed) {
+	public List<Item> retrieveUserFeeds(SourceFeed feed, Integer maxRequests, Integer maxResults) {
 		
 		List<Item> items = new ArrayList<Item>();
 
@@ -171,11 +151,9 @@ public class FacebookRetriever extends SocialMediaRetriever {
 	}
 	
 	@Override
-	public List<Item> retrieveKeywordsFeeds(KeywordsFeed feed) {
+	public List<Item> retrieveKeywordsFeeds(KeywordsFeed feed, Integer maxRequests, Integer maxResults) {
 		
 		List<Item> items = new ArrayList<Item>();
-		
-		currRunningTime = System.currentTimeMillis();
 		
 		Date lastItemDate = feed.getDateToRetrieve();
 		String label = feed.getLabel();
@@ -259,7 +237,7 @@ public class FacebookRetriever extends SocialMediaRetriever {
 						break;
 					}
 					
-					if(publicationDate.before(lastItemDate) || items.size()>maxResults || (System.currentTimeMillis() - currRunningTime) > maxRunningTime){
+					if(publicationDate.before(lastItemDate) || items.size()>maxResults){
 						isFinished = true;
 						break;
 					}
@@ -288,7 +266,7 @@ public class FacebookRetriever extends SocialMediaRetriever {
 	}
 	
 	
-	public List<Item> retrieveLocationFeeds(LocationFeed feed) {
+	public List<Item> retrieveLocationFeeds(LocationFeed feed, Integer maxRequests, Integer maxResults) {
 		return new ArrayList<Item>();
 	}
 	
@@ -342,44 +320,10 @@ public class FacebookRetriever extends SocialMediaRetriever {
 	*/
 	
 	@Override
-	public List<Item> retrieveListsFeeds(ListFeed feed) {
+	public List<Item> retrieveListsFeeds(ListFeed feed, Integer maxRequests, Integer maxResults) {
 		return new ArrayList<Item>();
 	}
 	
-	@Override
-	public List<Item> retrieve (Feed feed) {
-		
-		switch(feed.getFeedtype()) {
-			case SOURCE:
-				SourceFeed userFeed = (SourceFeed) feed;
-				
-				if(!userFeed.getSource().getNetwork().equals("Facebook"))
-					return new ArrayList<Item>();
-				
-				return retrieveUserFeeds(userFeed);
-				
-			
-			case KEYWORDS:
-				KeywordsFeed keyFeed = (KeywordsFeed) feed;
-				
-				return retrieveKeywordsFeeds(keyFeed);
-				
-			case LOCATION:
-				LocationFeed locationFeed = (LocationFeed) feed;
-				
-				return retrieveLocationFeeds(locationFeed);
-			
-			case LIST:
-				ListFeed listFeed = (ListFeed) feed;
-				
-				return retrieveListsFeeds(listFeed);
-			default:
-				logger.error("Unkonwn Feed Type: " + feed.toJSONString());
-				break;
-			
-		}
-		return new ArrayList<Item>();
-	}
 	
 	@Override
 	public void stop(){

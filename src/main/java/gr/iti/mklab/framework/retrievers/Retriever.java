@@ -14,7 +14,9 @@ public interface Retriever {
 	 * @param feed
 	 * @return
 	 */
-	public List<Item> retrieve(Feed feed);
+	public List<Item> retrieve(Feed feed) throws Exception;
+	
+	public List<Item> retrieve(Feed feed, Integer maxRequests, Integer maxResults) throws Exception;
 	
 	/**
 	 * Stops the retriever

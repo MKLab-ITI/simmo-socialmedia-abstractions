@@ -16,7 +16,6 @@ import com.google.api.client.util.Key;
 
 import gr.iti.mklab.framework.abstractions.socialmedia.mediaitems.DailyMotionMediaItem;
 import gr.iti.mklab.framework.abstractions.socialmedia.mediaitems.DailyMotionMediaItem.DailyMotionVideo;
-import gr.iti.mklab.framework.common.domain.Feed;
 import gr.iti.mklab.framework.common.domain.Item;
 import gr.iti.mklab.framework.common.domain.MediaItem;
 import gr.iti.mklab.framework.common.domain.StreamUser;
@@ -37,7 +36,6 @@ public class DailyMotionRetriever extends SocialMediaRetriever {
 
 	private HttpRequestFactory requestFactory;
 	private String requestPrefix = "https://api.dailymotion.com/video/";
-	
 	
 	public DailyMotionRetriever() {
 		
@@ -91,40 +89,32 @@ public class DailyMotionRetriever extends SocialMediaRetriever {
 	}
 
 	@Override
-	public List<Item> retrieve(Feed feed) {
-		List<Item> items = new ArrayList<Item>();
-		return items;
-	}
-
-	@Override
 	public void stop() {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public List<Item> retrieveKeywordsFeeds(KeywordsFeed feed) throws Exception {
+	public List<Item> retrieveKeywordsFeeds(KeywordsFeed feed, Integer maxRequests, Integer maxResults) throws Exception {
 		return new ArrayList<Item>();
 	}
 
 	@Override
-	public List<Item> retrieveUserFeeds(SourceFeed feed) throws Exception {
+	public List<Item> retrieveUserFeeds(SourceFeed feed, Integer maxRequests, Integer maxResults) throws Exception {
 		return new ArrayList<Item>();
 	}
 
 	@Override
-	public List<Item> retrieveLocationFeeds(LocationFeed feed) throws Exception {
+	public List<Item> retrieveLocationFeeds(LocationFeed feed, Integer maxRequests, Integer maxResults) throws Exception {
 		return new ArrayList<Item>();
 	}
 
 	@Override
 	public StreamUser getStreamUser(String uid) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<Item> retrieveListsFeeds(ListFeed feed) {
+	public List<Item> retrieveListsFeeds(ListFeed feed, Integer maxRequests, Integer maxResults) {
 		return new ArrayList<Item>();
 	}
 }

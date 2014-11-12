@@ -33,7 +33,12 @@ public class RSSRetriever implements Retriever {
 	private long oneMonthPeriod = 2592000000L;
 	
 	@Override
-	public List<Item> retrieve(Feed feed) {
+	public List<Item> retrieve(Feed feed) throws Exception {
+		return retrieve(feed, null, null);
+	}
+		
+	@Override
+	public List<Item> retrieve(Feed feed, Integer maxRequests, Integer maxResults) throws Exception {
 		
 		List<Item> items = new ArrayList<Item>();
 		
@@ -101,11 +106,12 @@ public class RSSRetriever implements Retriever {
 	
 	}
 	
-	public static void main(String...args) {
+	public static void main(String...args) throws Exception {
 		RSSRetriever retriever = new RSSRetriever();
 		
 		Feed feed = new URLFeed("http://ecowatch.com/feed/", new Date(System.currentTimeMillis()-3600000), "ecowatch");
 		
 		retriever.retrieve(feed);
 	}
+	
 }

@@ -20,7 +20,6 @@ import com.tumblr.jumblr.types.Post;
 
 import gr.iti.mklab.framework.abstractions.socialmedia.items.TumblrItem;
 import gr.iti.mklab.framework.abstractions.socialmedia.users.TumblrStreamUser;
-import gr.iti.mklab.framework.common.domain.Feed;
 import gr.iti.mklab.framework.common.domain.Item;
 import gr.iti.mklab.framework.common.domain.Keyword;
 import gr.iti.mklab.framework.common.domain.MediaItem;
@@ -42,27 +41,17 @@ public class TumblrRetriever extends SocialMediaRetriever {
 	private Logger logger = Logger.getLogger(TumblrRetriever.class);
 	
 	private JumblrClient client;
-
-	private int maxResults;
-	private int maxRequests;
 	
-	private long maxRunningTime;
-	
-
-	public TumblrRetriever(String consumerKey, String consumerSecret, Integer maxResults, Integer maxRequests, Long maxRunningTime) {
+	public TumblrRetriever(String consumerKey, String consumerSecret) {
 		
 		super(null);
-		
-		this.maxResults = maxResults;
-		this.maxRequests = maxRequests;
-		this.maxRunningTime = maxRunningTime;
 		
 		client = new JumblrClient(consumerKey,consumerSecret);
 	}
 
 	
 	@Override
-	public List<Item> retrieveUserFeeds(SourceFeed feed){
+	public List<Item> retrieveUserFeeds(SourceFeed feed, Integer maxResults, Integer maxRequests){
 		List<Item> items = new ArrayList<Item>();
 		
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
@@ -148,7 +137,7 @@ public class TumblrRetriever extends SocialMediaRetriever {
 	}
 	
 	@Override
-	public List<Item> retrieveKeywordsFeeds(KeywordsFeed feed){
+	public List<Item> retrieveKeywordsFeeds(KeywordsFeed feed, Integer maxResults, Integer maxRequests) {
 		
 		List<Item> items = new ArrayList<Item>();
 		
@@ -159,8 +148,6 @@ public class TumblrRetriever extends SocialMediaRetriever {
 		DateUtil dateUtil = new DateUtil();
 		
 		int numberOfRequests=0;
-		
-		long currRunningTime = System.currentTimeMillis();
 		
 		boolean isFinished = false;
 		
@@ -249,7 +236,7 @@ public class TumblrRetriever extends SocialMediaRetriever {
 				
 				}
 				
-				if(items.size()>maxResults || numberOfRequests>=maxRequests || (System.currentTimeMillis() - currRunningTime) > maxRunningTime){
+				if(items.size()>maxResults || numberOfRequests>=maxRequests){
 					isFinished = true;
 					break;
 				}
@@ -262,55 +249,17 @@ public class TumblrRetriever extends SocialMediaRetriever {
 				
 		}
 		
-//		logger.info("#Tumblr : Done retrieving for this session");
-//		logger.info("#Tumblr : Handler fetched " + items.size() + " posts from " + tags + 
-//				" [ " + lastItemDate + " - " + new Date(System.currentTimeMillis()) + " ]");
-		
 		return items;
 		
 	}
-	@Override
-	public List<Item> retrieveLocationFeeds(LocationFeed feed) throws JumblrException {
-		return new ArrayList<Item>();
-    }
 
 	@Override
-	public List<Item> retrieveListsFeeds(ListFeed feed) {
+	public List<Item> retrieveLocationFeeds(LocationFeed feed, Integer maxRequests, Integer maxResults) throws Exception {
 		return new ArrayList<Item>();
 	}
 	
 	@Override
-	public List<Item> retrieve (Feed feed) {
-	
-		switch(feed.getFeedtype()){
-			case SOURCE:
-				SourceFeed userFeed = (SourceFeed) feed;
-				if(!userFeed.getSource().getNetwork().equals("Tumblr"))
-					return new ArrayList<Item>();
-				
-				return retrieveUserFeeds(userFeed);
-				
-			
-			case KEYWORDS:
-				KeywordsFeed keyFeed = (KeywordsFeed) feed;
-				
-				return retrieveKeywordsFeeds(keyFeed);
-				
-			case LOCATION:
-				LocationFeed locationFeed = (LocationFeed) feed;
-				
-				return retrieveLocationFeeds(locationFeed);
-			
-			case LIST:
-				ListFeed listFeed = (ListFeed) feed;
-				
-				return retrieveListsFeeds(listFeed);
-				
-			default:
-				logger.error("Unkonwn Feed Type: " + feed.toJSONString());
-				break;
-		}
-	
+	public List<Item> retrieveListsFeeds(ListFeed feed, Integer maxResults, Integer maxRequests) {
 		return new ArrayList<Item>();
 	}
 	
@@ -332,14 +281,12 @@ public class TumblrRetriever extends SocialMediaRetriever {
 	}
 	@Override
 	public MediaItem getMediaItem(String id) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 
 	@Override
 	public StreamUser getStreamUser(String uid) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

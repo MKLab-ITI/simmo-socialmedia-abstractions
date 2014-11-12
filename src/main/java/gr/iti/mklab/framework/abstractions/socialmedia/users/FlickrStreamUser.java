@@ -39,7 +39,7 @@ public class FlickrStreamUser extends StreamUser {
 					+ "/buddyicons/" + user.getId() + ".jpg";
 		}
 		else {
-			profileImage = user.getBuddyIconUrl();
+			profileImage = user.getSecureBuddyIconUrl();
 		}
 		
 			

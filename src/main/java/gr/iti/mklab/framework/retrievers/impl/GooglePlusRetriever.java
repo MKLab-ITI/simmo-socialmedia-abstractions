@@ -26,9 +26,9 @@ import com.google.api.services.plus.model.ActivityFeed;
 import com.google.api.services.plus.model.PeopleFeed;
 import com.google.api.services.plus.model.Person;
 
+import gr.iti.mklab.framework.Credentials;
 import gr.iti.mklab.framework.abstractions.socialmedia.items.GooglePlusItem;
 import gr.iti.mklab.framework.abstractions.socialmedia.users.GooglePlusStreamUser;
-import gr.iti.mklab.framework.common.domain.Feed;
 import gr.iti.mklab.framework.common.domain.Item;
 import gr.iti.mklab.framework.common.domain.Keyword;
 import gr.iti.mklab.framework.common.domain.MediaItem;
@@ -45,7 +45,8 @@ import gr.iti.mklab.framework.common.domain.feeds.SourceFeed;
  * @author ailiakop
  * @email  ailiakop@iti.gr
  */
-public class GooglePlusRetriever extends SocialMediaRetriever{
+public class GooglePlusRetriever extends SocialMediaRetriever {
+	
 	private Logger logger = Logger.getLogger(GooglePlusRetriever.class);
 	
 	private static final HttpTransport transport = new NetHttpTransport();
@@ -54,38 +55,21 @@ public class GooglePlusRetriever extends SocialMediaRetriever{
 	private Plus plusSrv;
 	private String userPrefix = "https://plus.google.com/+";
 	private String GooglePlusKey;
-	
-	//private int pageLimit = 10;
-	private int maxResults;
-	private int maxRequests;
-	
-	private long maxRunningTime;
-	
-	public String getKey() { 
-		return GooglePlusKey;
-	}
-	public String getSecret() {
-		return null;
-	}
 
-	public GooglePlusRetriever(String key,Integer maxResults,Integer maxRequests,Long maxRunningTime) {
+	public GooglePlusRetriever(Credentials credentials) {
 		
-		super(null);
+		super(credentials);
 		
-		GooglePlusKey = key;
+		GooglePlusKey = credentials.getKey();
 		GoogleCredential credential = new GoogleCredential();
 		plusSrv = new Plus.Builder(transport, jsonFactory, credential)
 						.setApplicationName("SocialSensor")
 						.setHttpRequestInitializer(credential)
 						.setPlusRequestInitializer(new PlusRequestInitializer(GooglePlusKey)).build();
-		
-		this.maxResults = maxResults;
-		this.maxRequests = maxRequests;
-		this.maxRunningTime = maxRunningTime;
 	}
 
 	@Override
-	public List<Item> retrieveUserFeeds(SourceFeed feed) {
+	public List<Item> retrieveUserFeeds(SourceFeed feed, Integer maxRequests, Integer maxResults) {
 		
 		List<Item> items = new ArrayList<Item>();
 		
@@ -198,10 +182,6 @@ public class GooglePlusRetriever extends SocialMediaRetriever{
 			}
 		}
 
-		//logger.info("#GooglePlus : Done retrieving for this session");
-//		logger.info("#GooglePlus : Handler fetched " + items.size() + " posts from " + uName + 
-//				" [ " + lastItemDate + " - " + new Date(System.currentTimeMillis()) + " ]");
-//		
 		// The next request will retrieve only items of the last day
 		Date dateToRetrieve = new Date(System.currentTimeMillis() - (24*3600*1000));
 		feed.setDateToRetrieve(dateToRetrieve);
@@ -210,7 +190,7 @@ public class GooglePlusRetriever extends SocialMediaRetriever{
 	}
 	
 	@Override
-	public List<Item> retrieveKeywordsFeeds(KeywordsFeed feed){
+	public List<Item> retrieveKeywordsFeeds(KeywordsFeed feed, Integer maxRequests, Integer maxResults) {
 		List<Item> items = new ArrayList<Item>();
 		
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
@@ -218,8 +198,6 @@ public class GooglePlusRetriever extends SocialMediaRetriever{
 		String label = feed.getLabel();
 		
 		int totalRequests = 0;
-		
-		long currRunningTime = System.currentTimeMillis();
 		
 		boolean isFinished = false;
 		
@@ -316,7 +294,7 @@ public class GooglePlusRetriever extends SocialMediaRetriever{
 			
 			 totalRequests++;
 
-			 if(totalRequests>maxRequests || isFinished || (activityFeed.getNextPageToken() == null) || (System.currentTimeMillis() - currRunningTime) > maxRunningTime)
+			 if(totalRequests>maxRequests || isFinished || (activityFeed.getNextPageToken() == null))
 				 break;
 			 
 			 searchActivities.setPageToken(activityFeed.getNextPageToken());
@@ -341,45 +319,12 @@ public class GooglePlusRetriever extends SocialMediaRetriever{
 		
 	}
 	@Override
-	public List<Item> retrieveLocationFeeds(LocationFeed feed){
+	public List<Item> retrieveLocationFeeds(LocationFeed feed, Integer maxRequests, Integer maxResults){
 		return new ArrayList<Item>();
     }
 	
 	@Override
-	public List<Item> retrieveListsFeeds(ListFeed feed) {
-		return new ArrayList<Item>();
-	}
-	
-	@Override
-	public List<Item> retrieve (Feed feed) {
-		
-		switch(feed.getFeedtype()){
-			case SOURCE:
-				SourceFeed userFeed = (SourceFeed) feed;
-				if(!userFeed.getSource().getNetwork().equals("GooglePlus"))
-					return new ArrayList<Item>();
-				
-				return retrieveUserFeeds(userFeed);
-				
-			case KEYWORDS:
-				KeywordsFeed keyFeed = (KeywordsFeed) feed;
-				
-				return retrieveKeywordsFeeds(keyFeed);
-				
-			case LOCATION:
-				LocationFeed locationFeed = (LocationFeed) feed;
-				
-				return retrieveLocationFeeds(locationFeed);
-			
-			case LIST:
-				ListFeed listFeed = (ListFeed) feed;
-				
-				return retrieveListsFeeds(listFeed);
-			default:
-				logger.error("Unkonwn Feed Type: " + feed.toJSONString());
-				break;
-		}
-		
+	public List<Item> retrieveListsFeeds(ListFeed feed, Integer maxRequests, Integer maxResults) {
 		return new ArrayList<Item>();
 	}
 	
@@ -421,11 +366,15 @@ public class GooglePlusRetriever extends SocialMediaRetriever{
 		source.setId(uid);
 		SourceFeed feed = new SourceFeed(source, new Date(System.currentTimeMillis()-24*3600000), "1");
 		
-		GooglePlusRetriever retriever = new GooglePlusRetriever("AIzaSyB-knYzMRW6tUzobP-V1hTWYAXEps1Wngk", 1, 1000, 60l);
+		Credentials credentials = new Credentials();
+		credentials.setKey("AIzaSyB-knYzMRW6tUzobP-V1hTWYAXEps1Wngk");
 		
-		List<Item> items = retriever.retrieveUserFeeds(feed);
+		GooglePlusRetriever retriever = new GooglePlusRetriever(credentials);
+		
+		List<Item> items = retriever.retrieveUserFeeds(feed, 1, 1000);
 		for(Item item : items) {
 			System.out.println(item.toJSONString());
 		}
 	}
+	
 }

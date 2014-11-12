@@ -28,7 +28,6 @@ import org.jinstagram.auth.model.Token;
 
 import gr.iti.mklab.framework.abstractions.socialmedia.items.InstagramItem;
 import gr.iti.mklab.framework.abstractions.socialmedia.users.InstagramStreamUser;
-import gr.iti.mklab.framework.common.domain.Feed;
 import gr.iti.mklab.framework.common.domain.Item;
 import gr.iti.mklab.framework.common.domain.Keyword;
 import gr.iti.mklab.framework.common.domain.Location;
@@ -54,11 +53,6 @@ public class InstagramRetriever extends SocialMediaRetriever {
 	
 	private Instagram instagram = null;
 
-	private int maxResults;
-	private int maxRequests;
-	
-	private long maxRunningTime;
-	
 	private MediaFeed mediaFeed = new MediaFeed();
 	private TagMediaFeed tagFeed = new TagMediaFeed();
 
@@ -81,17 +75,8 @@ public class InstagramRetriever extends SocialMediaRetriever {
 		this.instagramOembed = new InstagramOembed();
 	}
 	
-	public InstagramRetriever(String key, String secret, String token, int maxResults,int maxRequests,long maxRunningTime) {
-		this(key, secret, token);
-		
-		this.maxResults = maxResults;
-		this.maxRequests = maxRequests;
-		this.maxRunningTime = maxRunningTime;
-		
-	}
-	
 	@Override
-	public List<Item> retrieveUserFeeds(SourceFeed feed) {
+	public List<Item> retrieveUserFeeds(SourceFeed feed, Integer maxRequests, Integer maxResults) {
 		
 		List<Item> items = new ArrayList<Item>();
 		
@@ -173,7 +158,7 @@ public class InstagramRetriever extends SocialMediaRetriever {
 	}
 	
 	@Override
-	public List<Item> retrieveKeywordsFeeds(KeywordsFeed feed) {
+	public List<Item> retrieveKeywordsFeeds(KeywordsFeed feed, Integer maxRequests, Integer maxResults) {
 		List<Item> items = new ArrayList<Item>();
 		
 		Date lastItemDate = feed.getDateToRetrieve();
@@ -182,8 +167,6 @@ public class InstagramRetriever extends SocialMediaRetriever {
 		boolean isFinished = false;
 		
 		int numberOfRequests = 0;
-		
-		long currRunningTime = System.currentTimeMillis();
 		
 		Keyword keyword = feed.getKeyword();
 		List<Keyword> keywords = feed.getKeywords();
@@ -246,12 +229,6 @@ public class InstagramRetriever extends SocialMediaRetriever {
 				if(numberOfRequests > maxRequests) {
 					if(loggingEnabled)
 						logger.info("numberOfRequests: " + numberOfRequests + " > " + maxRequests);
-					isFinished = true;
-					break;
-				}
-				if((System.currentTimeMillis() - currRunningTime) > maxRunningTime) {
-					if(loggingEnabled)
-						logger.info("maxRunningTime reached.");
 					isFinished = true;
 					break;
 				}
@@ -331,7 +308,7 @@ public class InstagramRetriever extends SocialMediaRetriever {
 	}
 	
 	@Override
-	public List<Item> retrieveLocationFeeds(LocationFeed feed) {
+	public List<Item> retrieveLocationFeeds(LocationFeed feed, Integer maxRequests, Integer maxResults) {
 		List<Item> items = new ArrayList<Item>();
 		
 		Date lastItemDate = feed.getDateToRetrieve();
@@ -426,47 +403,12 @@ public class InstagramRetriever extends SocialMediaRetriever {
     }
 	
 	@Override
-	public List<Item> retrieveListsFeeds(ListFeed feed) {
+	public List<Item> retrieveListsFeeds(ListFeed feed, Integer maxRequests, Integer maxResults) {
 		return new ArrayList<Item>();
 	}
 	
 	@Override
-	public List<Item> retrieve (Feed feed) {
-	
-		switch(feed.getFeedtype()){
-			case SOURCE:
-				SourceFeed userFeed = (SourceFeed) feed;
-				if(!userFeed.getSource().getNetwork().equals("Instagram"))
-					return new ArrayList<Item>();
-				
-				return retrieveUserFeeds(userFeed);
-				
-			case KEYWORDS:
-				KeywordsFeed keyFeed = (KeywordsFeed) feed;
-				
-				return retrieveKeywordsFeeds(keyFeed);
-			
-			case LOCATION:
-				LocationFeed locationFeed = (LocationFeed) feed;
-				
-				return retrieveLocationFeeds(locationFeed);
-			
-			case LIST:
-				ListFeed listFeed = (ListFeed) feed;
-				
-				return retrieveListsFeeds(listFeed);
-				
-			default:
-				logger.error("Unkonwn Feed Type: " + feed.toJSONString());
-				break;
-				
-		}
-		 
-		return new ArrayList<Item>();
-	}
-	
-	@Override
-	public void stop(){
+	public void stop() {
 		if(instagram != null){
 			instagram = null;
 		}

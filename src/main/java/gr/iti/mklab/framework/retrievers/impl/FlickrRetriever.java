@@ -20,6 +20,7 @@ import com.flickr4java.flickr.photos.PhotoList;
 import com.flickr4java.flickr.photos.PhotosInterface;
 import com.flickr4java.flickr.photos.SearchParameters;
 
+import gr.iti.mklab.framework.Credentials;
 import gr.iti.mklab.framework.abstractions.socialmedia.items.FlickrItem;
 import gr.iti.mklab.framework.abstractions.socialmedia.users.FlickrStreamUser;
 import gr.iti.mklab.framework.common.domain.Feed;
@@ -48,46 +49,18 @@ public class FlickrRetriever extends SocialMediaRetriever {
 	
 	private String flickrKey;
 	private String flickrSecret;
-	
-	private int maxResults;
-	private int maxRequests;
-	
-	private long maxRunningTime;
 
 	private Flickr flickr;
 
 	private HashMap<String, StreamUser> userMap;
 	
-	public String getKey() { 
-		return flickrKey;
-	}
-	public String getSecret() {
-		return flickrSecret;
-	}
 
-	public FlickrRetriever(String flickrKey, String flickrSecret) {
+	public FlickrRetriever(Credentials credentials) {
 		
-		super(null);
+		super(credentials);
 		
-		this.flickrKey = flickrKey;
-		this.flickrSecret = flickrSecret;
-		
-		userMap = new HashMap<String, StreamUser>();
-		
-		Flickr.debugStream = false;
-		
-		this.flickr = new Flickr(flickrKey, flickrSecret, new REST());
-	}
-	
-	public FlickrRetriever(String flickrKey, String flickrSecret, Integer maxResults, Integer maxRequests, long maxRunningTime) {
-		
-		super(null);
-		
-		this.flickrKey = flickrKey;
-		this.flickrSecret = flickrSecret;
-		this.maxResults = maxResults;
-		this.maxRequests = maxRequests;
-		this.maxRunningTime = maxRunningTime;
+		this.flickrKey = credentials.getKey();
+		this.flickrSecret = credentials.getSecret();
 		
 		userMap = new HashMap<String, StreamUser>();
 		
@@ -97,11 +70,9 @@ public class FlickrRetriever extends SocialMediaRetriever {
 	}
 	
 	@Override
-	public List<Item> retrieveUserFeeds(SourceFeed feed) {
+	public List<Item> retrieveUserFeeds(SourceFeed feed, Integer maxResults, Integer maxRequests) {
 		
 		List<Item> items = new ArrayList<Item>();
-		
-		long currRunningTime = System.currentTimeMillis();
 		
 		Date dateToRetrieve = feed.getDateToRetrieve();
 		String label = feed.getLabel();
@@ -129,8 +100,7 @@ public class FlickrRetriever extends SocialMediaRetriever {
 		extras.remove(Extras.MACHINE_TAGS);
 		params.setExtras(extras);
 		
-		while(page<=pages && numberOfRequests<=maxRequests && numberOfResults<=maxResults &&
-				(System.currentTimeMillis()-currRunningTime)<maxRunningTime) {
+		while(page<=pages && numberOfRequests<=maxRequests && numberOfResults<=maxResults) {
 			
 			PhotoList<Photo> photos;
 			try {
@@ -175,7 +145,7 @@ public class FlickrRetriever extends SocialMediaRetriever {
 	}
 	
 	@Override
-	public List<Item> retrieveKeywordsFeeds(KeywordsFeed feed) {
+	public List<Item> retrieveKeywordsFeeds(KeywordsFeed feed, Integer maxResults, Integer maxRequests) {
 		
 		List<Item> items = new ArrayList<Item>();
 		
@@ -186,8 +156,6 @@ public class FlickrRetriever extends SocialMediaRetriever {
 		
 		int numberOfRequests = 0;
 		int numberOfResults = 0;
-		
-		long currRunningTime = System.currentTimeMillis();
 		
 		Keyword keyword = feed.getKeyword();
 		List<Keyword> keywords = feed.getKeywords();
@@ -235,8 +203,7 @@ public class FlickrRetriever extends SocialMediaRetriever {
 		extras.remove(Extras.MACHINE_TAGS);
 		params.setExtras(extras);
 		
-		while(page<=pages && numberOfRequests<=maxRequests && numberOfResults<=maxResults &&
-				(System.currentTimeMillis()-currRunningTime)<maxRunningTime) {
+		while(page<=pages && numberOfRequests<=maxRequests && numberOfResults<=maxResults ) {
 			
 			PhotoList<Photo> photos;
 			try {
@@ -281,11 +248,9 @@ public class FlickrRetriever extends SocialMediaRetriever {
 	}
 	
 	@Override
-	public List<Item> retrieveLocationFeeds(LocationFeed feed){
+	public List<Item> retrieveLocationFeeds(LocationFeed feed, Integer maxResults, Integer maxRequests){
 		
 		List<Item> items = new ArrayList<Item>();
-		
-		long currRunningTime = System.currentTimeMillis();
 		
 		Date dateToRetrieve = feed.getDateToRetrieve();
 		String label = feed.getLabel();
@@ -308,8 +273,7 @@ public class FlickrRetriever extends SocialMediaRetriever {
 		extras.remove(Extras.MACHINE_TAGS);
 		params.setExtras(extras);
 		
-		while(page<=pages && numberOfRequests<=maxRequests && numberOfResults<=maxResults &&
-				(System.currentTimeMillis()-currRunningTime)<maxRunningTime) {
+		while(page<=pages && numberOfRequests<=maxRequests && numberOfResults<=maxResults ) {
 			
 			PhotoList<Photo> photos;
 			try {
@@ -349,42 +313,8 @@ public class FlickrRetriever extends SocialMediaRetriever {
     }
 	
 	@Override
-	public List<Item> retrieveListsFeeds(ListFeed feed) {
-		return new ArrayList<Item>();
-	}
-	
-	@Override
-	public List<Item> retrieve (Feed feed) {
-		
-		switch(feed.getFeedtype()) {
-			case SOURCE:
-				SourceFeed userFeed = (SourceFeed) feed;
-				if(!userFeed.getSource().getNetwork().equals("Flickr"))
-					return new ArrayList<Item>();
-				
-				return retrieveUserFeeds(userFeed);
-				
-			case KEYWORDS:
-				KeywordsFeed keyFeed = (KeywordsFeed) feed;
-				
-				return retrieveKeywordsFeeds(keyFeed);
-				
-			case LOCATION:
-				LocationFeed locationFeed = (LocationFeed) feed;
-				
-				return retrieveLocationFeeds(locationFeed);
-			
-			case LIST:
-				ListFeed listFeed = (ListFeed) feed;
-				
-				return retrieveListsFeeds(listFeed);
-			default:
-				logger.error("Unkonwn Feed Type: " + feed.toJSONString());
-				break;	
-			
-		}
-	
-		return new ArrayList<Item>();
+	public List<Item> retrieveListsFeeds(ListFeed feed, Integer maxRequests, Integer maxResults) {
+		return null;
 	}
 	
 	@Override
@@ -413,17 +343,21 @@ public class FlickrRetriever extends SocialMediaRetriever {
 		
 	}
 	
-	public static void main(String...args) {
+	public static void main(String...args) throws Exception {
 		
 		String flickrKey = "029eab4d06c40e08670d78055bf61205";
 		String flickrSecret = "bc4105126a4dfb8c";
 		
-		FlickrRetriever retriever = new FlickrRetriever(flickrKey, flickrSecret, 1, 1000, 60000);
+		Credentials credentials = new Credentials();
+		credentials.setKey(flickrKey);
+		credentials.setSecret(flickrSecret);
+		
+		FlickrRetriever retriever = new FlickrRetriever(credentials);
 		
 		Keyword keyword = new Keyword("\"uk\" amazing", 0d); 
 		Feed feed = new KeywordsFeed(keyword, new Date(System.currentTimeMillis()-14400000), "1");
 		
-		List<Item> items = retriever.retrieve(feed );
+		List<Item> items = retriever.retrieve(feed, 1, 1000);
 		System.out.println(items.size());
 	}
 	
