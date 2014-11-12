@@ -1,4 +1,4 @@
-package eu.socialsensor.framework.retrievers.socialmedia;
+package gr.iti.mklab.framework.retrievers.socialmedia;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -26,20 +26,20 @@ import org.jinstagram.entity.users.feed.UserFeed;
 import org.jinstagram.entity.users.feed.UserFeedData;
 import org.jinstagram.auth.model.Token;
 
-import eu.socialsensor.framework.abstractions.socialmedia.instagram.InstagramItem;
-import eu.socialsensor.framework.abstractions.socialmedia.instagram.InstagramStreamUser;
-import eu.socialsensor.framework.common.domain.Feed;
-import eu.socialsensor.framework.common.domain.Item;
-import eu.socialsensor.framework.common.domain.Keyword;
-import eu.socialsensor.framework.common.domain.Location;
-import eu.socialsensor.framework.common.domain.MediaItem;
-import eu.socialsensor.framework.common.domain.Source;
-import eu.socialsensor.framework.common.domain.StreamUser;
-import eu.socialsensor.framework.common.domain.feeds.KeywordsFeed;
-import eu.socialsensor.framework.common.domain.feeds.ListFeed;
-import eu.socialsensor.framework.common.domain.feeds.LocationFeed;
-import eu.socialsensor.framework.common.domain.feeds.SourceFeed;
-import eu.socialsensor.framework.common.util.DateUtil;
+import gr.iti.mklab.framework.abstractions.socialmedia.instagram.InstagramItem;
+import gr.iti.mklab.framework.abstractions.socialmedia.instagram.InstagramStreamUser;
+import gr.iti.mklab.framework.common.domain.Feed;
+import gr.iti.mklab.framework.common.domain.Item;
+import gr.iti.mklab.framework.common.domain.Keyword;
+import gr.iti.mklab.framework.common.domain.Location;
+import gr.iti.mklab.framework.common.domain.MediaItem;
+import gr.iti.mklab.framework.common.domain.Source;
+import gr.iti.mklab.framework.common.domain.StreamUser;
+import gr.iti.mklab.framework.common.domain.feeds.KeywordsFeed;
+import gr.iti.mklab.framework.common.domain.feeds.ListFeed;
+import gr.iti.mklab.framework.common.domain.feeds.LocationFeed;
+import gr.iti.mklab.framework.common.domain.feeds.SourceFeed;
+import gr.iti.mklab.framework.common.util.DateUtil;
 
 /**
  * Class responsible for retrieving Instagram content based on keywords or instagram users or locations

@@ -1,4 +1,4 @@
-package eu.socialsensor.framework.retrievers;
+package gr.iti.mklab.framework.retrievers;
 
 import org.apache.log4j.Logger;
 

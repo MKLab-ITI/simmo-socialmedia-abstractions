@@ -1,4 +1,4 @@
-package eu.socialsensor.framework.abstractions.socialmedia.gplus;
+package gr.iti.mklab.framework.abstractions.socialmedia.gplus;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -20,11 +20,11 @@ import com.google.api.services.plus.model.Activity.PlusObject.Attachments.Image;
 import com.google.api.services.plus.model.Activity.PlusObject.Attachments.Thumbnails;
 import com.google.api.services.plus.model.Comment;
 
-import eu.socialsensor.framework.common.domain.Item;
-import eu.socialsensor.framework.common.domain.Location;
-import eu.socialsensor.framework.common.domain.MediaItem;
-import eu.socialsensor.framework.common.domain.SocialNetworkSource;
-import eu.socialsensor.framework.common.domain.WebPage;
+import gr.iti.mklab.framework.common.domain.Item;
+import gr.iti.mklab.framework.common.domain.Location;
+import gr.iti.mklab.framework.common.domain.MediaItem;
+import gr.iti.mklab.framework.common.domain.SocialNetworkSource;
+import gr.iti.mklab.framework.common.domain.WebPage;
 
 /**
  * Class that holds the information of a google plus activity

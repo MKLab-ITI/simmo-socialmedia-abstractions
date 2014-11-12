@@ -1,11 +1,11 @@
-package eu.socialsensor.framework.abstractions.socialmedia.dailymotion;
+package gr.iti.mklab.framework.abstractions.socialmedia.dailymotion;
 
 import java.net.URL;
 
 import com.google.api.client.util.Key;
 
-import eu.socialsensor.framework.common.domain.Location;
-import eu.socialsensor.framework.common.domain.MediaItem;
+import gr.iti.mklab.framework.common.domain.Location;
+import gr.iti.mklab.framework.common.domain.MediaItem;
 
 /**
  * Class that holds the information regarding the dailymotion video

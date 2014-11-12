@@ -1,11 +1,11 @@
-package eu.socialsensor.framework.abstractions.socialmedia.instagram;
+package gr.iti.mklab.framework.abstractions.socialmedia.instagram;
 
 import org.jinstagram.entity.common.User;
 import org.jinstagram.entity.users.basicinfo.Counts;
 import org.jinstagram.entity.users.basicinfo.UserInfoData;
 
-import eu.socialsensor.framework.common.domain.SocialNetworkSource;
-import eu.socialsensor.framework.common.domain.StreamUser;
+import gr.iti.mklab.framework.common.domain.SocialNetworkSource;
+import gr.iti.mklab.framework.common.domain.StreamUser;
 
 /**
  * Class that holds the information of an instagram user

@@ -1,4 +1,4 @@
-package eu.socialsensor.framework.abstractions.socialmedia.youtube;
+package gr.iti.mklab.framework.abstractions.socialmedia.youtube;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -16,9 +16,9 @@ import com.google.gdata.data.youtube.YouTubeMediaContent;
 import com.google.gdata.data.youtube.YouTubeMediaGroup;
 import com.google.gdata.data.youtube.YtStatistics;
 
-import eu.socialsensor.framework.common.domain.Item;
-import eu.socialsensor.framework.common.domain.MediaItem;
-import eu.socialsensor.framework.common.domain.SocialNetworkSource;
+import gr.iti.mklab.framework.common.domain.Item;
+import gr.iti.mklab.framework.common.domain.MediaItem;
+import gr.iti.mklab.framework.common.domain.SocialNetworkSource;
 
 /**
  * Class that holds the information of a youtube video

@@ -1,4 +1,4 @@
-package eu.socialsensor.framework.abstractions.socialmedia.tumblr;
+package gr.iti.mklab.framework.abstractions.socialmedia.tumblr;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -15,10 +15,10 @@ import com.tumblr.jumblr.types.Post;
 import com.tumblr.jumblr.types.Video;
 import com.tumblr.jumblr.types.VideoPost;
 
-import eu.socialsensor.framework.common.domain.Item;
-import eu.socialsensor.framework.common.domain.MediaItem;
-import eu.socialsensor.framework.common.domain.SocialNetworkSource;
-import eu.socialsensor.framework.common.domain.WebPage;
+import gr.iti.mklab.framework.common.domain.Item;
+import gr.iti.mklab.framework.common.domain.MediaItem;
+import gr.iti.mklab.framework.common.domain.SocialNetworkSource;
+import gr.iti.mklab.framework.common.domain.WebPage;
 
 /**
  * Class that holds the information of a tumblr post

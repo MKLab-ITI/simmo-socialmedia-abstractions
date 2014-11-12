@@ -1,10 +1,10 @@
-package eu.socialsensor.framework.retrievers;
+package gr.iti.mklab.framework.retrievers;
 
 
 import java.util.List;
 
-import eu.socialsensor.framework.common.domain.Feed;
-import eu.socialsensor.framework.common.domain.Item;
+import gr.iti.mklab.framework.common.domain.Feed;
+import gr.iti.mklab.framework.common.domain.Item;
 
 public interface Retriever {
 	

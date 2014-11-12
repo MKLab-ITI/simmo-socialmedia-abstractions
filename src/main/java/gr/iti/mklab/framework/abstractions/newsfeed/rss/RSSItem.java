@@ -1,11 +1,11 @@
-package eu.socialsensor.framework.abstractions.newsfeed.rss;
+package gr.iti.mklab.framework.abstractions.newsfeed.rss;
 
 import org.jsoup.Jsoup;
 
 import com.sun.syndication.feed.synd.SyndEntry;
 
-import eu.socialsensor.framework.common.domain.Item;
-import eu.socialsensor.framework.common.domain.NewsFeedSource;
+import gr.iti.mklab.framework.common.domain.Item;
+import gr.iti.mklab.framework.common.domain.NewsFeedSource;
 
 /**
  * Class that holds the information of an RSS feed

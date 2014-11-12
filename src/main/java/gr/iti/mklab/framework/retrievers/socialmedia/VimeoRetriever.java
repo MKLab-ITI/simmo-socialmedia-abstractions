@@ -1,4 +1,4 @@
-package eu.socialsensor.framework.retrievers.socialmedia;
+package gr.iti.mklab.framework.retrievers.socialmedia;
 
 
 import java.util.ArrayList;
@@ -15,16 +15,16 @@ import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.JsonObjectParser;
 import com.google.api.client.json.jackson2.JacksonFactory;
 
-import eu.socialsensor.framework.abstractions.socialmedia.vimeo.VimeoMediaItem;
-import eu.socialsensor.framework.abstractions.socialmedia.vimeo.VimeoMediaItem.VimeoVideo;
-import eu.socialsensor.framework.common.domain.Feed;
-import eu.socialsensor.framework.common.domain.Item;
-import eu.socialsensor.framework.common.domain.MediaItem;
-import eu.socialsensor.framework.common.domain.StreamUser;
-import eu.socialsensor.framework.common.domain.feeds.KeywordsFeed;
-import eu.socialsensor.framework.common.domain.feeds.ListFeed;
-import eu.socialsensor.framework.common.domain.feeds.LocationFeed;
-import eu.socialsensor.framework.common.domain.feeds.SourceFeed;
+import gr.iti.mklab.framework.abstractions.socialmedia.vimeo.VimeoMediaItem;
+import gr.iti.mklab.framework.abstractions.socialmedia.vimeo.VimeoMediaItem.VimeoVideo;
+import gr.iti.mklab.framework.common.domain.Feed;
+import gr.iti.mklab.framework.common.domain.Item;
+import gr.iti.mklab.framework.common.domain.MediaItem;
+import gr.iti.mklab.framework.common.domain.StreamUser;
+import gr.iti.mklab.framework.common.domain.feeds.KeywordsFeed;
+import gr.iti.mklab.framework.common.domain.feeds.ListFeed;
+import gr.iti.mklab.framework.common.domain.feeds.LocationFeed;
+import gr.iti.mklab.framework.common.domain.feeds.SourceFeed;
 
 /**
  * The retriever that implements the Vimeo simplified retriever 

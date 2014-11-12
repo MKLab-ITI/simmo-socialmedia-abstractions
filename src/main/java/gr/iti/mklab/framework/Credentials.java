@@ -1,4 +1,4 @@
-package eu.socialsensor.framework;
+package gr.iti.mklab.framework;
 
 public class Credentials {
 

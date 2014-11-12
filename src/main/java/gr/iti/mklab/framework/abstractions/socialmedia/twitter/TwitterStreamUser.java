@@ -1,10 +1,10 @@
-package eu.socialsensor.framework.abstractions.socialmedia.twitter;
+package gr.iti.mklab.framework.abstractions.socialmedia.twitter;
 
 import java.util.Date;
 
 import twitter4j.User;
-import eu.socialsensor.framework.common.domain.SocialNetworkSource;
-import eu.socialsensor.framework.common.domain.StreamUser;
+import gr.iti.mklab.framework.common.domain.SocialNetworkSource;
+import gr.iti.mklab.framework.common.domain.StreamUser;
 
 /**
  * Class that holds the information of a twitter user

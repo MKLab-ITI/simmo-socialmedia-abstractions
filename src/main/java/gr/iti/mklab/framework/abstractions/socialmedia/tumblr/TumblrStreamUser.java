@@ -1,10 +1,10 @@
-package eu.socialsensor.framework.abstractions.socialmedia.tumblr;
+package gr.iti.mklab.framework.abstractions.socialmedia.tumblr;
 
 import com.tumblr.jumblr.types.Blog;
 import com.tumblr.jumblr.types.User;
 
-import eu.socialsensor.framework.common.domain.SocialNetworkSource;
-import eu.socialsensor.framework.common.domain.StreamUser;
+import gr.iti.mklab.framework.common.domain.SocialNetworkSource;
+import gr.iti.mklab.framework.common.domain.StreamUser;
 
 /**
  * Class that holds the information of a tumblr user

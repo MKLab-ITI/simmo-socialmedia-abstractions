@@ -1,4 +1,4 @@
-package eu.socialsensor.framework.abstractions.socialmedia.twitpic;
+package gr.iti.mklab.framework.abstractions.socialmedia.twitpic;
 
 import java.net.URL;
 import java.text.SimpleDateFormat;
@@ -6,8 +6,8 @@ import java.util.Date;
 
 import com.google.api.client.util.Key;
 
-import eu.socialsensor.framework.common.domain.MediaItem;
-import eu.socialsensor.framework.common.domain.StreamUser;
+import gr.iti.mklab.framework.common.domain.MediaItem;
+import gr.iti.mklab.framework.common.domain.StreamUser;
 
 /**
  * Class that holds the information regarding the twitpic media item

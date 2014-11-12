@@ -1,4 +1,4 @@
-package eu.socialsensor.framework.abstractions.socialmedia.vimeo;
+package gr.iti.mklab.framework.abstractions.socialmedia.vimeo;
 
 import java.net.URL;
 import java.text.SimpleDateFormat;
@@ -6,7 +6,7 @@ import java.util.Date;
 
 import com.google.api.client.util.Key;
 
-import eu.socialsensor.framework.common.domain.MediaItem;
+import gr.iti.mklab.framework.common.domain.MediaItem;
 
 /**
  * Class that holds the information regarding the vimeo media item

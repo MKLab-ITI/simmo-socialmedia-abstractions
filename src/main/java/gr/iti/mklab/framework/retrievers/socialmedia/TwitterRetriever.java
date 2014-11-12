@@ -1,4 +1,4 @@
-package eu.socialsensor.framework.retrievers.socialmedia;
+package gr.iti.mklab.framework.retrievers.socialmedia;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -17,20 +17,20 @@ import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
 import twitter4j.User;
 import twitter4j.conf.Configuration;
-import twitter4j.conf.ConfigurationBuilder;
-import eu.socialsensor.framework.abstractions.socialmedia.twitter.TwitterItem;
-import eu.socialsensor.framework.abstractions.socialmedia.twitter.TwitterStreamUser;
-import eu.socialsensor.framework.common.domain.Feed;
-import eu.socialsensor.framework.common.domain.Item;
-import eu.socialsensor.framework.common.domain.Keyword;
-import eu.socialsensor.framework.common.domain.Location;
-import eu.socialsensor.framework.common.domain.MediaItem;
-import eu.socialsensor.framework.common.domain.Source;
-import eu.socialsensor.framework.common.domain.StreamUser;
-import eu.socialsensor.framework.common.domain.feeds.KeywordsFeed;
-import eu.socialsensor.framework.common.domain.feeds.ListFeed;
-import eu.socialsensor.framework.common.domain.feeds.LocationFeed;
-import eu.socialsensor.framework.common.domain.feeds.SourceFeed;
+
+import gr.iti.mklab.framework.abstractions.socialmedia.twitter.TwitterItem;
+import gr.iti.mklab.framework.abstractions.socialmedia.twitter.TwitterStreamUser;
+import gr.iti.mklab.framework.common.domain.Feed;
+import gr.iti.mklab.framework.common.domain.Item;
+import gr.iti.mklab.framework.common.domain.Keyword;
+import gr.iti.mklab.framework.common.domain.Location;
+import gr.iti.mklab.framework.common.domain.MediaItem;
+import gr.iti.mklab.framework.common.domain.Source;
+import gr.iti.mklab.framework.common.domain.StreamUser;
+import gr.iti.mklab.framework.common.domain.feeds.KeywordsFeed;
+import gr.iti.mklab.framework.common.domain.feeds.ListFeed;
+import gr.iti.mklab.framework.common.domain.feeds.LocationFeed;
+import gr.iti.mklab.framework.common.domain.feeds.SourceFeed;
 
 /**
  * Class responsible for retrieving Twitter content based on keywords, twitter users or locations

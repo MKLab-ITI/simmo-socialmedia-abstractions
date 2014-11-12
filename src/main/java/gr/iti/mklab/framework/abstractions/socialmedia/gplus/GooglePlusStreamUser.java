@@ -1,10 +1,10 @@
-package eu.socialsensor.framework.abstractions.socialmedia.gplus;
+package gr.iti.mklab.framework.abstractions.socialmedia.gplus;
 
 import com.google.api.services.plus.model.Activity.Actor;
 import com.google.api.services.plus.model.Person;
 
-import eu.socialsensor.framework.common.domain.SocialNetworkSource;
-import eu.socialsensor.framework.common.domain.StreamUser;
+import gr.iti.mklab.framework.common.domain.SocialNetworkSource;
+import gr.iti.mklab.framework.common.domain.StreamUser;
 
 /**
  * Class that holds the information of a google plus user

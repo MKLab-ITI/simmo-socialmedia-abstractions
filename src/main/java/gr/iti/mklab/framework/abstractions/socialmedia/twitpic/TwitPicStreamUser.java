@@ -1,7 +1,7 @@
-package eu.socialsensor.framework.abstractions.socialmedia.twitpic;
+package gr.iti.mklab.framework.abstractions.socialmedia.twitpic;
 
-import eu.socialsensor.framework.abstractions.socialmedia.twitpic.TwitPicMediaItem.TwitPicUser;
-import eu.socialsensor.framework.common.domain.StreamUser;
+import gr.iti.mklab.framework.abstractions.socialmedia.twitpic.TwitPicMediaItem.TwitPicUser;
+import gr.iti.mklab.framework.common.domain.StreamUser;
 
 public class TwitPicStreamUser extends StreamUser {
 

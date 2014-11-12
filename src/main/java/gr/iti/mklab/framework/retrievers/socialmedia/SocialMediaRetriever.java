@@ -1,15 +1,15 @@
-package eu.socialsensor.framework.retrievers.socialmedia;
+package gr.iti.mklab.framework.retrievers.socialmedia;
 
 import java.util.List;
 
-import eu.socialsensor.framework.common.domain.Item;
-import eu.socialsensor.framework.common.domain.MediaItem;
-import eu.socialsensor.framework.common.domain.StreamUser;
-import eu.socialsensor.framework.common.domain.feeds.KeywordsFeed;
-import eu.socialsensor.framework.common.domain.feeds.ListFeed;
-import eu.socialsensor.framework.common.domain.feeds.LocationFeed;
-import eu.socialsensor.framework.common.domain.feeds.SourceFeed;
-import eu.socialsensor.framework.retrievers.Retriever;
+import gr.iti.mklab.framework.common.domain.Item;
+import gr.iti.mklab.framework.common.domain.MediaItem;
+import gr.iti.mklab.framework.common.domain.StreamUser;
+import gr.iti.mklab.framework.common.domain.feeds.KeywordsFeed;
+import gr.iti.mklab.framework.common.domain.feeds.ListFeed;
+import gr.iti.mklab.framework.common.domain.feeds.LocationFeed;
+import gr.iti.mklab.framework.common.domain.feeds.SourceFeed;
+import gr.iti.mklab.framework.retrievers.Retriever;
 
 /**
  * The interface for retrieving from social media - Currently the

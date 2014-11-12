@@ -1,9 +1,9 @@
-package eu.socialsensor.framework.abstractions.socialmedia.flickr;
+package gr.iti.mklab.framework.abstractions.socialmedia.flickr;
 
 import com.flickr4java.flickr.people.User;
 
-import eu.socialsensor.framework.common.domain.SocialNetworkSource;
-import eu.socialsensor.framework.common.domain.StreamUser;
+import gr.iti.mklab.framework.common.domain.SocialNetworkSource;
+import gr.iti.mklab.framework.common.domain.StreamUser;
 
 /**
  * Class that holds the information of a flickr user

@@ -1,4 +1,4 @@
-package eu.socialsensor.framework.abstractions.socialmedia.flickr;
+package gr.iti.mklab.framework.abstractions.socialmedia.flickr;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -11,11 +11,11 @@ import com.flickr4java.flickr.photos.GeoData;
 import com.flickr4java.flickr.photos.Photo;
 import com.flickr4java.flickr.tags.Tag;
 
-import eu.socialsensor.framework.common.domain.Item;
-import eu.socialsensor.framework.common.domain.Location;
-import eu.socialsensor.framework.common.domain.MediaItem;
-import eu.socialsensor.framework.common.domain.SocialNetworkSource;
-import eu.socialsensor.framework.common.domain.StreamUser;
+import gr.iti.mklab.framework.common.domain.Item;
+import gr.iti.mklab.framework.common.domain.Location;
+import gr.iti.mklab.framework.common.domain.MediaItem;
+import gr.iti.mklab.framework.common.domain.SocialNetworkSource;
+import gr.iti.mklab.framework.common.domain.StreamUser;
 
 /**
  * Class that holds the information of a flickr photo

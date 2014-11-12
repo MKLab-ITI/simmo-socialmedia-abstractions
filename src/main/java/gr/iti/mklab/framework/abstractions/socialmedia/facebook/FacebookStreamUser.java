@@ -1,12 +1,12 @@
-package eu.socialsensor.framework.abstractions.socialmedia.facebook;
+package gr.iti.mklab.framework.abstractions.socialmedia.facebook;
 
 import com.restfb.types.CategorizedFacebookType;
 import com.restfb.types.Location;
 import com.restfb.types.Page;
 import com.restfb.types.User;
 
-import eu.socialsensor.framework.common.domain.SocialNetworkSource;
-import eu.socialsensor.framework.common.domain.StreamUser;
+import gr.iti.mklab.framework.common.domain.SocialNetworkSource;
+import gr.iti.mklab.framework.common.domain.StreamUser;
 
 /**
  * Class that holds the information of a facebook user or a facebook page

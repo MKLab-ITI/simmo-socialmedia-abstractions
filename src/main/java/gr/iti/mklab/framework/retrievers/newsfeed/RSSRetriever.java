@@ -1,4 +1,4 @@
-package eu.socialsensor.framework.retrievers.newsfeed;
+package gr.iti.mklab.framework.retrievers.newsfeed;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -14,11 +14,11 @@ import com.sun.syndication.feed.synd.SyndFeed;
 import com.sun.syndication.io.SyndFeedInput;
 import com.sun.syndication.io.XmlReader;
 
-import eu.socialsensor.framework.abstractions.newsfeed.rss.RSSItem;
-import eu.socialsensor.framework.common.domain.Feed;
-import eu.socialsensor.framework.common.domain.Item;
-import eu.socialsensor.framework.common.domain.feeds.URLFeed;
-import eu.socialsensor.framework.retrievers.Retriever;
+import gr.iti.mklab.framework.abstractions.newsfeed.rss.RSSItem;
+import gr.iti.mklab.framework.common.domain.Feed;
+import gr.iti.mklab.framework.common.domain.Item;
+import gr.iti.mklab.framework.common.domain.feeds.URLFeed;
+import gr.iti.mklab.framework.retrievers.Retriever;
 
 /**
  * Class for retrieving rss feeds from official sources
