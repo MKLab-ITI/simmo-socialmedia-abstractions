@@ -1,4 +1,5 @@
-package gr.iti.mklab.framework.retrievers.socialmedia;
+package gr.iti.mklab.framework.retrievers.impl;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,15 +8,15 @@ import com.google.api.client.http.GenericUrl;
 import com.google.api.client.http.HttpRequest;
 import com.google.api.client.http.HttpRequestFactory;
 import com.google.api.client.http.HttpRequestInitializer;
+import com.google.api.client.http.HttpResponse;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.JsonObjectParser;
 import com.google.api.client.json.jackson2.JacksonFactory;
-import com.google.api.client.util.Key;
 
-import gr.iti.mklab.framework.abstractions.socialmedia.mediaitems.DailyMotionMediaItem;
-import gr.iti.mklab.framework.abstractions.socialmedia.mediaitems.DailyMotionMediaItem.DailyMotionVideo;
+import gr.iti.mklab.framework.abstractions.socialmedia.mediaitems.TwitPicMediaItem.TwitPicImage;
+import gr.iti.mklab.framework.abstractions.socialmedia.mediaitems.TwitPicMediaItem;
 import gr.iti.mklab.framework.common.domain.Feed;
 import gr.iti.mklab.framework.common.domain.Item;
 import gr.iti.mklab.framework.common.domain.MediaItem;
@@ -26,20 +27,23 @@ import gr.iti.mklab.framework.common.domain.feeds.LocationFeed;
 import gr.iti.mklab.framework.common.domain.feeds.SourceFeed;
 
 /**
- * The retriever that implements the Daily Motion wrapper
+ * The retriever that implements the Twitpic simplified retriever
  * @author manosetro
  * @email  manosetro@iti.gr
  */
-public class DailyMotionRetriever implements SocialMediaRetriever {
+public class TwitpicRetriever extends SocialMediaRetriever {
 
+	private static String requestPrefix = "http://api.twitpic.com/2/media/show.json?id=";
+	
 	static final HttpTransport HTTP_TRANSPORT = new NetHttpTransport();
 	static final JsonFactory JSON_FACTORY = new JacksonFactory();
-
+	
 	private HttpRequestFactory requestFactory;
-	private String requestPrefix = "https://api.dailymotion.com/video/";
-	
-	
-	public DailyMotionRetriever() {
+
+	public TwitpicRetriever() {
+		
+		super(null);
+		
 		requestFactory = HTTP_TRANSPORT.createRequestFactory(
 				new HttpRequestInitializer() {
 					@Override
@@ -49,53 +53,32 @@ public class DailyMotionRetriever implements SocialMediaRetriever {
 				});
 	}
 	
-	/** 
-	 * URL for Dailymotion API. 
-	 */
-	private static class DailyMotionUrl extends GenericUrl {
-
-		public DailyMotionUrl(String encodedUrl) {
-			super(encodedUrl);
-		}
-
-		@Key
-		public String fields = "id,tags,title,url,embed_url,rating,thumbnail_url," +
-				"views_total,created_time,geoloc,ratings_total,comments_total";
-	}
-	
-	/**
-	 * Returns the retrieved media item
-	 */
-	public MediaItem getMediaItem(String id) {
+	public MediaItem getMediaItem(String shortId) {
 		
-		DailyMotionUrl url = new DailyMotionUrl(requestPrefix + id);
+		GenericUrl requestUrl = new GenericUrl(requestPrefix + shortId);
 		
 		HttpRequest request;
 		try {
-			request = requestFactory.buildGetRequest(url);
-			DailyMotionVideo video = request.execute().parseAs(DailyMotionVideo.class);
-			
-			if(video != null) {
-				MediaItem mediaItem = new DailyMotionMediaItem(video);
+			request = requestFactory.buildGetRequest(requestUrl);
+			HttpResponse response = request.execute();
+			TwitPicImage image = response.parseAs(TwitPicImage.class);
+			if(image != null) {
+				MediaItem mediaItem = new TwitPicMediaItem(image);
 				return mediaItem;
 			}
-			
 		} catch (Exception e) {
-			
 		}
-
+		
 		return null;
 	}
 
 	@Override
 	public List<Item> retrieve(Feed feed) {
-		List<Item> items = new ArrayList<Item>();
-		return items;
+		return new ArrayList<Item>();
 	}
 
 	@Override
 	public void stop() {
-		// TODO Auto-generated method stub
 		
 	}
 
@@ -124,4 +107,5 @@ public class DailyMotionRetriever implements SocialMediaRetriever {
 	public List<Item> retrieveListsFeeds(ListFeed feed) {
 		return new ArrayList<Item>();
 	}
+
 }

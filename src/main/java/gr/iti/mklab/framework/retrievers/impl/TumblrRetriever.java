@@ -1,4 +1,4 @@
-package gr.iti.mklab.framework.retrievers.socialmedia;
+package gr.iti.mklab.framework.retrievers.impl;
 
 import java.net.MalformedURLException;
 import java.text.ParseException;
@@ -37,7 +37,7 @@ import gr.iti.mklab.framework.common.domain.feeds.SourceFeed;
  * @author ailiakop
  * @email  ailiakop@iti.gr
  */
-public class TumblrRetriever implements SocialMediaRetriever {
+public class TumblrRetriever extends SocialMediaRetriever {
 	
 	private Logger logger = Logger.getLogger(TumblrRetriever.class);
 	
@@ -50,6 +50,8 @@ public class TumblrRetriever implements SocialMediaRetriever {
 	
 
 	public TumblrRetriever(String consumerKey, String consumerSecret, Integer maxResults, Integer maxRequests, Long maxRunningTime) {
+		
+		super(null);
 		
 		this.maxResults = maxResults;
 		this.maxRequests = maxRequests;

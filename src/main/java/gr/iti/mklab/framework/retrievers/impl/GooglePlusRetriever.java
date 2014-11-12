@@ -1,4 +1,4 @@
-package gr.iti.mklab.framework.retrievers.socialmedia;
+package gr.iti.mklab.framework.retrievers.impl;
 
 import java.io.IOException;
 import java.text.ParseException;
@@ -45,7 +45,7 @@ import gr.iti.mklab.framework.common.domain.feeds.SourceFeed;
  * @author ailiakop
  * @email  ailiakop@iti.gr
  */
-public class GooglePlusRetriever implements SocialMediaRetriever{
+public class GooglePlusRetriever extends SocialMediaRetriever{
 	private Logger logger = Logger.getLogger(GooglePlusRetriever.class);
 	
 	private static final HttpTransport transport = new NetHttpTransport();
@@ -69,6 +69,9 @@ public class GooglePlusRetriever implements SocialMediaRetriever{
 	}
 
 	public GooglePlusRetriever(String key,Integer maxResults,Integer maxRequests,Long maxRunningTime) {
+		
+		super(null);
+		
 		GooglePlusKey = key;
 		GoogleCredential credential = new GoogleCredential();
 		plusSrv = new Plus.Builder(transport, jsonFactory, credential)

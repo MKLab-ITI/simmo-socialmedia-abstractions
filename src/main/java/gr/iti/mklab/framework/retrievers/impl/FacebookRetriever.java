@@ -1,4 +1,4 @@
-package gr.iti.mklab.framework.retrievers.socialmedia;
+package gr.iti.mklab.framework.retrievers.impl;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -43,7 +43,7 @@ import gr.iti.mklab.framework.common.domain.feeds.SourceFeed;
  * @email  ailiakop@iti.gr
  * 
  */
-public class FacebookRetriever implements SocialMediaRetriever {
+public class FacebookRetriever extends SocialMediaRetriever {
 	
 	//private RateLimitsMonitor rateLimitsMonitor;
 			
@@ -59,10 +59,15 @@ public class FacebookRetriever implements SocialMediaRetriever {
 	private boolean loggingEnabled = false;
 	
 	public FacebookRetriever(String  facebookAccessToken) {
+		super(null);
+		
 		this.facebookClient = new DefaultFacebookClient(facebookAccessToken);
 	}
 	
 	public FacebookRetriever(FacebookClient facebookClient, int maxRequests, long minInterval, Integer maxResults, long maxRunningTime) {
+		
+		super(null);
+		
 		this.facebookClient = facebookClient;		
 		//this.rateLimitsMonitor = new RateLimitsMonitor(maxRequests, minInterval);
 		this.maxResults = maxResults;

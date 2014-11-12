@@ -1,4 +1,4 @@
-package gr.iti.mklab.framework.retrievers.socialmedia;
+package gr.iti.mklab.framework.retrievers.impl;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -40,7 +40,7 @@ import gr.iti.mklab.framework.common.domain.feeds.SourceFeed;
  * @author ailiakop
  * @email  ailiakop@iti.gr
  */
-public class FlickrRetriever implements SocialMediaRetriever {
+public class FlickrRetriever extends SocialMediaRetriever {
 
 	private Logger logger = Logger.getLogger(FlickrRetriever.class);
 	
@@ -67,6 +67,8 @@ public class FlickrRetriever implements SocialMediaRetriever {
 
 	public FlickrRetriever(String flickrKey, String flickrSecret) {
 		
+		super(null);
+		
 		this.flickrKey = flickrKey;
 		this.flickrSecret = flickrSecret;
 		
@@ -78,6 +80,8 @@ public class FlickrRetriever implements SocialMediaRetriever {
 	}
 	
 	public FlickrRetriever(String flickrKey, String flickrSecret, Integer maxResults, Integer maxRequests, long maxRunningTime) {
+		
+		super(null);
 		
 		this.flickrKey = flickrKey;
 		this.flickrSecret = flickrSecret;

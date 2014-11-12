@@ -1,4 +1,4 @@
-package gr.iti.mklab.framework.retrievers.socialmedia;
+package gr.iti.mklab.framework.retrievers.impl;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -37,7 +37,7 @@ import gr.iti.mklab.framework.common.domain.feeds.KeywordsFeed;
 import gr.iti.mklab.framework.common.domain.feeds.ListFeed;
 import gr.iti.mklab.framework.common.domain.feeds.LocationFeed;
 import gr.iti.mklab.framework.common.domain.feeds.SourceFeed;
-import gr.iti.mklab.framework.retrievers.socialmedia.SocialMediaRetriever;
+import gr.iti.mklab.framework.retrievers.impl.SocialMediaRetriever;
 
 /**
  * Class responsible for retrieving YouTube content based on keywords and YouTube users 
@@ -45,7 +45,7 @@ import gr.iti.mklab.framework.retrievers.socialmedia.SocialMediaRetriever;
  * @author ailiakop
  * @email  ailiakop@iti.gr
  */
-public class YoutubeRetriever implements SocialMediaRetriever {
+public class YoutubeRetriever extends SocialMediaRetriever {
 
 	private final String activityFeedUserUrlPrefix = "http://gdata.youtube.com/feeds/api/users/";
 	private final String activityFeedVideoUrlPrefix = "http://gdata.youtube.com/feeds/api/videos";
@@ -62,6 +62,9 @@ public class YoutubeRetriever implements SocialMediaRetriever {
 	private long maxRunningTime;
 	
 	public YoutubeRetriever(String clientId, String developerKey) {	
+		
+		super(null);
+		
 		this.service = new YouTubeService(clientId, developerKey);
 	}
 	

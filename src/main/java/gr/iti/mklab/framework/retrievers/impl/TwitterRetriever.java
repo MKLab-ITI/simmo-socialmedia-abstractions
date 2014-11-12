@@ -1,4 +1,4 @@
-package gr.iti.mklab.framework.retrievers.socialmedia;
+package gr.iti.mklab.framework.retrievers.impl;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -37,7 +37,7 @@ import gr.iti.mklab.framework.common.domain.feeds.SourceFeed;
  * @author ailiakop
  * @email  ailiakop@iti.gr
  */
-public class TwitterRetriever implements SocialMediaRetriever {
+public class TwitterRetriever extends SocialMediaRetriever {
 	
 	private Logger  logger = Logger.getLogger(TwitterRetriever.class);
 	private boolean loggingEnabled = false;
@@ -51,6 +51,8 @@ public class TwitterRetriever implements SocialMediaRetriever {
 	private long maxRunningTime = 0l;
 	
 	public TwitterRetriever(Configuration conf, Integer maxRequests, Integer maxResults, Long maxRunningTime) {
+		
+		super(null);
 		
 		this.tf = new TwitterFactory(conf);
 		twitter = tf.getInstance();

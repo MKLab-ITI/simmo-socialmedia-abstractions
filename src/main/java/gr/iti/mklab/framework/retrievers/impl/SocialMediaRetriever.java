@@ -1,7 +1,8 @@
-package gr.iti.mklab.framework.retrievers.socialmedia;
+package gr.iti.mklab.framework.retrievers.impl;
 
 import java.util.List;
 
+import gr.iti.mklab.framework.Credentials;
 import gr.iti.mklab.framework.common.domain.Item;
 import gr.iti.mklab.framework.common.domain.MediaItem;
 import gr.iti.mklab.framework.common.domain.StreamUser;
@@ -19,9 +20,11 @@ import gr.iti.mklab.framework.retrievers.Retriever;
  * @author ailiakop
  * @email  ailiakop@iti.gr
  */
-public interface SocialMediaRetriever extends Retriever {
+public abstract class SocialMediaRetriever implements Retriever {
 	
-	
+	public SocialMediaRetriever(Credentials credentials) {
+		
+	}
 	
 	/**
 	 * Retrieves a keywords feed that contains certain keywords
@@ -30,7 +33,7 @@ public interface SocialMediaRetriever extends Retriever {
 	 * @return
 	 * @throws Exception
 	 */
-	public List<Item> retrieveKeywordsFeeds(KeywordsFeed feed) throws Exception;
+	public abstract List<Item> retrieveKeywordsFeeds(KeywordsFeed feed) throws Exception;
 	
 	/**
 	 * Retrieves a user feed that contains the user/users in 
@@ -39,7 +42,7 @@ public interface SocialMediaRetriever extends Retriever {
 	 * @return
 	 * @throws Exception
 	 */
-	public List<Item> retrieveUserFeeds(SourceFeed feed) throws Exception;
+	public abstract List<Item> retrieveUserFeeds(SourceFeed feed) throws Exception;
 	
 	/**
 	 * Retrieves a location feed that contains the coordinates of the location
@@ -48,7 +51,7 @@ public interface SocialMediaRetriever extends Retriever {
 	 * @return
 	 * @throws Exception
 	 */
-	public List<Item> retrieveLocationFeeds(LocationFeed feed) throws Exception;
+	public abstract List<Item> retrieveLocationFeeds(LocationFeed feed) throws Exception;
 
 	/**
 	 * Retrieves a list feed that contains the owner of a list an a slug 
@@ -57,7 +60,7 @@ public interface SocialMediaRetriever extends Retriever {
 	 * @return
 	 * @throws Exception
 	 */
-	public List<Item> retrieveListsFeeds(ListFeed feed);
+	public abstract List<Item> retrieveListsFeeds(ListFeed feed);
 	
 	/**
 	 * Retrieves the info for a specific user on the basis
@@ -65,7 +68,7 @@ public interface SocialMediaRetriever extends Retriever {
 	 * @param uid
 	 * @return a StreamUser instance
 	 */
-	public StreamUser getStreamUser(String uid);
+	public abstract StreamUser getStreamUser(String uid);
 	
 	/**
 	 * Retrieves the info for a specific media object on the basis
@@ -73,6 +76,6 @@ public interface SocialMediaRetriever extends Retriever {
 	 * @param id
 	 * @return a MediaItem instance
 	 */
-	public MediaItem getMediaItem(String id);
+	public abstract MediaItem getMediaItem(String id);
 	
 }

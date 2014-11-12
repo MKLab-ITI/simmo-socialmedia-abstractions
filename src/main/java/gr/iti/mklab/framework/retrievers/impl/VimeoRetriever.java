@@ -1,4 +1,4 @@
-package gr.iti.mklab.framework.retrievers.socialmedia;
+package gr.iti.mklab.framework.retrievers.impl;
 
 
 import java.util.ArrayList;
@@ -15,8 +15,8 @@ import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.JsonObjectParser;
 import com.google.api.client.json.jackson2.JacksonFactory;
 
-import gr.iti.mklab.framework.abstractions.socialmedia.mediaitems.TwitPicMediaItem.TwitPicImage;
-import gr.iti.mklab.framework.abstractions.socialmedia.mediaitems.TwitPicMediaItem;
+import gr.iti.mklab.framework.abstractions.socialmedia.mediaitems.VimeoMediaItem;
+import gr.iti.mklab.framework.abstractions.socialmedia.mediaitems.VimeoMediaItem.VimeoVideo;
 import gr.iti.mklab.framework.common.domain.Feed;
 import gr.iti.mklab.framework.common.domain.Item;
 import gr.iti.mklab.framework.common.domain.MediaItem;
@@ -27,20 +27,22 @@ import gr.iti.mklab.framework.common.domain.feeds.LocationFeed;
 import gr.iti.mklab.framework.common.domain.feeds.SourceFeed;
 
 /**
- * The retriever that implements the Twitpic simplified retriever
+ * The retriever that implements the Vimeo simplified retriever 
  * @author manosetro
  * @email  manosetro@iti.gr
  */
-public class TwitpicRetriever implements SocialMediaRetriever {
+public class VimeoRetriever extends SocialMediaRetriever {
 
-	private static String requestPrefix = "http://api.twitpic.com/2/media/show.json?id=";
-	
 	static final HttpTransport HTTP_TRANSPORT = new NetHttpTransport();
 	static final JsonFactory JSON_FACTORY = new JacksonFactory();
 	
 	private HttpRequestFactory requestFactory;
-
-	public TwitpicRetriever() {
+	private String requestPrefix = "http://vimeo.com/api/v2/video/";
+	
+	public VimeoRetriever() {
+		
+		super(null);
+		
 		requestFactory = HTTP_TRANSPORT.createRequestFactory(
 				new HttpRequestInitializer() {
 					@Override
@@ -50,23 +52,25 @@ public class TwitpicRetriever implements SocialMediaRetriever {
 				});
 	}
 	
-	public MediaItem getMediaItem(String shortId) {
-		
-		GenericUrl requestUrl = new GenericUrl(requestPrefix + shortId);
+	public MediaItem getMediaItem(String id) {
+	
+		GenericUrl url = new GenericUrl(requestPrefix + id + ".json");
 		
 		HttpRequest request;
 		try {
-			request = requestFactory.buildGetRequest(requestUrl);
+			request = requestFactory.buildGetRequest(url);
 			HttpResponse response = request.execute();
-			TwitPicImage image = response.parseAs(TwitPicImage.class);
-			if(image != null) {
-				MediaItem mediaItem = new TwitPicMediaItem(image);
+			VimeoVideo[] videos = response.parseAs(VimeoVideo[].class);
+			if(videos != null && videos.length>0) {
+				MediaItem mediaItem = new VimeoMediaItem(videos[0]);
 				return mediaItem;
 			}
 		} catch (Exception e) {
+			//e.printStackTrace();
 		}
-		
 		return null;
+		 
+		
 	}
 
 	@Override
@@ -76,7 +80,7 @@ public class TwitpicRetriever implements SocialMediaRetriever {
 
 	@Override
 	public void stop() {
-		
+		// TODO Auto-generated method stub	
 	}
 
 	@Override

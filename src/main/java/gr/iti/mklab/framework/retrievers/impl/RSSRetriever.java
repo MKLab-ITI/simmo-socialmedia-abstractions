@@ -1,4 +1,4 @@
-package gr.iti.mklab.framework.retrievers.newsfeed;
+package gr.iti.mklab.framework.retrievers.impl;
 
 import java.io.IOException;
 import java.net.MalformedURLException;

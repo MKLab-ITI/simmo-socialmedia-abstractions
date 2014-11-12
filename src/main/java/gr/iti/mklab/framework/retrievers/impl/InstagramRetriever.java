@@ -1,4 +1,4 @@
-package gr.iti.mklab.framework.retrievers.socialmedia;
+package gr.iti.mklab.framework.retrievers.impl;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -47,7 +47,7 @@ import gr.iti.mklab.framework.common.util.DateUtil;
  * @author ailiakop
  * @email  ailiakop@iti.gr
  */
-public class InstagramRetriever implements SocialMediaRetriever {
+public class InstagramRetriever extends SocialMediaRetriever {
 	
 	private Logger logger = Logger.getLogger(InstagramRetriever.class);
 	private boolean loggingEnabled = false;
@@ -65,11 +65,16 @@ public class InstagramRetriever implements SocialMediaRetriever {
 	private InstagramOembed instagramOembed;
 	
 	public InstagramRetriever(String clientId) {
+		
+		super(null);
+		
 		this.instagram = new Instagram(clientId);
 		this.instagramOembed = new InstagramOembed();
 	}
 	
 	public InstagramRetriever(String key, String secret, String token) {
+		super(null);
+		
 		Token accessToken = new Token(token, secret); 
 		this.instagram = new Instagram(key);
 		this.instagram.setAccessToken(accessToken);
