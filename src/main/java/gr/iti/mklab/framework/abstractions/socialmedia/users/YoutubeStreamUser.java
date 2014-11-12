@@ -1,4 +1,4 @@
-package gr.iti.mklab.framework.abstractions.socialmedia.youtube;
+package gr.iti.mklab.framework.abstractions.socialmedia.users;
 
 import com.google.gdata.data.Link;
 import com.google.gdata.data.Person;

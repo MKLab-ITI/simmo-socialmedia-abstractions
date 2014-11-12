@@ -1,4 +1,4 @@
-package gr.iti.mklab.framework.abstractions.socialmedia.facebook;
+package gr.iti.mklab.framework.abstractions.socialmedia.items;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -16,6 +16,7 @@ import com.restfb.types.Post.Comments;
 import com.restfb.types.Post.Likes;
 import com.restfb.types.User;
 
+import gr.iti.mklab.framework.abstractions.socialmedia.users.FacebookStreamUser;
 import gr.iti.mklab.framework.common.domain.Item;
 import gr.iti.mklab.framework.common.domain.Location;
 import gr.iti.mklab.framework.common.domain.MediaItem;

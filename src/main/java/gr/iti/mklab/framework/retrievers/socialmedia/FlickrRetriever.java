@@ -20,8 +20,8 @@ import com.flickr4java.flickr.photos.PhotoList;
 import com.flickr4java.flickr.photos.PhotosInterface;
 import com.flickr4java.flickr.photos.SearchParameters;
 
-import gr.iti.mklab.framework.abstractions.socialmedia.flickr.FlickrItem;
-import gr.iti.mklab.framework.abstractions.socialmedia.flickr.FlickrStreamUser;
+import gr.iti.mklab.framework.abstractions.socialmedia.items.FlickrItem;
+import gr.iti.mklab.framework.abstractions.socialmedia.users.FlickrStreamUser;
 import gr.iti.mklab.framework.common.domain.Feed;
 import gr.iti.mklab.framework.common.domain.Item;
 import gr.iti.mklab.framework.common.domain.Keyword;

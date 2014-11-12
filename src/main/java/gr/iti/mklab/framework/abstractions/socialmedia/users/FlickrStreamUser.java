@@ -1,4 +1,4 @@
-package gr.iti.mklab.framework.abstractions.socialmedia.flickr;
+package gr.iti.mklab.framework.abstractions.socialmedia.users;
 
 import com.flickr4java.flickr.people.User;
 

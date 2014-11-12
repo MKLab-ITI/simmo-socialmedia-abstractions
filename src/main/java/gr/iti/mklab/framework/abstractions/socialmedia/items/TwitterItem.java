@@ -1,5 +1,6 @@
-package gr.iti.mklab.framework.abstractions.socialmedia.twitter;
+package gr.iti.mklab.framework.abstractions.socialmedia.items;
 
+import gr.iti.mklab.framework.abstractions.socialmedia.users.TwitterStreamUser;
 import gr.iti.mklab.framework.common.domain.Item;
 import gr.iti.mklab.framework.common.domain.Location;
 import gr.iti.mklab.framework.common.domain.MediaItem;

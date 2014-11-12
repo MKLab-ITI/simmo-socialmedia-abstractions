@@ -1,4 +1,4 @@
-package gr.iti.mklab.framework.abstractions.socialmedia.gplus;
+package gr.iti.mklab.framework.abstractions.socialmedia.users;
 
 import com.google.api.services.plus.model.Activity.Actor;
 import com.google.api.services.plus.model.Person;

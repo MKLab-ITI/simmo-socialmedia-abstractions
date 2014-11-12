@@ -1,4 +1,4 @@
-package gr.iti.mklab.framework.abstractions.socialmedia.instagram;
+package gr.iti.mklab.framework.abstractions.socialmedia.items;
 
 import java.util.Date;
 import java.net.MalformedURLException;
@@ -9,6 +9,7 @@ import org.jinstagram.entity.common.ImageData;
 import org.jinstagram.entity.common.Images;
 import org.jinstagram.entity.users.feed.MediaFeedData;
 
+import gr.iti.mklab.framework.abstractions.socialmedia.users.InstagramStreamUser;
 import gr.iti.mklab.framework.common.domain.Item;
 import gr.iti.mklab.framework.common.domain.Location;
 import gr.iti.mklab.framework.common.domain.MediaItem;

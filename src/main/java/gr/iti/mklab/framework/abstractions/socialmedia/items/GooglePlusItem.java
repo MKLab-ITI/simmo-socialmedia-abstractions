@@ -1,4 +1,4 @@
-package gr.iti.mklab.framework.abstractions.socialmedia.gplus;
+package gr.iti.mklab.framework.abstractions.socialmedia.items;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -20,6 +20,7 @@ import com.google.api.services.plus.model.Activity.PlusObject.Attachments.Image;
 import com.google.api.services.plus.model.Activity.PlusObject.Attachments.Thumbnails;
 import com.google.api.services.plus.model.Comment;
 
+import gr.iti.mklab.framework.abstractions.socialmedia.users.GooglePlusStreamUser;
 import gr.iti.mklab.framework.common.domain.Item;
 import gr.iti.mklab.framework.common.domain.Location;
 import gr.iti.mklab.framework.common.domain.MediaItem;

@@ -1,4 +1,4 @@
-package gr.iti.mklab.framework.abstractions.socialmedia.youtube;
+package gr.iti.mklab.framework.abstractions.socialmedia.items;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -16,6 +16,7 @@ import com.google.gdata.data.youtube.YouTubeMediaContent;
 import com.google.gdata.data.youtube.YouTubeMediaGroup;
 import com.google.gdata.data.youtube.YtStatistics;
 
+import gr.iti.mklab.framework.abstractions.socialmedia.users.YoutubeStreamUser;
 import gr.iti.mklab.framework.common.domain.Item;
 import gr.iti.mklab.framework.common.domain.MediaItem;
 import gr.iti.mklab.framework.common.domain.SocialNetworkSource;

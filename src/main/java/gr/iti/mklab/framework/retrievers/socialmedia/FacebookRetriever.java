@@ -22,8 +22,8 @@ import com.restfb.types.Post;
 import com.restfb.types.Post.Comments;
 import com.restfb.types.User;
 
-import gr.iti.mklab.framework.abstractions.socialmedia.facebook.FacebookItem;
-import gr.iti.mklab.framework.abstractions.socialmedia.facebook.FacebookStreamUser;
+import gr.iti.mklab.framework.abstractions.socialmedia.items.FacebookItem;
+import gr.iti.mklab.framework.abstractions.socialmedia.users.FacebookStreamUser;
 import gr.iti.mklab.framework.common.domain.Feed;
 import gr.iti.mklab.framework.common.domain.Item;
 import gr.iti.mklab.framework.common.domain.Keyword;

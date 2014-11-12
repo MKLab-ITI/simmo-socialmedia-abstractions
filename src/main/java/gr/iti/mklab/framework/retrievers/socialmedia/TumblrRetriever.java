@@ -18,8 +18,8 @@ import com.tumblr.jumblr.exceptions.JumblrException;
 import com.tumblr.jumblr.types.Blog;
 import com.tumblr.jumblr.types.Post;
 
-import gr.iti.mklab.framework.abstractions.socialmedia.tumblr.TumblrItem;
-import gr.iti.mklab.framework.abstractions.socialmedia.tumblr.TumblrStreamUser;
+import gr.iti.mklab.framework.abstractions.socialmedia.items.TumblrItem;
+import gr.iti.mklab.framework.abstractions.socialmedia.users.TumblrStreamUser;
 import gr.iti.mklab.framework.common.domain.Feed;
 import gr.iti.mklab.framework.common.domain.Item;
 import gr.iti.mklab.framework.common.domain.Keyword;

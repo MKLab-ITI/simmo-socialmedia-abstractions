@@ -1,4 +1,4 @@
-package gr.iti.mklab.framework.abstractions.socialmedia.dailymotion;
+package gr.iti.mklab.framework.abstractions.socialmedia.mediaitems;
 
 import java.net.URL;
 

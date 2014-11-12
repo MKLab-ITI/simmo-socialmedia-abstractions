@@ -1,6 +1,7 @@
-package gr.iti.mklab.framework.abstractions.socialmedia.twitpic;
+package gr.iti.mklab.framework.abstractions.socialmedia.users;
 
-import gr.iti.mklab.framework.abstractions.socialmedia.twitpic.TwitPicMediaItem.TwitPicUser;
+import com.google.api.client.util.Key;
+
 import gr.iti.mklab.framework.common.domain.StreamUser;
 
 public class TwitPicStreamUser extends StreamUser {
@@ -24,5 +25,17 @@ public class TwitPicStreamUser extends StreamUser {
 		createdAt = user.timestamp;
 		profileImage = user.avatar_url;
 
+	}
+	
+	/**
+	 * Class that holds the information regarding the twitpic image
+	 * @author manosetro
+	 * @email  manosetro@iti.gr
+	 */
+	public static class TwitPicUser {
+		@Key
+		public String id, username, name, bio, avatar_url, timestamp, location;
+		@Key
+		public int photo_count;
 	}
 }

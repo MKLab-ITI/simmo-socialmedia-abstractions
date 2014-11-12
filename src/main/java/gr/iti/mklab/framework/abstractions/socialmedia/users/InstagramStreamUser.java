@@ -1,4 +1,4 @@
-package gr.iti.mklab.framework.abstractions.socialmedia.instagram;
+package gr.iti.mklab.framework.abstractions.socialmedia.users;
 
 import org.jinstagram.entity.common.User;
 import org.jinstagram.entity.users.basicinfo.Counts;

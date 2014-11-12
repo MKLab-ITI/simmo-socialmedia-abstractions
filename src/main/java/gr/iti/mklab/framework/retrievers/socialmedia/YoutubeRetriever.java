@@ -25,8 +25,8 @@ import com.google.gdata.data.youtube.YouTubeMediaGroup;
 import com.google.gdata.data.youtube.YtStatistics;
 import com.google.gdata.util.ServiceException;
 
-import gr.iti.mklab.framework.abstractions.socialmedia.youtube.YoutubeItem;
-import gr.iti.mklab.framework.abstractions.socialmedia.youtube.YoutubeStreamUser;
+import gr.iti.mklab.framework.abstractions.socialmedia.items.YoutubeItem;
+import gr.iti.mklab.framework.abstractions.socialmedia.users.YoutubeStreamUser;
 import gr.iti.mklab.framework.common.domain.Feed;
 import gr.iti.mklab.framework.common.domain.Item;
 import gr.iti.mklab.framework.common.domain.Keyword;

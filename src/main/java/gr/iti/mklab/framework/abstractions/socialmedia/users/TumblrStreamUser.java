@@ -1,4 +1,4 @@
-package gr.iti.mklab.framework.abstractions.socialmedia.tumblr;
+package gr.iti.mklab.framework.abstractions.socialmedia.users;
 
 import com.tumblr.jumblr.types.Blog;
 import com.tumblr.jumblr.types.User;

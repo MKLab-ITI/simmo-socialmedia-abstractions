@@ -1,4 +1,4 @@
-package gr.iti.mklab.framework.abstractions.socialmedia.facebook;
+package gr.iti.mklab.framework.abstractions.socialmedia.users;
 
 import com.restfb.types.CategorizedFacebookType;
 import com.restfb.types.Location;

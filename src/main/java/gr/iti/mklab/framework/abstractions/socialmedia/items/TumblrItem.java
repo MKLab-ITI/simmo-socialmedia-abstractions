@@ -1,4 +1,4 @@
-package gr.iti.mklab.framework.abstractions.socialmedia.tumblr;
+package gr.iti.mklab.framework.abstractions.socialmedia.items;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -15,6 +15,7 @@ import com.tumblr.jumblr.types.Post;
 import com.tumblr.jumblr.types.Video;
 import com.tumblr.jumblr.types.VideoPost;
 
+import gr.iti.mklab.framework.abstractions.socialmedia.users.TumblrStreamUser;
 import gr.iti.mklab.framework.common.domain.Item;
 import gr.iti.mklab.framework.common.domain.MediaItem;
 import gr.iti.mklab.framework.common.domain.SocialNetworkSource;

@@ -1,4 +1,4 @@
-package gr.iti.mklab.framework.abstractions.socialmedia.vimeo;
+package gr.iti.mklab.framework.abstractions.socialmedia.mediaitems;
 
 import java.net.URL;
 import java.text.SimpleDateFormat;

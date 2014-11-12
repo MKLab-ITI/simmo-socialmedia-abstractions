@@ -1,4 +1,4 @@
-package gr.iti.mklab.framework.abstractions.newsfeed.rss;
+package gr.iti.mklab.framework.abstractions.socialmedia.items;
 
 import org.jsoup.Jsoup;
 

@@ -14,8 +14,8 @@ import com.google.api.client.json.JsonObjectParser;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.util.Key;
 
-import gr.iti.mklab.framework.abstractions.socialmedia.dailymotion.DailyMotionMediaItem;
-import gr.iti.mklab.framework.abstractions.socialmedia.dailymotion.DailyMotionMediaItem.DailyMotionVideo;
+import gr.iti.mklab.framework.abstractions.socialmedia.mediaitems.DailyMotionMediaItem;
+import gr.iti.mklab.framework.abstractions.socialmedia.mediaitems.DailyMotionMediaItem.DailyMotionVideo;
 import gr.iti.mklab.framework.common.domain.Feed;
 import gr.iti.mklab.framework.common.domain.Item;
 import gr.iti.mklab.framework.common.domain.MediaItem;

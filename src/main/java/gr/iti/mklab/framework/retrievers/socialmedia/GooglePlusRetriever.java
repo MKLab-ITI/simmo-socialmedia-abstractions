@@ -26,8 +26,8 @@ import com.google.api.services.plus.model.ActivityFeed;
 import com.google.api.services.plus.model.PeopleFeed;
 import com.google.api.services.plus.model.Person;
 
-import gr.iti.mklab.framework.abstractions.socialmedia.gplus.GooglePlusItem;
-import gr.iti.mklab.framework.abstractions.socialmedia.gplus.GooglePlusStreamUser;
+import gr.iti.mklab.framework.abstractions.socialmedia.items.GooglePlusItem;
+import gr.iti.mklab.framework.abstractions.socialmedia.users.GooglePlusStreamUser;
 import gr.iti.mklab.framework.common.domain.Feed;
 import gr.iti.mklab.framework.common.domain.Item;
 import gr.iti.mklab.framework.common.domain.Keyword;

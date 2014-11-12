@@ -17,9 +17,8 @@ import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
 import twitter4j.User;
 import twitter4j.conf.Configuration;
-
-import gr.iti.mklab.framework.abstractions.socialmedia.twitter.TwitterItem;
-import gr.iti.mklab.framework.abstractions.socialmedia.twitter.TwitterStreamUser;
+import gr.iti.mklab.framework.abstractions.socialmedia.items.TwitterItem;
+import gr.iti.mklab.framework.abstractions.socialmedia.users.TwitterStreamUser;
 import gr.iti.mklab.framework.common.domain.Feed;
 import gr.iti.mklab.framework.common.domain.Item;
 import gr.iti.mklab.framework.common.domain.Keyword;

@@ -1,4 +1,4 @@
-package gr.iti.mklab.framework.abstractions.socialmedia.twitter;
+package gr.iti.mklab.framework.abstractions.socialmedia.users;
 
 import java.util.Date;
 

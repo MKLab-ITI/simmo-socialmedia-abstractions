@@ -1,4 +1,4 @@
-package gr.iti.mklab.framework.abstractions.socialmedia.twitpic;
+package gr.iti.mklab.framework.abstractions.socialmedia.mediaitems;
 
 import java.net.URL;
 import java.text.SimpleDateFormat;
@@ -6,6 +6,8 @@ import java.util.Date;
 
 import com.google.api.client.util.Key;
 
+import gr.iti.mklab.framework.abstractions.socialmedia.users.TwitPicStreamUser;
+import gr.iti.mklab.framework.abstractions.socialmedia.users.TwitPicStreamUser.TwitPicUser;
 import gr.iti.mklab.framework.common.domain.MediaItem;
 import gr.iti.mklab.framework.common.domain.StreamUser;
 
@@ -84,16 +86,6 @@ public class TwitPicMediaItem extends MediaItem {
 		public TwitPicUser user;
 	}
 
-	/**
-	 * Class that holds the information regarding the twitpic image
-	 * @author manosetro
-	 * @email  manosetro@iti.gr
-	 */
-	public static class TwitPicUser {
-		@Key
-		public String id, username, name, bio, avatar_url, timestamp, location;
-		@Key
-		public int photo_count;
-	}
+
 	
 }

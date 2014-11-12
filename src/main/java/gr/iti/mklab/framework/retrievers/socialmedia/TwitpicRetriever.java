@@ -15,8 +15,8 @@ import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.JsonObjectParser;
 import com.google.api.client.json.jackson2.JacksonFactory;
 
-import gr.iti.mklab.framework.abstractions.socialmedia.twitpic.TwitPicMediaItem.TwitPicImage;
-import gr.iti.mklab.framework.abstractions.socialmedia.twitpic.TwitPicMediaItem;
+import gr.iti.mklab.framework.abstractions.socialmedia.mediaitems.TwitPicMediaItem.TwitPicImage;
+import gr.iti.mklab.framework.abstractions.socialmedia.mediaitems.TwitPicMediaItem;
 import gr.iti.mklab.framework.common.domain.Feed;
 import gr.iti.mklab.framework.common.domain.Item;
 import gr.iti.mklab.framework.common.domain.MediaItem;

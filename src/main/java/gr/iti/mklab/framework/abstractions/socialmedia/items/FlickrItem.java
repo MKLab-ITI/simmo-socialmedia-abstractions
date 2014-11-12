@@ -1,4 +1,4 @@
-package gr.iti.mklab.framework.abstractions.socialmedia.flickr;
+package gr.iti.mklab.framework.abstractions.socialmedia.items;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -11,6 +11,7 @@ import com.flickr4java.flickr.photos.GeoData;
 import com.flickr4java.flickr.photos.Photo;
 import com.flickr4java.flickr.tags.Tag;
 
+import gr.iti.mklab.framework.abstractions.socialmedia.users.FlickrStreamUser;
 import gr.iti.mklab.framework.common.domain.Item;
 import gr.iti.mklab.framework.common.domain.Location;
 import gr.iti.mklab.framework.common.domain.MediaItem;

@@ -26,8 +26,8 @@ import org.jinstagram.entity.users.feed.UserFeed;
 import org.jinstagram.entity.users.feed.UserFeedData;
 import org.jinstagram.auth.model.Token;
 
-import gr.iti.mklab.framework.abstractions.socialmedia.instagram.InstagramItem;
-import gr.iti.mklab.framework.abstractions.socialmedia.instagram.InstagramStreamUser;
+import gr.iti.mklab.framework.abstractions.socialmedia.items.InstagramItem;
+import gr.iti.mklab.framework.abstractions.socialmedia.users.InstagramStreamUser;
 import gr.iti.mklab.framework.common.domain.Feed;
 import gr.iti.mklab.framework.common.domain.Item;
 import gr.iti.mklab.framework.common.domain.Keyword;
