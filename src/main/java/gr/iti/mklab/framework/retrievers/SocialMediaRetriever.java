@@ -1,4 +1,4 @@
-package gr.iti.mklab.framework.retrievers.impl;
+package gr.iti.mklab.framework.retrievers;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +12,6 @@ import gr.iti.mklab.framework.common.domain.feeds.KeywordsFeed;
 import gr.iti.mklab.framework.common.domain.feeds.ListFeed;
 import gr.iti.mklab.framework.common.domain.feeds.LocationFeed;
 import gr.iti.mklab.framework.common.domain.feeds.SourceFeed;
-import gr.iti.mklab.framework.retrievers.Retriever;
 
 /**
  * The interface for retrieving from social media - Currently the
@@ -24,8 +23,10 @@ import gr.iti.mklab.framework.retrievers.Retriever;
  */
 public abstract class SocialMediaRetriever implements Retriever {
 	
-	public SocialMediaRetriever(Credentials credentials) {
-		
+	protected RateLimitsMonitor rateLimitsMonitor;
+
+	public SocialMediaRetriever(Credentials credentials, Integer maxRequestPerWindow, Long windowLenth) {
+		rateLimitsMonitor = new RateLimitsMonitor(maxRequestPerWindow, windowLenth);
 	}
 	
 	/**

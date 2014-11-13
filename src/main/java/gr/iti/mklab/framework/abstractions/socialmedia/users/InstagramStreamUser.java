@@ -26,8 +26,7 @@ public class InstagramStreamUser extends StreamUser {
 		//Id
 		id = SocialNetworkSource.Instagram + "#" + user.getId();
 		//The id of the user in the network
-		Long userLId = user.getId();
-		userid = userLId.toString();
+		userid = user.getId();
 		//The name of the user
 		name = user.getFullName();
 		//The username of the user
@@ -51,8 +50,7 @@ public class InstagramStreamUser extends StreamUser {
 		//Id
 		id = SocialNetworkSource.Instagram + "#" + user.getId();
 		//The id of the user in the network
-		Long userLId = user.getId();
-		userid = userLId.toString();
+		userid = user.getId();
 		//The name of the user
 		name = user.getFullName();
 		//The username of the user

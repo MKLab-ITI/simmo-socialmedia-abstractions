@@ -25,6 +25,7 @@ import gr.iti.mklab.framework.common.domain.feeds.KeywordsFeed;
 import gr.iti.mklab.framework.common.domain.feeds.ListFeed;
 import gr.iti.mklab.framework.common.domain.feeds.LocationFeed;
 import gr.iti.mklab.framework.common.domain.feeds.SourceFeed;
+import gr.iti.mklab.framework.retrievers.SocialMediaRetriever;
 
 /**
  * The retriever that implements the Vimeo simplified retriever 
@@ -41,7 +42,7 @@ public class VimeoRetriever extends SocialMediaRetriever {
 	
 	public VimeoRetriever() {
 		
-		super(null);
+		super(null, null, null);
 		
 		requestFactory = HTTP_TRANSPORT.createRequestFactory(
 				new HttpRequestInitializer() {

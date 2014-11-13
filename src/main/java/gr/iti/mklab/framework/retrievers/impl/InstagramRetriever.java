@@ -39,6 +39,7 @@ import gr.iti.mklab.framework.common.domain.feeds.ListFeed;
 import gr.iti.mklab.framework.common.domain.feeds.LocationFeed;
 import gr.iti.mklab.framework.common.domain.feeds.SourceFeed;
 import gr.iti.mklab.framework.common.util.DateUtil;
+import gr.iti.mklab.framework.retrievers.SocialMediaRetriever;
 
 /**
  * Class responsible for retrieving Instagram content based on keywords or instagram users or locations
@@ -60,14 +61,14 @@ public class InstagramRetriever extends SocialMediaRetriever {
 	
 	public InstagramRetriever(String clientId) {
 		
-		super(null);
+		super(null, null, null);
 		
 		this.instagram = new Instagram(clientId);
 		this.instagramOembed = new InstagramOembed();
 	}
 	
 	public InstagramRetriever(String key, String secret, String token) {
-		super(null);
+		super(null, null, null);
 		
 		Token accessToken = new Token(token, secret); 
 		this.instagram = new Instagram(key);
@@ -503,8 +504,7 @@ public class InstagramRetriever extends SocialMediaRetriever {
 	@Override
 	public StreamUser getStreamUser(String uid) {
 		try {
-			long userId = Long.parseLong(uid);
-			UserInfo userInfo = instagram.getUserInfo(userId);
+			UserInfo userInfo = instagram.getUserInfo(uid);
 			
 			StreamUser user = new InstagramStreamUser(userInfo.getData());
 			return user;

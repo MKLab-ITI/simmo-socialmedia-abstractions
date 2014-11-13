@@ -37,7 +37,7 @@ import gr.iti.mklab.framework.common.domain.feeds.KeywordsFeed;
 import gr.iti.mklab.framework.common.domain.feeds.ListFeed;
 import gr.iti.mklab.framework.common.domain.feeds.LocationFeed;
 import gr.iti.mklab.framework.common.domain.feeds.SourceFeed;
-import gr.iti.mklab.framework.retrievers.impl.SocialMediaRetriever;
+import gr.iti.mklab.framework.retrievers.SocialMediaRetriever;
 
 /**
  * Class responsible for retrieving YouTube content based on keywords and YouTube users 
@@ -56,8 +56,9 @@ public class YoutubeRetriever extends SocialMediaRetriever {
 	
 	private YouTubeService service;
 	
-	public YoutubeRetriever(Credentials credentials) {			
-		super(credentials);	
+	public YoutubeRetriever(Credentials credentials, Integer maxRequestPerWindow, Long windowLenth) {			
+		super(credentials, maxRequestPerWindow, windowLenth);	
+		
 		this.service = new YouTubeService(credentials.getClientId(), credentials.getKey());
 	}
 

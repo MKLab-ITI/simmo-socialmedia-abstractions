@@ -33,6 +33,7 @@ import gr.iti.mklab.framework.common.domain.feeds.KeywordsFeed;
 import gr.iti.mklab.framework.common.domain.feeds.ListFeed;
 import gr.iti.mklab.framework.common.domain.feeds.LocationFeed;
 import gr.iti.mklab.framework.common.domain.feeds.SourceFeed;
+import gr.iti.mklab.framework.retrievers.SocialMediaRetriever;
 
 
 /**
@@ -55,9 +56,9 @@ public class FlickrRetriever extends SocialMediaRetriever {
 	private HashMap<String, StreamUser> userMap;
 	
 
-	public FlickrRetriever(Credentials credentials) {
+	public FlickrRetriever(Credentials credentials, Integer maxRequestPerWindow, Long windowLenth) {
 		
-		super(credentials);
+		super(credentials, maxRequestPerWindow, windowLenth);
 		
 		this.flickrKey = credentials.getKey();
 		this.flickrSecret = credentials.getSecret();
@@ -352,7 +353,7 @@ public class FlickrRetriever extends SocialMediaRetriever {
 		credentials.setKey(flickrKey);
 		credentials.setSecret(flickrSecret);
 		
-		FlickrRetriever retriever = new FlickrRetriever(credentials);
+		FlickrRetriever retriever = new FlickrRetriever(credentials, 10, 10000l);
 		
 		Keyword keyword = new Keyword("\"uk\" amazing", 0d); 
 		Feed feed = new KeywordsFeed(keyword, new Date(System.currentTimeMillis()-14400000), "1");

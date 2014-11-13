@@ -29,6 +29,7 @@ import gr.iti.mklab.framework.common.domain.feeds.KeywordsFeed;
 import gr.iti.mklab.framework.common.domain.feeds.ListFeed;
 import gr.iti.mklab.framework.common.domain.feeds.LocationFeed;
 import gr.iti.mklab.framework.common.domain.feeds.SourceFeed;
+import gr.iti.mklab.framework.retrievers.SocialMediaRetriever;
 
 /**
  * Class responsible for retrieving Tumblr content based on keywords or tumblr users
@@ -44,7 +45,7 @@ public class TumblrRetriever extends SocialMediaRetriever {
 	
 	public TumblrRetriever(String consumerKey, String consumerSecret) {
 		
-		super(null);
+		super(null, null, null);
 		
 		client = new JumblrClient(consumerKey,consumerSecret);
 	}

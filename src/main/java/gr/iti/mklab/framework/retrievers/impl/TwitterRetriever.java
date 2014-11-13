@@ -32,6 +32,7 @@ import gr.iti.mklab.framework.common.domain.feeds.KeywordsFeed;
 import gr.iti.mklab.framework.common.domain.feeds.ListFeed;
 import gr.iti.mklab.framework.common.domain.feeds.LocationFeed;
 import gr.iti.mklab.framework.common.domain.feeds.SourceFeed;
+import gr.iti.mklab.framework.retrievers.SocialMediaRetriever;
 
 /**
  * Class responsible for retrieving Twitter content based on keywords, twitter users or locations
@@ -47,9 +48,9 @@ public class TwitterRetriever extends SocialMediaRetriever {
 	private Twitter twitter = null;
 	private TwitterFactory tf = null;
 	
-	public TwitterRetriever(Credentials credentials) {
+	public TwitterRetriever(Credentials credentials, Integer maxRequestPerWindow, Long windowLenth) {
 		
-		super(credentials);
+		super(credentials, maxRequestPerWindow, windowLenth);
 		
 		ConfigurationBuilder cb = new ConfigurationBuilder();
 		cb.setJSONStoreEnabled(false)
@@ -426,10 +427,6 @@ public class TwitterRetriever extends SocialMediaRetriever {
 	
 	@Override
 	public void stop() {
-		if(twitter != null) {
-			twitter.shutdown();
-		}
-		
 		twitter = null;
 	}
 

@@ -110,14 +110,14 @@ public class FacebookItem extends Item {
 		else {
 			Likes likesPosts = post.getLikes();
 			if(likesPosts!=null) {
-				if(likesPosts.getCount()==null) {
+				if(likesPosts.getTotalCount()==null) {
 					List<NamedFacebookType> likeData = likesPosts.getData();
 					if(likeData != null) {
 						likes = (long) likeData.size();
 					}
 				}
 				else {
-					likes = likesPosts.getCount();
+					likes = likesPosts.getTotalCount();
 				}
 			}
 		}

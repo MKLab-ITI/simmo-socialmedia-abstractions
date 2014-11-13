@@ -34,6 +34,7 @@ import gr.iti.mklab.framework.common.domain.feeds.KeywordsFeed;
 import gr.iti.mklab.framework.common.domain.feeds.ListFeed;
 import gr.iti.mklab.framework.common.domain.feeds.LocationFeed;
 import gr.iti.mklab.framework.common.domain.feeds.SourceFeed;
+import gr.iti.mklab.framework.retrievers.SocialMediaRetriever;
 
 
 /**
@@ -48,12 +49,11 @@ public class FacebookRetriever extends SocialMediaRetriever {
 	private FacebookClient facebookClient;
 	
 	private Logger  logger = Logger.getLogger(FacebookRetriever.class);
-	private boolean loggingEnabled = false;
 	
-	public FacebookRetriever(Credentials credentials) {
-		super(credentials);
+	public FacebookRetriever(Credentials credentials, Integer maxRequestPerWindow, Long windowLenth) {
+		super(credentials, maxRequestPerWindow, windowLenth);
 		
-		this.facebookClient = new DefaultFacebookClient(credentials.getAccessToken());
+		facebookClient = new DefaultFacebookClient(credentials.getAccessToken());
 	}
 
 	@Override
@@ -89,7 +89,9 @@ public class FacebookRetriever extends SocialMediaRetriever {
 		
 		FacebookStreamUser facebookUser = new FacebookStreamUser(page);
 		for(List<Post> connectionPage : connection) {
-			//rateLimitsMonitor.check();
+			
+			rateLimitsMonitor.check();
+			
 			totalRequests++;
 			for(Post post : connectionPage) {	
 				
@@ -110,22 +112,6 @@ public class FacebookRetriever extends SocialMediaRetriever {
 			    			items.add(facebookComment);
 			    		} 
 				    }
-				    
-					/*
-					// Test Code
-				    Connection<Comments> commentsConn = facebookClient.fetchConnection(post.getId()+"/comments", Comments.class);
-				    for(List<Comments> commentsList : commentsConn) {
-				    	for (Comments comments : commentsList) {
-				    	if(comments == null)
-				    		continue;
-
-				    	for(Comment comment : comments.getData()) {
-				    			FacebookItem facebookComment = new FacebookItem(comment, post, null);
-				    			fbStream.store(facebookComment);
-				    		}
-				    	}
-				    }
-				    */
 				 }
 				
 				if(publicationDate.before(lastItemDate) || items.size()>maxResults || totalRequests>maxRequests){
@@ -139,13 +125,7 @@ public class FacebookRetriever extends SocialMediaRetriever {
 			
 		}
 
-		// The next request will retrieve only items of the last day
-		Date dateToRetrieve = new Date(System.currentTimeMillis() - (24*3600*1000));
-		feed.setDateToRetrieve(dateToRetrieve);
-		
-		//logger.info("#Facebook : Done retrieving for this session");
-//		logger.info("#Facebook : Handler fetched " + items.size() + " posts from " + uName + 
-//				" [ " + lastItemDate + " - " + new Date(System.currentTimeMillis()) + " ]");
+		logger.info("Facebook: " + items.size() + " posts from " + userFeed + " [ " + lastItemDate + " - " + new Date(System.currentTimeMillis()) + " ]");
 		
 		return items;
 	}
@@ -177,7 +157,6 @@ public class FacebookRetriever extends SocialMediaRetriever {
 					tags += word.toLowerCase()+" ";
 				}
 			}
-			//tags += keyword.getName().toLowerCase();
 		}
 		else if(keywords != null) {
 			for(Keyword key : keywords) {
@@ -253,14 +232,7 @@ public class FacebookRetriever extends SocialMediaRetriever {
 			return items;
 		}
 		
-		if(loggingEnabled) {
-			logger.info("#Facebook : Handler fetched " + items.size() + " posts from " + tags + 
-					" [ " + lastItemDate + " - " + new Date(System.currentTimeMillis()) + " ]");
-		}
-		
-		// The next request will retrieve only items of the last day
-		Date dateToRetrieve = new Date(System.currentTimeMillis() - (24*3600*1000));
-		feed.setDateToRetrieve(dateToRetrieve);
+		logger.info("Facebook: " + items.size() + " posts for " + tags + " [ " + lastItemDate + " - " + new Date(System.currentTimeMillis()) + " ]");
 		
 		return items;
 	}
@@ -269,55 +241,6 @@ public class FacebookRetriever extends SocialMediaRetriever {
 	public List<Item> retrieveLocationFeeds(LocationFeed feed, Integer maxRequests, Integer maxResults) {
 		return new ArrayList<Item>();
 	}
-	
-	/**
-	 * Retrieve from certain facebook pages after a specific date
-	 * @param date
-	public void retrieveFromPages(List<String> retrievedPages, Date date) {
-		
-		List<Item> items = new ArrayList<Item>();
-		
-		boolean isFinished = true;
-		
-		for(String page : retrievedPages) {
-			Connection<Post> connection = facebookClient.fetchConnection(page+"/posts" , Post.class);
-			
-			for(List<Post> connectionPage : connection) {
-					
-				for(Post post : connectionPage) {	
-					
-					Date publicationDate = post.getCreatedTime();
-					try {
-						if(publicationDate.after(date) && post!=null && post.getId()!=null) {
-							//Get the user of the post
-							CategorizedFacebookType c_user = post.getFrom();
-							User user = facebookClient.fetchObject(c_user.getId(), User.class);
-							FacebookStreamUser facebookUser = new FacebookStreamUser(user);
-							
-							FacebookItem facebookUpdate = new FacebookItem(post, facebookUser);
-							
-							items.add(facebookUpdate);
-						}
-					}
-					catch(Exception e) {
-						logger.error(e);
-						break;
-					}
-					
-					if(publicationDate.before(date) || items.size()>maxResults){
-						isFinished = true;
-						break;
-					}
-					
-				}
-				if(isFinished)
-					break;
-				
-			}
-			
-		}
-	}
-	*/
 	
 	@Override
 	public List<Item> retrieveListsFeeds(ListFeed feed, Integer maxRequests, Integer maxResults) {
