@@ -2,7 +2,7 @@ package gr.iti.mklab.framework.abstractions.socialmedia.users;
 
 import com.flickr4java.flickr.people.User;
 
-import gr.iti.mklab.framework.common.domain.SocialNetworkSource;
+import gr.iti.mklab.framework.common.domain.SocialNetwork;
 import gr.iti.mklab.framework.common.domain.StreamUser;
 
 /**
@@ -18,11 +18,11 @@ public class FlickrStreamUser extends StreamUser {
 	private static final long serialVersionUID = 6511210498213084201L;
 
 	public FlickrStreamUser(User user) {
-		super(SocialNetworkSource.Flickr.toString(), Operation.NEW);
+		
 		if (user == null) return;
 		
 		//Id
-		id = SocialNetworkSource.Flickr+"#"+user.getId();
+		id = SocialNetwork.Flickr+"#"+user.getId();
 		//The id of the user in the network
 		userid = user.getId();
 		//The name of the user
@@ -30,7 +30,7 @@ public class FlickrStreamUser extends StreamUser {
 		//The username of the user
 		username = user.getUsername();
 		//streamId
-		streamId = SocialNetworkSource.Flickr.toString();
+		streamId = SocialNetwork.Flickr.toString();
 		//Profile picture of the user
 		int iconFarm = user.getIconFarm();
 		int iconServer = user.getIconServer();

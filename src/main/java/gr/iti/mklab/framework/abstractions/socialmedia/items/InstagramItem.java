@@ -13,7 +13,7 @@ import gr.iti.mklab.framework.abstractions.socialmedia.users.InstagramStreamUser
 import gr.iti.mklab.framework.common.domain.Item;
 import gr.iti.mklab.framework.common.domain.Location;
 import gr.iti.mklab.framework.common.domain.MediaItem;
-import gr.iti.mklab.framework.common.domain.SocialNetworkSource;
+import gr.iti.mklab.framework.common.domain.SocialNetwork;
 
 /**
  * Class that holds the information of a instagram image
@@ -23,22 +23,16 @@ import gr.iti.mklab.framework.common.domain.SocialNetworkSource;
 public class InstagramItem extends Item {
 
 	private static final long serialVersionUID = -8872330316768925229L;
-
-	public InstagramItem(String id, Operation operation) {
-		super(SocialNetworkSource.Instagram.toString(), operation);
-		setId(SocialNetworkSource.Instagram+"#"+id);
-	}
 	
 	public InstagramItem(MediaFeedData image) throws MalformedURLException {
-		super(SocialNetworkSource.Instagram.toString(), Operation.NEW);
 		
 		if(image == null || image.getId() == null)
 			return;
 		
 		//Id
-		id = SocialNetworkSource.Instagram + "#" + image.getId();
+		id = SocialNetwork.Instagram + "#" + image.getId();
 		//SocialNetwork Name
-		streamId =  SocialNetworkSource.Instagram.toString();
+		streamId =  SocialNetwork.Instagram.toString();
 		//Timestamp of the creation of the photo
 		int createdTime = Integer.parseInt(image.getCreatedTime());
 		Date publicationDate = new Date((long) createdTime * 1000);
@@ -99,7 +93,7 @@ public class InstagramItem extends Item {
 				//url
 				MediaItem mediaItem = new MediaItem(mediaUrl);
 				
-				String mediaId = SocialNetworkSource.Instagram + "#"+image.getId(); 
+				String mediaId = SocialNetwork.Instagram + "#"+image.getId(); 
 				
 				//id
 				mediaItem.setId(mediaId);

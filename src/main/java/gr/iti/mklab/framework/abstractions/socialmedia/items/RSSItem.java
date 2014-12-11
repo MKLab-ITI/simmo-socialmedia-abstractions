@@ -5,7 +5,6 @@ import org.jsoup.Jsoup;
 import com.sun.syndication.feed.synd.SyndEntry;
 
 import gr.iti.mklab.framework.common.domain.Item;
-import gr.iti.mklab.framework.common.domain.NewsFeedSource;
 
 /**
  * Class that holds the information of an RSS feed
@@ -20,7 +19,6 @@ public class RSSItem extends Item {
 	private static final long serialVersionUID = 1413164596016357110L;
 
 	public RSSItem(SyndEntry rssEntry) {
-		super(NewsFeedSource.RSS.toString(), Operation.NEW);
 		
 		if(rssEntry == null || rssEntry.getLink() == null)
 			return;

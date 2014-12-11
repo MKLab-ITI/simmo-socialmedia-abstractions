@@ -18,7 +18,7 @@ import com.tumblr.jumblr.types.VideoPost;
 import gr.iti.mklab.framework.abstractions.socialmedia.users.TumblrStreamUser;
 import gr.iti.mklab.framework.common.domain.Item;
 import gr.iti.mklab.framework.common.domain.MediaItem;
-import gr.iti.mklab.framework.common.domain.SocialNetworkSource;
+import gr.iti.mklab.framework.common.domain.SocialNetwork;
 import gr.iti.mklab.framework.common.domain.WebPage;
 
 /**
@@ -35,14 +35,7 @@ public class TumblrItem extends Item {
 	
 	private Logger logger = Logger.getLogger(TumblrItem.class);
 	
-	public TumblrItem(String id, Operation operation) {
-		super(SocialNetworkSource.Tumblr.toString(), operation);
-		setId(SocialNetworkSource.Tumblr + "#" + id);
-	}
-
 	public TumblrItem(Post post) throws MalformedURLException {
-		
-		super(SocialNetworkSource.Tumblr.toString(), Operation.NEW);
 		
 		if(post == null || post.getId() == null){
 			return;
@@ -50,10 +43,10 @@ public class TumblrItem extends Item {
 			
 		
 		//Id
-		id = SocialNetworkSource.Tumblr + "#" + post.getId();
+		id = SocialNetwork.Tumblr + "#" + post.getId();
 		
 		//SocialNetwork Name
-		streamId = SocialNetworkSource.Tumblr.toString();
+		streamId = SocialNetwork.Tumblr.toString();
 		
 		//Timestamp of the creation of the post
 		publicationTime = post.getTimestamp()*1000;
@@ -95,7 +88,7 @@ public class TumblrItem extends Item {
 						//url
 						MediaItem mediaItem = new MediaItem(url);
 					
-						String mediaId = SocialNetworkSource.Tumblr + "#"+post.getId()+"_"+number; 
+						String mediaId = SocialNetwork.Tumblr + "#"+post.getId()+"_"+number; 
 						
 						//id
 						mediaItem.setId(mediaId);
@@ -197,7 +190,7 @@ public class TumblrItem extends Item {
 		
 			MediaItem mediaItem = new MediaItem(url);
 
-			String mediaId = SocialNetworkSource.Tumblr + "#"+post.getId()+"_"+number; 
+			String mediaId = SocialNetwork.Tumblr + "#"+post.getId()+"_"+number; 
 			
 			//id
 			mediaItem.setId(mediaId);

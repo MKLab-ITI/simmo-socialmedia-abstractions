@@ -3,8 +3,8 @@ package gr.iti.mklab.framework.retrievers;
 
 import java.util.List;
 
-import gr.iti.mklab.framework.common.domain.Feed;
 import gr.iti.mklab.framework.common.domain.Item;
+import gr.iti.mklab.framework.common.domain.feeds.Feed;
 
 public interface Retriever {
 	

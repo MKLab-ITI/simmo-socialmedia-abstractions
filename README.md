@@ -1,4 +1,4 @@
-socialmedia-abstractions
+mklab-socialmedia-abstractions
 ========================
 
 

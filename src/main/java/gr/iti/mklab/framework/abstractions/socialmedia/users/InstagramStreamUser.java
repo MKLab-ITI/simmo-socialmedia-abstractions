@@ -4,7 +4,7 @@ import org.jinstagram.entity.common.User;
 import org.jinstagram.entity.users.basicinfo.Counts;
 import org.jinstagram.entity.users.basicinfo.UserInfoData;
 
-import gr.iti.mklab.framework.common.domain.SocialNetworkSource;
+import gr.iti.mklab.framework.common.domain.SocialNetwork;
 import gr.iti.mklab.framework.common.domain.StreamUser;
 
 /**
@@ -20,11 +20,11 @@ public class InstagramStreamUser extends StreamUser {
 	private static final long serialVersionUID = -186352302816765493L;
 
 	public InstagramStreamUser(User user) {
-		super(SocialNetworkSource.Instagram.toString(), Operation.NEW);
+
 		if (user == null) return;
 		
 		//Id
-		id = SocialNetworkSource.Instagram + "#" + user.getId();
+		id = SocialNetwork.Instagram + "#" + user.getId();
 		//The id of the user in the network
 		userid = user.getId();
 		//The name of the user
@@ -32,7 +32,7 @@ public class InstagramStreamUser extends StreamUser {
 		//The username of the user
 		username = user.getUserName();
 		//streamId
-		streamId = SocialNetworkSource.Instagram.toString();
+		streamId = SocialNetwork.Instagram.toString();
 		//The description of the user
 		description = user.getBio();
 		//Profile picture of the user
@@ -44,11 +44,11 @@ public class InstagramStreamUser extends StreamUser {
 	}
 	
 	public InstagramStreamUser(UserInfoData user) {
-		super(SocialNetworkSource.Instagram.toString(), Operation.NEW);
+
 		if (user == null) return;
 
 		//Id
-		id = SocialNetworkSource.Instagram + "#" + user.getId();
+		id = SocialNetwork.Instagram + "#" + user.getId();
 		//The id of the user in the network
 		userid = user.getId();
 		//The name of the user
@@ -56,7 +56,7 @@ public class InstagramStreamUser extends StreamUser {
 		//The username of the user
 		username = user.getUsername();
 		//streamId
-		streamId = SocialNetworkSource.Instagram.toString();
+		streamId = SocialNetwork.Instagram.toString();
 		//The description of the user
 		description = user.getBio();
 		//Profile picture of the user

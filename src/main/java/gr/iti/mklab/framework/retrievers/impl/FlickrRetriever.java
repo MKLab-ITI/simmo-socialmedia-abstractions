@@ -23,12 +23,12 @@ import com.flickr4java.flickr.photos.SearchParameters;
 import gr.iti.mklab.framework.Credentials;
 import gr.iti.mklab.framework.abstractions.socialmedia.items.FlickrItem;
 import gr.iti.mklab.framework.abstractions.socialmedia.users.FlickrStreamUser;
-import gr.iti.mklab.framework.common.domain.Feed;
 import gr.iti.mklab.framework.common.domain.Item;
 import gr.iti.mklab.framework.common.domain.Keyword;
 import gr.iti.mklab.framework.common.domain.MediaItem;
-import gr.iti.mklab.framework.common.domain.Source;
+import gr.iti.mklab.framework.common.domain.Account;
 import gr.iti.mklab.framework.common.domain.StreamUser;
+import gr.iti.mklab.framework.common.domain.feeds.Feed;
 import gr.iti.mklab.framework.common.domain.feeds.KeywordsFeed;
 import gr.iti.mklab.framework.common.domain.feeds.ListFeed;
 import gr.iti.mklab.framework.common.domain.feeds.LocationFeed;
@@ -84,7 +84,7 @@ public class FlickrRetriever extends SocialMediaRetriever {
 		
 		//Here we search the user by the userId given (NSID) - 
 		// however we can get NSID via flickrAPI given user's username
-		Source source = feed.getSource();
+		Account source = feed.getAccount();
 		String userID = source.getId();
 		
 		if(userID == null) {
@@ -355,7 +355,7 @@ public class FlickrRetriever extends SocialMediaRetriever {
 		
 		FlickrRetriever retriever = new FlickrRetriever(credentials, 10, 10000l);
 		
-		Keyword keyword = new Keyword("\"uk\" amazing", 0d); 
+		Keyword keyword = new Keyword("\"uk\" amazing"); 
 		Feed feed = new KeywordsFeed(keyword, new Date(System.currentTimeMillis()-14400000), "1");
 		
 		List<Item> items = retriever.retrieve(feed, 1, 1000);

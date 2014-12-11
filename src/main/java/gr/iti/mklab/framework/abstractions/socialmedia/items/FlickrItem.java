@@ -15,7 +15,7 @@ import gr.iti.mklab.framework.abstractions.socialmedia.users.FlickrStreamUser;
 import gr.iti.mklab.framework.common.domain.Item;
 import gr.iti.mklab.framework.common.domain.Location;
 import gr.iti.mklab.framework.common.domain.MediaItem;
-import gr.iti.mklab.framework.common.domain.SocialNetworkSource;
+import gr.iti.mklab.framework.common.domain.SocialNetwork;
 import gr.iti.mklab.framework.common.domain.StreamUser;
 
 /**
@@ -29,21 +29,16 @@ public class FlickrItem extends Item {
 	 * 
 	 */
 	private static final long serialVersionUID = 4323341976887218659L;
-
-	public FlickrItem(String id, Operation operation) {
-		super(SocialNetworkSource.Flickr.toString(), operation);
-		setId(SocialNetworkSource.Flickr+"#"+id);
-	}
 	
 	@SuppressWarnings("deprecation")
 	public FlickrItem(Photo photo) {
-		super(SocialNetworkSource.Flickr.toString(), Operation.NEW);
+
 		if (photo == null || photo.getId() == null) return;
 		
 		//Id
-		id = SocialNetworkSource.Flickr + "#" + photo.getId();
+		id = SocialNetwork.Flickr + "#" + photo.getId();
 		//SocialNetwork Name
-		streamId = SocialNetworkSource.Flickr.toString();
+		streamId = SocialNetwork.Flickr.toString();
 		//Timestamp of the creation of the photo
 		publicationTime = photo.getDatePosted().getTime();
 		//Title of the photo
@@ -110,7 +105,7 @@ public class FlickrItem extends Item {
 				//url
 				MediaItem mediaItem = new MediaItem(mediaUrl);
 				
-				String mediaId = SocialNetworkSource.Flickr + "#"+photo.getId(); 
+				String mediaId = SocialNetwork.Flickr + "#"+photo.getId(); 
 				
 				//id
 				mediaItem.setId(mediaId);

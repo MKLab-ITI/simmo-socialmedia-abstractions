@@ -20,7 +20,7 @@ import gr.iti.mklab.framework.abstractions.socialmedia.users.FacebookStreamUser;
 import gr.iti.mklab.framework.common.domain.Item;
 import gr.iti.mklab.framework.common.domain.Location;
 import gr.iti.mklab.framework.common.domain.MediaItem;
-import gr.iti.mklab.framework.common.domain.SocialNetworkSource;
+import gr.iti.mklab.framework.common.domain.SocialNetwork;
 import gr.iti.mklab.framework.common.domain.WebPage;
 
 /**
@@ -34,21 +34,15 @@ public class FacebookItem extends Item {
 	
 	private static final long serialVersionUID = 2267260425325527385L;
 
-	public FacebookItem(String id, Operation operation) {
-		super(SocialNetworkSource.Facebook.toString(), operation);
-		setId(SocialNetworkSource.Facebook+"#"+id);
-	}
 	
 	public FacebookItem(Post post) {
-		
-		super(SocialNetworkSource.Facebook.toString(), Operation.NEW);
 		
 		if (post == null || post.getId() == null) return;
 		
 		//Id
-		id = SocialNetworkSource.Facebook+"#"+post.getId();
+		id = SocialNetwork.Facebook+"#"+post.getId();
 		//SocialNetwork Name
-		streamId = SocialNetworkSource.Facebook.toString();
+		streamId = SocialNetwork.Facebook.toString();
 		//Timestamp of the creation of the post
 		publicationTime = post.getCreatedTime().getTime();
 		//post's descritpion
@@ -158,7 +152,7 @@ public class FacebookItem extends Item {
 					
 						if(p_url != null){
 							
-							String mediaId = SocialNetworkSource.Facebook+"#"+post.getId();
+							String mediaId = SocialNetwork.Facebook+"#"+post.getId();
 							//url
 							MediaItem mediaItem = new MediaItem(p_url);
 							
@@ -238,7 +232,7 @@ public class FacebookItem extends Item {
 				
 					if(p_url != null){
 						
-						String mediaId = SocialNetworkSource.Facebook+"#"+post.getId();
+						String mediaId = SocialNetwork.Facebook+"#"+post.getId();
 						//url
 						MediaItem mediaItem = new MediaItem(p_url);
 						
@@ -299,7 +293,7 @@ public class FacebookItem extends Item {
 				try {
 					videoUrl = new URL(vUrl);
 					
-					String mediaId = SocialNetworkSource.Facebook+"#"+post.getId();
+					String mediaId = SocialNetwork.Facebook+"#"+post.getId();
 					//url
 					MediaItem mediaItem = new MediaItem(videoUrl);
 					
@@ -367,16 +361,15 @@ public class FacebookItem extends Item {
 	}
 	
 	public FacebookItem(Comment comment, Post post, User user) {
-		super(SocialNetworkSource.Facebook.toString(), Operation.NEW);
 		
 		if (comment == null) return;
 		
 		//Id
-		id =SocialNetworkSource.Facebook+"#"+comment.getId();
+		id = SocialNetwork.Facebook+"#"+comment.getId();
 		//Reference to the original post
-		reference = SocialNetworkSource.Facebook+"#"+post.getId();
+		reference = SocialNetwork.Facebook+"#"+post.getId();
 		//SocialNetwork Name
-		streamId = SocialNetworkSource.Facebook.toString();
+		streamId = SocialNetwork.Facebook.toString();
 		//Timestamp of the creation of the post
 		publicationTime = comment.getCreatedTime().getTime();
 		//Message that post contains
@@ -422,7 +415,7 @@ public class FacebookItem extends Item {
 			try {
 				URL mediaUrl = new URL(url);
 
-				String mediaId = SocialNetworkSource.Facebook+"#"+media.getId();
+				String mediaId = SocialNetwork.Facebook+"#"+media.getId();
 				//url
 				MediaItem mediaItem = new MediaItem(mediaUrl);
 

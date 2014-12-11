@@ -4,7 +4,7 @@ import gr.iti.mklab.framework.abstractions.socialmedia.users.TwitterStreamUser;
 import gr.iti.mklab.framework.common.domain.Item;
 import gr.iti.mklab.framework.common.domain.Location;
 import gr.iti.mklab.framework.common.domain.MediaItem;
-import gr.iti.mklab.framework.common.domain.SocialNetworkSource;
+import gr.iti.mklab.framework.common.domain.SocialNetwork;
 import gr.iti.mklab.framework.common.domain.WebPage;
 
 import java.net.MalformedURLException;
@@ -38,23 +38,15 @@ public class TwitterItem extends Item {
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	//private static final String RETWEET = "retweetCount";
-
-	public TwitterItem(String id, Operation operation) {
-		super(SocialNetworkSource.Twitter.toString(), operation);
-		setId(SocialNetworkSource.Twitter+"#"+id);
-	}
     
 	public TwitterItem(Status status) {
 		
 		if (status == null) return;
 		
-		operation = Operation.NEW;
-		
 		//Id
-		id = SocialNetworkSource.Twitter+"#"+status.getId();
+		id = SocialNetwork.Twitter+"#"+status.getId();
 		//SocialNetwork Name
-		streamId = SocialNetworkSource.Twitter.toString();
+		streamId = SocialNetwork.Twitter.toString();
 		//Timestamp of the creation of the tweet
 		publicationTime = status.getCreatedAt().getTime();
 		//User that wrote the tweet
@@ -72,9 +64,9 @@ public class TwitterItem extends Item {
 			
 			original = false;
 			
-			reference = SocialNetworkSource.Twitter + "#" + retweetStatus.getId();
+			reference = SocialNetwork.Twitter + "#" + retweetStatus.getId();
 			//super.referencedUser = retweetStatus.getUser().getScreenName();
-			super.referencedUserId = SocialNetworkSource.Twitter + "#" + retweetStatus.getUser().getId();
+			super.referencedUserId = SocialNetwork.Twitter + "#" + retweetStatus.getUser().getId();
 		}
 		else {
 			original = true;
@@ -98,12 +90,12 @@ public class TwitterItem extends Item {
 		List<String> mentions = new ArrayList<String>();
 		for(UserMentionEntity userMention : userMentions) {
 			//String screenname = userMention.getScreenName();
-			String mentionedUserId = SocialNetworkSource.Twitter + "#" + userMention.getId();
+			String mentionedUserId = SocialNetwork.Twitter + "#" + userMention.getId();
 			mentions.add(mentionedUserId);
 		}
 		super.mentions = mentions.toArray(new String[mentions.size()]);
 		if(status.getInReplyToUserId() > 0) {
-			super.inReply = SocialNetworkSource.Twitter + "#" + status.getInReplyToUserId();
+			super.inReply = SocialNetwork.Twitter + "#" + status.getInReplyToUserId();
 		}
 		
 		//Popularity
@@ -194,7 +186,7 @@ public class TwitterItem extends Item {
 				//url
 				MediaItem mediaItem = new MediaItem(temp_url);
 					
-				String mediaId = SocialNetworkSource.Twitter + "#" + mediaEntity.getId();
+				String mediaId = SocialNetwork.Twitter + "#" + mediaEntity.getId();
 					
 				//id
 				mediaItem.setId(mediaId);

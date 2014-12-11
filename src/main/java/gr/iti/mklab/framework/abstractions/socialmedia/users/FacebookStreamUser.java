@@ -5,7 +5,7 @@ import com.restfb.types.Location;
 import com.restfb.types.Page;
 import com.restfb.types.User;
 
-import gr.iti.mklab.framework.common.domain.SocialNetworkSource;
+import gr.iti.mklab.framework.common.domain.SocialNetwork;
 import gr.iti.mklab.framework.common.domain.StreamUser;
 
 /**
@@ -26,12 +26,11 @@ public class FacebookStreamUser extends StreamUser {
 	 * @param user
 	 */
 	public FacebookStreamUser(User user) {
-		super(SocialNetworkSource.Facebook.toString(), Operation.NEW);
 		
 		if (user == null) return;
 		
 		//Id
-		id = SocialNetworkSource.Facebook+"#"+user.getId();
+		id = SocialNetwork.Facebook+"#"+user.getId();
 		
 		//The id of the user in the network
 		userid = user.getId();
@@ -48,7 +47,7 @@ public class FacebookStreamUser extends StreamUser {
 		username = user.getUsername();
 		
 		//streamId
-		streamId =  SocialNetworkSource.Facebook.toString();
+		streamId =  SocialNetwork.Facebook.toString();
 		
 		//The description of the user
 		description = user.getAbout();
@@ -82,11 +81,10 @@ public class FacebookStreamUser extends StreamUser {
 	 * @param page
 	 */
 	public FacebookStreamUser(Page page) {
-		super(SocialNetworkSource.Facebook.toString(), Operation.NEW);
 		if (page == null) return;
 		
 		//Id
-		id = SocialNetworkSource.Facebook+"#"+page.getId();
+		id = SocialNetwork.Facebook+"#"+page.getId();
 		
 		//The id of the page in the network
 		userid = page.getId();
@@ -98,7 +96,7 @@ public class FacebookStreamUser extends StreamUser {
 		username = page.getUsername();
 		
 		//The name of the Social Network
-		streamId = SocialNetworkSource.Facebook.toString();
+		streamId = SocialNetwork.Facebook.toString();
 		
 		//The description of the page
 		description = page.getAbout();
@@ -134,12 +132,11 @@ public class FacebookStreamUser extends StreamUser {
 	 * @param user
 	 */
 	public FacebookStreamUser(CategorizedFacebookType user) {
-		super(SocialNetworkSource.Facebook.toString(), Operation.NEW);
 
 		if (user == null) return;
 
 		//Id
-		id = SocialNetworkSource.Facebook+"#"+user.getId();
+		id = SocialNetwork.Facebook+"#"+user.getId();
 		//The id of the page in the network
 		userid = user.getId();
 		//The name of the page

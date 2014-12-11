@@ -6,7 +6,7 @@ import com.google.gdata.data.media.mediarss.MediaThumbnail;
 import com.google.gdata.data.youtube.UserProfileEntry;
 import com.google.gdata.data.youtube.YtUserProfileStatistics;
 
-import gr.iti.mklab.framework.common.domain.SocialNetworkSource;
+import gr.iti.mklab.framework.common.domain.SocialNetwork;
 import gr.iti.mklab.framework.common.domain.StreamUser;
 
 /**
@@ -22,38 +22,42 @@ public class YoutubeStreamUser extends StreamUser {
 	private static final long serialVersionUID = -9208863907526546716L;
 
 	public YoutubeStreamUser(String user) {
-		super(SocialNetworkSource.Youtube.toString(), Operation.NEW);
-		if (user == null) return;
+
+		if (user == null)
+			return;
+		
 		//Id
-		id = SocialNetworkSource.Youtube+"#"+user;
+		id = SocialNetwork.Youtube+"#"+user;
 		//The name of the user
 		username = user;
 		//streamId
-		streamId = SocialNetworkSource.Youtube.toString();
+		streamId = SocialNetwork.Youtube.toString();
 	}
 
 	public YoutubeStreamUser(Person user) {
-		super(SocialNetworkSource.Youtube.toString(), Operation.NEW);
-		if (user == null) return;
+
+		if (user == null) 
+			return;
 		
 		//Id
-		id = SocialNetworkSource.Youtube+"#"+user.getName();
+		id = SocialNetwork.Youtube+"#"+user.getName();
 		//The id of the user in the network
 		userid = user.getName();
 		//The name of the user
 		username = user.getName();
 		//streamId
-		streamId = SocialNetworkSource.Youtube.toString();
+		streamId = SocialNetwork.Youtube.toString();
 		//The link to the user's profile
 		linkToProfile = user.getUri();
 	}
 	
 	public YoutubeStreamUser(UserProfileEntry user) {
-		super(SocialNetworkSource.Youtube.toString(), Operation.NEW);
-		if (user == null) return;
+
+		if (user == null) 
+			return;
 
 		//Id
-		id = SocialNetworkSource.Youtube+"#"+user.getUsername();
+		id = SocialNetwork.Youtube+"#"+user.getUsername();
 
 		//The id of the user in the network
 		userid = user.getUsername();
@@ -62,7 +66,7 @@ public class YoutubeStreamUser extends StreamUser {
 		//The name of the user
 		name = (user.getFirstName()==null?"":user.getFirstName()+" ") + (user.getLastName()==null?"":user.getLastName());
 		//streamId
-		streamId = SocialNetworkSource.Youtube.toString();
+		streamId = SocialNetwork.Youtube.toString();
 
 		MediaThumbnail thumnail = user.getThumbnail();
 		profileImage = thumnail.getUrl();

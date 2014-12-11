@@ -3,7 +3,7 @@ package gr.iti.mklab.framework.abstractions.socialmedia.users;
 import com.google.api.services.plus.model.Activity.Actor;
 import com.google.api.services.plus.model.Person;
 
-import gr.iti.mklab.framework.common.domain.SocialNetworkSource;
+import gr.iti.mklab.framework.common.domain.SocialNetwork;
 import gr.iti.mklab.framework.common.domain.StreamUser;
 
 /**
@@ -19,11 +19,11 @@ public class GooglePlusStreamUser extends StreamUser {
 	private static final long serialVersionUID = -2715125421888395821L;
 
 	public GooglePlusStreamUser(Actor actor) {
-		super(SocialNetworkSource.GooglePlus.toString(), Operation.NEW);
+
 		if (actor == null) return;
 		
 		//Id
-		id = SocialNetworkSource.GooglePlus + "#"+actor.getId();
+		id = SocialNetwork.GooglePlus + "#"+actor.getId();
 		
 		//The id of the user in the network
 		userid = actor.getId();
@@ -35,7 +35,7 @@ public class GooglePlusStreamUser extends StreamUser {
 		username = actor.getDisplayName();
 		
 		//streamId
-		streamId = SocialNetworkSource.GooglePlus.toString();
+		streamId = SocialNetwork.GooglePlus.toString();
 		
 		//Profile picture of the user
 		profileImage = actor.getImage().getUrl();
@@ -48,12 +48,12 @@ public class GooglePlusStreamUser extends StreamUser {
 	}
 
 	public GooglePlusStreamUser(Person person) {
-		super(SocialNetworkSource.GooglePlus.toString(), Operation.NEW);
+
 		if (person == null) 
 			return;
 		
 		//Id
-		id = SocialNetworkSource.GooglePlus + "#"+person.getId();
+		id = SocialNetwork.GooglePlus + "#"+person.getId();
 		
 		//The id of the user in the network
 		userid = person.getId();
@@ -68,7 +68,7 @@ public class GooglePlusStreamUser extends StreamUser {
 		description = person.getTagline();
 		
 		//streamId
-		streamId = SocialNetworkSource.GooglePlus.toString();
+		streamId = SocialNetwork.GooglePlus.toString();
 		
 		//Profile picture of the user
 		profileImage = person.getImage().getUrl();

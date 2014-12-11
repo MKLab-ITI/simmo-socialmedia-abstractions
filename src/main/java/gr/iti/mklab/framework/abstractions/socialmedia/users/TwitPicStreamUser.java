@@ -12,7 +12,6 @@ public class TwitPicStreamUser extends StreamUser {
 	private static final long serialVersionUID = 2219372938038811930L;
 
 	public TwitPicStreamUser(TwitPicUser user) {
-		super("Twitpic", Operation.NEW);
 
 		id = "Twitpic#"+user.id;
 		description = user.bio;

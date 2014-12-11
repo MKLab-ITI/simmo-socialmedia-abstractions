@@ -15,7 +15,10 @@ public class Credentials {
 	}
 	
 	public Credentials(String key, String secret, String accessToken, String accessTokenSecret) {
-		
+		this.key = key;
+		this.secret = secret;
+		this.accessToken = accessToken;
+		this.accessTokenSecret = accessTokenSecret;
 	}
 	
 	public void setKey(String key) {

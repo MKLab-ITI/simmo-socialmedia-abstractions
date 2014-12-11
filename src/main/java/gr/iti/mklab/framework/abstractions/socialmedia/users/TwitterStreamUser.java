@@ -3,7 +3,7 @@ package gr.iti.mklab.framework.abstractions.socialmedia.users;
 import java.util.Date;
 
 import twitter4j.User;
-import gr.iti.mklab.framework.common.domain.SocialNetworkSource;
+import gr.iti.mklab.framework.common.domain.SocialNetwork;
 import gr.iti.mklab.framework.common.domain.StreamUser;
 
 /**
@@ -19,11 +19,12 @@ public class TwitterStreamUser extends StreamUser {
 	private static final long serialVersionUID = -6485573747686458937L;
 
 	public TwitterStreamUser(User user) {
-		super(SocialNetworkSource.Twitter.toString(), Operation.NEW);
-		if (user == null) return;
+
+		if (user == null) 
+			return;
 		
 		//Id
-		id = SocialNetworkSource.Twitter + "#" + user.getId();
+		id = SocialNetwork.Twitter + "#" + user.getId();
 		//The id of the user in the network
 		userid = Long.toString(user.getId());
 		//The name of the user
@@ -31,7 +32,7 @@ public class TwitterStreamUser extends StreamUser {
 		//The username of the user
 		username = user.getScreenName();
 		//streamId
-		streamId = SocialNetworkSource.Twitter.toString();
+		streamId = SocialNetwork.Twitter.toString();
 		//The description of the user
 		description = user.getDescription();
 		//Profile picture of the user

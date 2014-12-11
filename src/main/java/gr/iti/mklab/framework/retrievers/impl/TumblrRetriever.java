@@ -23,7 +23,7 @@ import gr.iti.mklab.framework.abstractions.socialmedia.users.TumblrStreamUser;
 import gr.iti.mklab.framework.common.domain.Item;
 import gr.iti.mklab.framework.common.domain.Keyword;
 import gr.iti.mklab.framework.common.domain.MediaItem;
-import gr.iti.mklab.framework.common.domain.Source;
+import gr.iti.mklab.framework.common.domain.Account;
 import gr.iti.mklab.framework.common.domain.StreamUser;
 import gr.iti.mklab.framework.common.domain.feeds.KeywordsFeed;
 import gr.iti.mklab.framework.common.domain.feeds.ListFeed;
@@ -62,7 +62,7 @@ public class TumblrRetriever extends SocialMediaRetriever {
 		
 		boolean isFinished = false;
 		
-		Source source = feed.getSource();
+		Account source = feed.getAccount();
 		String uName = source.getName();
 		
 		if(uName == null){

@@ -21,13 +21,13 @@ import twitter4j.conf.ConfigurationBuilder;
 import gr.iti.mklab.framework.Credentials;
 import gr.iti.mklab.framework.abstractions.socialmedia.items.TwitterItem;
 import gr.iti.mklab.framework.abstractions.socialmedia.users.TwitterStreamUser;
-import gr.iti.mklab.framework.common.domain.Feed;
 import gr.iti.mklab.framework.common.domain.Item;
 import gr.iti.mklab.framework.common.domain.Keyword;
 import gr.iti.mklab.framework.common.domain.Location;
 import gr.iti.mklab.framework.common.domain.MediaItem;
-import gr.iti.mklab.framework.common.domain.Source;
+import gr.iti.mklab.framework.common.domain.Account;
 import gr.iti.mklab.framework.common.domain.StreamUser;
+import gr.iti.mklab.framework.common.domain.feeds.Feed;
 import gr.iti.mklab.framework.common.domain.feeds.KeywordsFeed;
 import gr.iti.mklab.framework.common.domain.feeds.ListFeed;
 import gr.iti.mklab.framework.common.domain.feeds.LocationFeed;
@@ -74,7 +74,7 @@ public class TwitterRetriever extends SocialMediaRetriever {
 		
 		Integer numberOfRequests = 0;
 		
-		Source source = feed.getSource();
+		Account source = feed.getAccount();
 		if(source == null)
 			return items;
 		
@@ -401,7 +401,7 @@ public class TwitterRetriever extends SocialMediaRetriever {
 		switch(feed.getFeedtype()) {
 			case SOURCE:
 				SourceFeed userFeed = (SourceFeed) feed;
-				if(!userFeed.getSource().getNetwork().equals("Twitter"))
+				if(!userFeed.getAccount().getNetwork().equals("Twitter"))
 					return new ArrayList<Item>();
 				
 				return retrieveUserFeeds(userFeed, maxRequests, maxResults);

@@ -32,7 +32,7 @@ import gr.iti.mklab.framework.abstractions.socialmedia.users.GooglePlusStreamUse
 import gr.iti.mklab.framework.common.domain.Item;
 import gr.iti.mklab.framework.common.domain.Keyword;
 import gr.iti.mklab.framework.common.domain.MediaItem;
-import gr.iti.mklab.framework.common.domain.Source;
+import gr.iti.mklab.framework.common.domain.Account;
 import gr.iti.mklab.framework.common.domain.StreamUser;
 import gr.iti.mklab.framework.common.domain.feeds.KeywordsFeed;
 import gr.iti.mklab.framework.common.domain.feeds.ListFeed;
@@ -83,7 +83,7 @@ public class GooglePlusRetriever extends SocialMediaRetriever {
 		
 		boolean isFinished = false;
 		
-		Source source = feed.getSource();
+		Account source = feed.getAccount();
 		String uName = source.getName();
 		String userID = source.getId();
 		
@@ -363,7 +363,7 @@ public class GooglePlusRetriever extends SocialMediaRetriever {
 	public static void main(String...args) {
 		String uid = "102155862500050097100";
 		
-		Source source = new Source(null, 0);
+		Account source = new Account(null, 0);
 		source.setId(uid);
 		SourceFeed feed = new SourceFeed(source, new Date(System.currentTimeMillis()-24*3600000), "1");
 		

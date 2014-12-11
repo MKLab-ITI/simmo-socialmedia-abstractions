@@ -24,7 +24,7 @@ import gr.iti.mklab.framework.abstractions.socialmedia.users.GooglePlusStreamUse
 import gr.iti.mklab.framework.common.domain.Item;
 import gr.iti.mklab.framework.common.domain.Location;
 import gr.iti.mklab.framework.common.domain.MediaItem;
-import gr.iti.mklab.framework.common.domain.SocialNetworkSource;
+import gr.iti.mklab.framework.common.domain.SocialNetwork;
 import gr.iti.mklab.framework.common.domain.WebPage;
 
 /**
@@ -34,24 +34,16 @@ import gr.iti.mklab.framework.common.domain.WebPage;
  */
 public class GooglePlusItem extends Item {
 	
-	private static final long serialVersionUID = 1077924633642822831L;
-
-	public GooglePlusItem(String id, Operation operation) {
-		super(SocialNetworkSource.GooglePlus.toString(), operation);
-		setId(SocialNetworkSource.GooglePlus+"#"+id);
-	}
-	
+	private static final long serialVersionUID = 1077924633642822831L;	
 	
 	public GooglePlusItem(Activity activity) {
-		
-		super(SocialNetworkSource.GooglePlus.toString(), Operation.NEW);
 		
 		if(activity == null || activity.getId() == null) return;
 		
 		//Id
-		id = SocialNetworkSource.GooglePlus + "#" + activity.getId();
+		id = SocialNetwork.GooglePlus + "#" + activity.getId();
 		//SocialNetwork Name
-		streamId = SocialNetworkSource.GooglePlus.toString();
+		streamId = SocialNetwork.GooglePlus.toString();
 		//Timestamp of the creation of the post
 		publicationTime =  activity.getPublished().getValue();
 		//Title of the post
@@ -148,7 +140,7 @@ public class GooglePlusItem extends Item {
 			    		//url
 			    		MediaItem mediaItem = new MediaItem(mediaUrl);
 			    		
-			    		String mediaId = SocialNetworkSource.GooglePlus + "#"+attachment.getId(); 
+			    		String mediaId = SocialNetwork.GooglePlus + "#"+attachment.getId(); 
 			    		
 			    		//id
 						mediaItem.setId(mediaId);
@@ -208,7 +200,7 @@ public class GooglePlusItem extends Item {
 		    			//url
 		    			MediaItem mediaItem = new MediaItem(mediaUrl);
 		    			
-		    			String mediaId = SocialNetworkSource.GooglePlus + "#"+attachment.getId(); 
+		    			String mediaId = SocialNetwork.GooglePlus + "#"+attachment.getId(); 
 		    			
 		    			//id
 						mediaItem.setId(mediaId);
@@ -264,7 +256,7 @@ public class GooglePlusItem extends Item {
 			    			
 		    				MediaItem mediaItem = new MediaItem(mediaUrl);
 		    				
-		    				String mediaId = SocialNetworkSource.GooglePlus + "#"+attachment.getId(); 
+		    				String mediaId = SocialNetwork.GooglePlus + "#"+attachment.getId(); 
 		    				
 		    				//id
 							mediaItem.setId(mediaId);
@@ -344,16 +336,15 @@ public class GooglePlusItem extends Item {
 	}
 	
 	public GooglePlusItem(Comment comment, Activity activity, GooglePlusStreamUser user){
-		super(SocialNetworkSource.GooglePlus.toString(), Operation.NEW);
 		
 		if (comment == null) return;
 		
 		//Id
-		id = SocialNetworkSource.GooglePlus+"#"+comment.getId();
+		id = SocialNetwork.GooglePlus+"#"+comment.getId();
 		//Reference to the original post
-		reference = SocialNetworkSource.GooglePlus+"#"+activity.getId();
+		reference = SocialNetwork.GooglePlus+"#"+activity.getId();
 		//SocialNetwork Name
-		streamId = SocialNetworkSource.GooglePlus.toString();
+		streamId = SocialNetwork.GooglePlus.toString();
 		//Timestamp of the creation of the post
 		publicationTime = comment.getPublished().getValue();
 		description = "Comment";
