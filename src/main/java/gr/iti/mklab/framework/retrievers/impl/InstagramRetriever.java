@@ -29,7 +29,6 @@ import org.jinstagram.auth.model.Token;
 import gr.iti.mklab.framework.abstractions.socialmedia.items.InstagramItem;
 import gr.iti.mklab.framework.abstractions.socialmedia.users.InstagramStreamUser;
 import gr.iti.mklab.framework.common.domain.Item;
-import gr.iti.mklab.framework.common.domain.Keyword;
 import gr.iti.mklab.framework.common.domain.Location;
 import gr.iti.mklab.framework.common.domain.MediaItem;
 import gr.iti.mklab.framework.common.domain.Account;
@@ -168,32 +167,24 @@ public class InstagramRetriever extends SocialMediaRetriever {
 		boolean isFinished = false;
 		
 		int numberOfRequests = 0;
+
+		List<String> keywords = feed.getKeywords();
 		
-		Keyword keyword = feed.getKeyword();
-		List<Keyword> keywords = feed.getKeywords();
-		
-		if(keywords == null && keywords == null){
+		if(keywords == null || keywords.isEmpty()){
 			logger.error("#Instagram : No keywords feed");
 			return items;
 		}
 		
 		String tags = "";
-		if(keyword != null) {
-			for(String key : keyword.getName().split(" ")) {
-				if(key.length()>1)
-					tags += key.toLowerCase();
-			}
-		}
-		else if(keywords != null) {
-			for(Keyword key : keywords) {
-				String [] words = key.getName().split(" ");
-				for(String word : words) {
-					if(!tags.contains(word) && word.length()>1) {
-						tags += word.toLowerCase();
-					}
+		for(String key : keywords) {
+			String [] words = key.split(" ");
+			for(String word : words) {
+				if(!tags.contains(word) && word.length()>1) {
+					tags += word.toLowerCase();
 				}
 			}
 		}
+		
 		tags = tags.replaceAll(" ", "");
 	
 		if(tags.equals(""))

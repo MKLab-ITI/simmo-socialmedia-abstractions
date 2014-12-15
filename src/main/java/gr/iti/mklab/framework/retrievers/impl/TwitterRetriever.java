@@ -22,7 +22,6 @@ import gr.iti.mklab.framework.Credentials;
 import gr.iti.mklab.framework.abstractions.socialmedia.items.TwitterItem;
 import gr.iti.mklab.framework.abstractions.socialmedia.users.TwitterStreamUser;
 import gr.iti.mklab.framework.common.domain.Item;
-import gr.iti.mklab.framework.common.domain.Keyword;
 import gr.iti.mklab.framework.common.domain.Location;
 import gr.iti.mklab.framework.common.domain.MediaItem;
 import gr.iti.mklab.framework.common.domain.Account;
@@ -167,28 +166,19 @@ public class TwitterRetriever extends SocialMediaRetriever {
 		
 		String label = feed.getLabel();
 		
-		Keyword keyword = feed.getKeyword();
-		List<Keyword> keywords = feed.getKeywords();
-		
-		if(keywords == null && keyword == null) {
+		List<String> keywords = feed.getKeywords();
+		if(keywords == null || keywords.isEmpty()) {
 			logger.error("#Twitter : No keywords feed");
 			return items;
 		}
 		
 		
 		String tags = "";
-		
-		if(keyword != null) {
-			tags += keyword.getName().toLowerCase();
-			tags = tags.trim();
-		}
-		else if(keywords != null){
-			for(Keyword key : keywords){
-				String [] words = key.getName().split(" ");
-				for(String word : words)
-					if(!tags.contains(word) && word.length()>1)
-						tags += word.toLowerCase()+" ";
-			}
+		for(String key : keywords){
+			String [] words = key.split(" ");
+			for(String word : words)
+				if(!tags.contains(word) && word.length()>1)
+					tags += word.toLowerCase()+" ";
 		}
 		
 		if(tags.equals("")) 
@@ -416,7 +406,7 @@ public class TwitterRetriever extends SocialMediaRetriever {
 				return retrieveListsFeeds(listFeed, maxRequests, maxResults);
 				
 			default:
-				logger.error("Unkonwn Feed Type: " + feed.toJSONString());
+				logger.error("Unkonwn Feed Type: " + feed);
 				return new ArrayList<Item>();
 		}
 	}
@@ -448,5 +438,19 @@ public class TwitterRetriever extends SocialMediaRetriever {
 	}
 
 
+	public static void main(String...args) throws Exception {
+		
+		Credentials credentials = new Credentials ();
+		credentials.setKey("UVWoIsZoP16ndCkEI2gOUNCWV");
+		credentials.setSecret("OckCuM5AynOXH0NsxpqQHNfBTfWPVp5BA20S8Xd8AtMzNy4OO3");
+		credentials.setAccessToken("2547837110-IcVqpQiE764M6FPoYZ9oxwK6QhJGwwaTjX0syZm");
+		credentials.setAccessTokenSecret("wxQuDS6JODxBsZeIv8pHD4jYcVY3Ypsva6vbT7qjejpGA");
+		
+		TwitterRetriever retriever = new TwitterRetriever(credentials, 1, 60000L);
+	
+		AccountFeed feed = new AccountFeed(null, null, null);
+		
+		retriever.retrieveUserFeeds(feed);
+	}
 	
 }

@@ -83,7 +83,7 @@ public class FlickrItem extends Item {
 		url = photo.getUrl();
 		
 		//Popularity
-		numOfComments = (long) photo.getComments();
+		comments = (long) photo.getComments();
 		
 		//Getting the photo
 		try {

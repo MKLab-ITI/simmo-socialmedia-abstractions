@@ -30,7 +30,6 @@ import gr.iti.mklab.framework.Credentials;
 import gr.iti.mklab.framework.abstractions.socialmedia.items.GooglePlusItem;
 import gr.iti.mklab.framework.abstractions.socialmedia.users.GooglePlusStreamUser;
 import gr.iti.mklab.framework.common.domain.Item;
-import gr.iti.mklab.framework.common.domain.Keyword;
 import gr.iti.mklab.framework.common.domain.MediaItem;
 import gr.iti.mklab.framework.common.domain.Account;
 import gr.iti.mklab.framework.common.domain.StreamUser;
@@ -202,30 +201,22 @@ public class GooglePlusRetriever extends SocialMediaRetriever {
 		
 		boolean isFinished = false;
 		
-		Keyword keyword = feed.getKeyword();
-		List<Keyword> keywords = feed.getKeywords();
+		List<String> keywords = feed.getKeywords();
 		
-		if(keywords == null && keyword == null) {
+		if(keywords == null || keywords.isEmpty()) {
 			logger.info("#GooglePlus : No keywords feed");
 			return items;
 		}
 		
 		String tags = "";
+		for(String key : keywords) {
+			String [] words = key.split(" ");
+			for(String word : words) {
+				if(!tags.contains(word) && word.length() > 1)
+					tags += word.toLowerCase()+" ";
+			}
+		}
 		
-		if(keyword!=null) {
-			for(String key : keyword.getName().split(" ")) {
-				tags+=key.toLowerCase()+" ";
-			}
-		}
-		else if(keywords != null) {
-			for(Keyword key : keywords) {
-				String [] words = key.getName().split(" ");
-				for(String word : words) {
-					if(!tags.contains(word) && word.length() > 1)
-						tags += word.toLowerCase()+" ";
-				}
-			}
-		}
 		
 		if(tags.equals(""))
 			return items;
@@ -363,7 +354,7 @@ public class GooglePlusRetriever extends SocialMediaRetriever {
 	public static void main(String...args) {
 		String uid = "102155862500050097100";
 		
-		Account source = new Account(null, 0);
+		Account source = new Account();
 		source.setId(uid);
 		AccountFeed feed = new AccountFeed(source, new Date(System.currentTimeMillis()-24*3600000), "1");
 		
@@ -374,7 +365,7 @@ public class GooglePlusRetriever extends SocialMediaRetriever {
 		
 		List<Item> items = retriever.retrieveUserFeeds(feed, 1, 1000);
 		for(Item item : items) {
-			System.out.println(item.toJSONString());
+			System.out.println(item);
 		}
 	}
 	

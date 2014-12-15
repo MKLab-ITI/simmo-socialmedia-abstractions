@@ -123,12 +123,12 @@ public class FacebookItem extends Item {
 		if(cmnts != null) {
 			Long n = cmnts.getTotalCount();
 			if(n != null) {
-				numOfComments = n;
+				comments = n;
 			}
 			else {
 				List<Comment> data = cmnts.getData();
 				if(data != null)
-					numOfComments = (long) data.size();
+					comments = (long) data.size();
 			}
 		}
 		

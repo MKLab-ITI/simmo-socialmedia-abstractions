@@ -26,7 +26,6 @@ import gr.iti.mklab.framework.Credentials;
 import gr.iti.mklab.framework.abstractions.socialmedia.items.FacebookItem;
 import gr.iti.mklab.framework.abstractions.socialmedia.users.FacebookStreamUser;
 import gr.iti.mklab.framework.common.domain.Item;
-import gr.iti.mklab.framework.common.domain.Keyword;
 import gr.iti.mklab.framework.common.domain.MediaItem;
 import gr.iti.mklab.framework.common.domain.Account;
 import gr.iti.mklab.framework.common.domain.StreamUser;
@@ -139,31 +138,19 @@ public class FacebookRetriever extends SocialMediaRetriever {
 		
 		boolean isFinished = false;
 		
-		Keyword keyword = feed.getKeyword();
-		List<Keyword> keywords = feed.getKeywords();
+		List<String> keywords = feed.getKeywords();
 		
-		if(keywords == null && keyword == null) {
+		if(keywords == null || keywords.isEmpty()) {
 			logger.error("#Facebook : No keywords feed");
 			return items;
 		}
 
 		String tags = "";
-		if(keyword != null) {
-			String name = keyword.getName();
-			String [] words = name.split("\\s+");
+		for(String keyword : keywords) {
+			String [] words = keyword.split(" ");
 			for(String word : words) {
-				if(!tags.contains(word) && word.length() > 2) {
+				if(!tags.contains(word) && word.length() > 1) {
 					tags += word.toLowerCase()+" ";
-				}
-			}
-		}
-		else if(keywords != null) {
-			for(Keyword key : keywords) {
-				String [] words = key.getName().split(" ");
-				for(String word : words) {
-					if(!tags.contains(word) && word.length() > 1) {
-						tags += word.toLowerCase()+" ";
-					}
 				}
 			}
 		}

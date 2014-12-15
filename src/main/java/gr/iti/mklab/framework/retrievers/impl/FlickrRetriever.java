@@ -24,7 +24,6 @@ import gr.iti.mklab.framework.Credentials;
 import gr.iti.mklab.framework.abstractions.socialmedia.items.FlickrItem;
 import gr.iti.mklab.framework.abstractions.socialmedia.users.FlickrStreamUser;
 import gr.iti.mklab.framework.common.domain.Item;
-import gr.iti.mklab.framework.common.domain.Keyword;
 import gr.iti.mklab.framework.common.domain.MediaItem;
 import gr.iti.mklab.framework.common.domain.Account;
 import gr.iti.mklab.framework.common.domain.StreamUser;
@@ -157,37 +156,25 @@ public class FlickrRetriever extends SocialMediaRetriever {
 		int numberOfRequests = 0;
 		int numberOfResults = 0;
 		
-		Keyword keyword = feed.getKeyword();
-		List<Keyword> keywords = feed.getKeywords();
+		List<String> keywords = feed.getKeywords();
 		
-		if(keywords == null && keyword == null) {
+		if(keywords == null || keywords.isEmpty()) {
 			logger.error("#Flickr : Text is emtpy");
 			return items;
 		}
 		
 		List<String> tags = new ArrayList<String>();
 		String text = "";
-		
-		if(keyword != null) {
-			String[] parts = keyword.getName().split("\\s+");
-			for(String key : parts) {
-				if(key.length()>1) {
-					tags.add(key.toLowerCase().replace("\"", ""));
-					text += key.toLowerCase()+" ";
-				}
-			}	
-		}
-		else if(keywords != null) {
-			for(Keyword key : keywords) {
-				String [] words = key.getName().split("\\s+");
-				for(String word : words) {
-					if(!tags.contains(word) && word.length()>1) {
-						tags.add(word);
-						text += (word + " ");
-					}
+		for(String key : keywords) {
+			String [] words = key.split("\\s+");
+			for(String word : words) {
+				if(!tags.contains(word) && word.length()>1) {
+					tags.add(word);
+					text += (word + " ");
 				}
 			}
 		}
+		
 		
 		if(text.equals("")) {
 			logger.error("#Flickr : Text is emtpy");
@@ -354,8 +341,7 @@ public class FlickrRetriever extends SocialMediaRetriever {
 		
 		FlickrRetriever retriever = new FlickrRetriever(credentials, 10, 10000l);
 		
-		Keyword keyword = new Keyword("\"uk\" amazing"); 
-		Feed feed = new KeywordsFeed(keyword, new Date(System.currentTimeMillis()-14400000), "1");
+		Feed feed = new KeywordsFeed("\"uk\" amazing", new Date(System.currentTimeMillis()-14400000), "1");
 		
 		List<Item> items = retriever.retrieve(feed, 1, 1000);
 		System.out.println(items.size());

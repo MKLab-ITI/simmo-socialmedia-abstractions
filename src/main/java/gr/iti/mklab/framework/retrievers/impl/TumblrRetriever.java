@@ -21,7 +21,6 @@ import com.tumblr.jumblr.types.Post;
 import gr.iti.mklab.framework.abstractions.socialmedia.items.TumblrItem;
 import gr.iti.mklab.framework.abstractions.socialmedia.users.TumblrStreamUser;
 import gr.iti.mklab.framework.common.domain.Item;
-import gr.iti.mklab.framework.common.domain.Keyword;
 import gr.iti.mklab.framework.common.domain.MediaItem;
 import gr.iti.mklab.framework.common.domain.Account;
 import gr.iti.mklab.framework.common.domain.StreamUser;
@@ -152,32 +151,23 @@ public class TumblrRetriever extends SocialMediaRetriever {
 		
 		boolean isFinished = false;
 		
-		Keyword keyword = feed.getKeyword();
-		List<Keyword> keywords = feed.getKeywords();
+		List<String> keywords = feed.getKeywords();
 		
-		if(keywords == null && keyword == null){
+		if(keywords == null || keywords.isEmpty()) {
 			logger.info("#Tumblr : No keywords feed");
 			return items;
 		}
 		
 		String tags = "";
-		if(keyword != null){
-			for(String key : keyword.getName().split("\\s+")) {
-				if(key.length()>1) {
-					tags+=key.toLowerCase()+" ";
+		for(String key : keywords) {
+			String [] words = key.split("\\s+");
+			for(String word : words) {
+				if(!tags.contains(word) && word.length()>1) {
+					tags += word.toLowerCase()+" ";
 				}
 			}
 		}
-		else if(keywords != null) {
-			for(Keyword key : keywords) {
-				String [] words = key.getName().split("\\s+");
-				for(String word : words) {
-					if(!tags.contains(word) && word.length()>1) {
-						tags += word.toLowerCase()+" ";
-					}
-				}
-			}
-		}
+		
 		
 		if(tags.equals(""))
 			return items;

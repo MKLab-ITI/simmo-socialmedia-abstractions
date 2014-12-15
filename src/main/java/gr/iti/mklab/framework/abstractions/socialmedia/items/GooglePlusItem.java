@@ -96,7 +96,7 @@ public class GooglePlusItem extends Item {
 			shares = object.getResharers().getTotalItems();
 			
 		if(activity.getObject().getReplies() != null)
-			numOfComments = object.getReplies().getTotalItems();
+			comments = object.getReplies().getTotalItems();
 		
 		url = activity.getUrl();
 		if(url == null) {
