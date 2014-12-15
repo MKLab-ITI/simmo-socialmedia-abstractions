@@ -7,11 +7,11 @@ import gr.iti.mklab.framework.Credentials;
 import gr.iti.mklab.framework.common.domain.Item;
 import gr.iti.mklab.framework.common.domain.MediaItem;
 import gr.iti.mklab.framework.common.domain.StreamUser;
+import gr.iti.mklab.framework.common.domain.feeds.AccountFeed;
 import gr.iti.mklab.framework.common.domain.feeds.Feed;
 import gr.iti.mklab.framework.common.domain.feeds.KeywordsFeed;
 import gr.iti.mklab.framework.common.domain.feeds.ListFeed;
 import gr.iti.mklab.framework.common.domain.feeds.LocationFeed;
-import gr.iti.mklab.framework.common.domain.feeds.SourceFeed;
 
 /**
  * The interface for retrieving from social media - Currently the
@@ -49,11 +49,11 @@ public abstract class SocialMediaRetriever implements Retriever {
 	 * @return
 	 * @throws Exception
 	 */
-	public List<Item> retrieveUserFeeds(SourceFeed feed) throws Exception {
+	public List<Item> retrieveUserFeeds(AccountFeed feed) throws Exception {
 		return retrieveUserFeeds(feed, null, null);
 	}
 	
-	public abstract List<Item> retrieveUserFeeds(SourceFeed feed, Integer maxRequests, Integer maxResults) throws Exception;
+	public abstract List<Item> retrieveUserFeeds(AccountFeed feed, Integer maxRequests, Integer maxResults) throws Exception;
 	
 	/**
 	 * Retrieves a location feed that contains the coordinates of the location
@@ -109,8 +109,8 @@ public abstract class SocialMediaRetriever implements Retriever {
 	public List<Item> retrieve (Feed feed, Integer maxRequests, Integer maxResults) throws Exception {
 	
 		switch(feed.getFeedtype()) {
-			case SOURCE:
-				SourceFeed userFeed = (SourceFeed) feed;				
+			case ACCOUNT:
+				AccountFeed userFeed = (AccountFeed) feed;				
 				return retrieveUserFeeds(userFeed);
 			
 			case KEYWORDS:

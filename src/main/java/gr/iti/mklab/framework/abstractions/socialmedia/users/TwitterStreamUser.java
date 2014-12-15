@@ -3,7 +3,7 @@ package gr.iti.mklab.framework.abstractions.socialmedia.users;
 import java.util.Date;
 
 import twitter4j.User;
-import gr.iti.mklab.framework.common.domain.SocialNetwork;
+import gr.iti.mklab.framework.common.domain.Source;
 import gr.iti.mklab.framework.common.domain.StreamUser;
 
 /**
@@ -24,7 +24,7 @@ public class TwitterStreamUser extends StreamUser {
 			return;
 		
 		//Id
-		id = SocialNetwork.Twitter + "#" + user.getId();
+		id = Source.Twitter + "#" + user.getId();
 		//The id of the user in the network
 		userid = Long.toString(user.getId());
 		//The name of the user
@@ -32,13 +32,11 @@ public class TwitterStreamUser extends StreamUser {
 		//The username of the user
 		username = user.getScreenName();
 		//streamId
-		streamId = SocialNetwork.Twitter.toString();
+		streamId = Source.Twitter.toString();
 		//The description of the user
 		description = user.getDescription();
 		//Profile picture of the user
 		profileImage = user.getProfileImageURL();
-		//Image url of the user
-		imageUrl = user.getOriginalProfileImageURL();
 		//Page URL of the user
 		pageUrl = "https://twitter.com/" + user.getScreenName();
 		url = user.getURL();
@@ -60,7 +58,7 @@ public class TwitterStreamUser extends StreamUser {
 		//Friends of the user
 		friends =  (long) user.getFriendsCount();
 		
-		favoritiesCount = user.getFavouritesCount();
+		favorities = user.getFavouritesCount();
 		
 		timezone = user.getTimeZone();
 	}

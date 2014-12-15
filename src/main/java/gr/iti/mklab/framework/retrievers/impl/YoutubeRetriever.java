@@ -33,10 +33,10 @@ import gr.iti.mklab.framework.common.domain.Keyword;
 import gr.iti.mklab.framework.common.domain.MediaItem;
 import gr.iti.mklab.framework.common.domain.Account;
 import gr.iti.mklab.framework.common.domain.StreamUser;
+import gr.iti.mklab.framework.common.domain.feeds.AccountFeed;
 import gr.iti.mklab.framework.common.domain.feeds.KeywordsFeed;
 import gr.iti.mklab.framework.common.domain.feeds.ListFeed;
 import gr.iti.mklab.framework.common.domain.feeds.LocationFeed;
-import gr.iti.mklab.framework.common.domain.feeds.SourceFeed;
 import gr.iti.mklab.framework.retrievers.SocialMediaRetriever;
 
 /**
@@ -64,7 +64,7 @@ public class YoutubeRetriever extends SocialMediaRetriever {
 
 	
 	@Override
-	public List<Item> retrieveUserFeeds(SourceFeed feed, Integer maxResults, Integer maxRequests) {
+	public List<Item> retrieveUserFeeds(AccountFeed feed, Integer maxResults, Integer maxRequests) {
 		
 		List<Item> items = new ArrayList<Item>();
 		
@@ -328,7 +328,7 @@ public class YoutubeRetriever extends SocialMediaRetriever {
 					//id
 					mediaItem.setId(mediaId);
 					//SocialNetwork Name
-					mediaItem.setStreamId("Youtube");
+					mediaItem.setSource("Youtube");
 					//Type 
 					mediaItem.setType("video");
 					//Time of publication
@@ -408,7 +408,7 @@ public class YoutubeRetriever extends SocialMediaRetriever {
 	private StreamUser getStreamUser(StreamUser u) {
 		URL profileUrl;
 		try {
-			profileUrl = new URL(u.getLinkToProfile());
+			profileUrl = new URL(u.getPageUrl());
 			UserProfileEntry userProfile = service.getEntry(profileUrl , UserProfileEntry.class);
 			
 			StreamUser user = new YoutubeStreamUser(userProfile);

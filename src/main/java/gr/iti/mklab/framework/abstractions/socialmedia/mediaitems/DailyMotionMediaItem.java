@@ -26,7 +26,7 @@ public class DailyMotionMediaItem extends MediaItem {
 		//id
 		this.setId("Dailymotion#" + video.id);
 		//SocialNetwork Name
-		this.setStreamId("Dailymotion");
+		this.setSource("Dailymotion");
 		//Type 
 		this.setType("video");
 		//Time of publication

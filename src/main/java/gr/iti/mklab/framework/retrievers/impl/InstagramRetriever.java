@@ -34,10 +34,10 @@ import gr.iti.mklab.framework.common.domain.Location;
 import gr.iti.mklab.framework.common.domain.MediaItem;
 import gr.iti.mklab.framework.common.domain.Account;
 import gr.iti.mklab.framework.common.domain.StreamUser;
+import gr.iti.mklab.framework.common.domain.feeds.AccountFeed;
 import gr.iti.mklab.framework.common.domain.feeds.KeywordsFeed;
 import gr.iti.mklab.framework.common.domain.feeds.ListFeed;
 import gr.iti.mklab.framework.common.domain.feeds.LocationFeed;
-import gr.iti.mklab.framework.common.domain.feeds.SourceFeed;
 import gr.iti.mklab.framework.common.util.DateUtil;
 import gr.iti.mklab.framework.retrievers.SocialMediaRetriever;
 
@@ -77,7 +77,7 @@ public class InstagramRetriever extends SocialMediaRetriever {
 	}
 	
 	@Override
-	public List<Item> retrieveUserFeeds(SourceFeed feed, Integer maxRequests, Integer maxResults) {
+	public List<Item> retrieveUserFeeds(AccountFeed feed, Integer maxRequests, Integer maxResults) {
 		
 		List<Item> items = new ArrayList<Item>();
 		
@@ -449,7 +449,7 @@ public class InstagramRetriever extends SocialMediaRetriever {
 				//id
 				mediaItem.setId(mediaId);
 				//SocialNetwork Name
-				mediaItem.setStreamId("Instagram");
+				mediaItem.setSource("Instagram");
 				//Reference
 				mediaItem.setRef(id);
 				//Type 

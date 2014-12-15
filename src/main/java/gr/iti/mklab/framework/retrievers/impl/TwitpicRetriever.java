@@ -1,6 +1,5 @@
 package gr.iti.mklab.framework.retrievers.impl;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,11 +19,11 @@ import gr.iti.mklab.framework.abstractions.socialmedia.mediaitems.TwitPicMediaIt
 import gr.iti.mklab.framework.common.domain.Item;
 import gr.iti.mklab.framework.common.domain.MediaItem;
 import gr.iti.mklab.framework.common.domain.StreamUser;
+import gr.iti.mklab.framework.common.domain.feeds.AccountFeed;
 import gr.iti.mklab.framework.common.domain.feeds.Feed;
 import gr.iti.mklab.framework.common.domain.feeds.KeywordsFeed;
 import gr.iti.mklab.framework.common.domain.feeds.ListFeed;
 import gr.iti.mklab.framework.common.domain.feeds.LocationFeed;
-import gr.iti.mklab.framework.common.domain.feeds.SourceFeed;
 import gr.iti.mklab.framework.retrievers.SocialMediaRetriever;
 
 /**
@@ -89,7 +88,7 @@ public class TwitpicRetriever extends SocialMediaRetriever {
 	}
 
 	@Override
-	public List<Item> retrieveUserFeeds(SourceFeed feed) throws Exception {
+	public List<Item> retrieveUserFeeds(AccountFeed feed) throws Exception {
 		return new ArrayList<Item>();
 	}
 
@@ -122,7 +121,7 @@ public class TwitpicRetriever extends SocialMediaRetriever {
 	}
 
 	@Override
-	public List<Item> retrieveUserFeeds(SourceFeed feed, Integer maxRequests,
+	public List<Item> retrieveUserFeeds(AccountFeed feed, Integer maxRequests,
 			Integer maxResults) throws Exception {
 		return null;
 	}

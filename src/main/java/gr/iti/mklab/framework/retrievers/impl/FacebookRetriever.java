@@ -30,12 +30,11 @@ import gr.iti.mklab.framework.common.domain.Keyword;
 import gr.iti.mklab.framework.common.domain.MediaItem;
 import gr.iti.mklab.framework.common.domain.Account;
 import gr.iti.mklab.framework.common.domain.StreamUser;
+import gr.iti.mklab.framework.common.domain.feeds.AccountFeed;
 import gr.iti.mklab.framework.common.domain.feeds.KeywordsFeed;
 import gr.iti.mklab.framework.common.domain.feeds.ListFeed;
 import gr.iti.mklab.framework.common.domain.feeds.LocationFeed;
-import gr.iti.mklab.framework.common.domain.feeds.SourceFeed;
 import gr.iti.mklab.framework.retrievers.SocialMediaRetriever;
-
 
 /**
  * Class responsible for retrieving facebook content based on keywords or facebook users/facebook pages
@@ -57,7 +56,7 @@ public class FacebookRetriever extends SocialMediaRetriever {
 	}
 
 	@Override
-	public List<Item> retrieveUserFeeds(SourceFeed feed, Integer maxRequests, Integer maxResults) {
+	public List<Item> retrieveUserFeeds(AccountFeed feed, Integer maxRequests, Integer maxResults) {
 		
 		List<Item> items = new ArrayList<Item>();
 
@@ -270,7 +269,7 @@ public class FacebookRetriever extends SocialMediaRetriever {
 			mediaItem.setPageUrl(photo.getLink());
 			mediaItem.setThumbnail(photo.getPicture());
 			
-			mediaItem.setStreamId("Facebook");
+			mediaItem.setSource("Facebook");
 			mediaItem.setType("image");
 			
 			mediaItem.setTitle(photo.getName());

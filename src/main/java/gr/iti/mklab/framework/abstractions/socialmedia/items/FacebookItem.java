@@ -20,7 +20,7 @@ import gr.iti.mklab.framework.abstractions.socialmedia.users.FacebookStreamUser;
 import gr.iti.mklab.framework.common.domain.Item;
 import gr.iti.mklab.framework.common.domain.Location;
 import gr.iti.mklab.framework.common.domain.MediaItem;
-import gr.iti.mklab.framework.common.domain.SocialNetwork;
+import gr.iti.mklab.framework.common.domain.Source;
 import gr.iti.mklab.framework.common.domain.WebPage;
 
 /**
@@ -40,9 +40,9 @@ public class FacebookItem extends Item {
 		if (post == null || post.getId() == null) return;
 		
 		//Id
-		id = SocialNetwork.Facebook+"#"+post.getId();
+		id = Source.Facebook+"#"+post.getId();
 		//SocialNetwork Name
-		streamId = SocialNetwork.Facebook.toString();
+		source = Source.Facebook.toString();
 		//Timestamp of the creation of the post
 		publicationTime = post.getCreatedTime().getTime();
 		//post's descritpion
@@ -152,14 +152,14 @@ public class FacebookItem extends Item {
 					
 						if(p_url != null){
 							
-							String mediaId = SocialNetwork.Facebook+"#"+post.getId();
+							String mediaId = Source.Facebook+"#"+post.getId();
 							//url
 							MediaItem mediaItem = new MediaItem(p_url);
 							
 							//id
 							mediaItem.setId(mediaId);
 							//SocialNetwork Name
-							mediaItem.setStreamId(streamId);
+							mediaItem.setSource(source);
 							//Reference
 							mediaItem.setRef(id);
 							//Type 
@@ -226,20 +226,19 @@ public class FacebookItem extends Item {
 					try {
 						p_url = new URL(picture);
 					} catch (MalformedURLException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				
 					if(p_url != null){
 						
-						String mediaId = SocialNetwork.Facebook+"#"+post.getId();
+						String mediaId = Source.Facebook+"#"+post.getId();
 						//url
 						MediaItem mediaItem = new MediaItem(p_url);
 						
 						//id
 						mediaItem.setId(mediaId);
 						//SocialNetwork Name
-						mediaItem.setStreamId(streamId);
+						mediaItem.setSource(source);
 						//Reference
 						mediaItem.setRef(id);
 						//Type 
@@ -277,7 +276,7 @@ public class FacebookItem extends Item {
 			if (link != null) {
 				
 				WebPage webPage = new WebPage(link, id);
-				webPage.setStreamId(streamId);
+				webPage.setSource(source);
 				webPages.add(webPage);
 			}
 		}
@@ -287,20 +286,20 @@ public class FacebookItem extends Item {
 			
 			String vUrl = post.getSource();
 			String picture = post.getPicture();
-			if(picture!=null){
+			if(picture != null) {
 				
 				URL videoUrl = null;
 				try {
 					videoUrl = new URL(vUrl);
 					
-					String mediaId = SocialNetwork.Facebook+"#"+post.getId();
+					String mediaId = Source.Facebook+"#"+post.getId();
 					//url
 					MediaItem mediaItem = new MediaItem(videoUrl);
 					
 					//id
 					mediaItem.setId(mediaId);
 					//SocialNetwork Name
-					mediaItem.setStreamId(streamId);
+					mediaItem.setSource(source);
 					//Reference
 					mediaItem.setRef(id);
 					//Type 
@@ -365,11 +364,11 @@ public class FacebookItem extends Item {
 		if (comment == null) return;
 		
 		//Id
-		id = SocialNetwork.Facebook+"#"+comment.getId();
+		id = Source.Facebook+"#"+comment.getId();
 		//Reference to the original post
-		reference = SocialNetwork.Facebook+"#"+post.getId();
+		reference = Source.Facebook+"#"+post.getId();
 		//SocialNetwork Name
-		streamId = SocialNetwork.Facebook.toString();
+		source = Source.Facebook.toString();
 		//Timestamp of the creation of the post
 		publicationTime = comment.getCreatedTime().getTime();
 		//Message that post contains
@@ -415,14 +414,14 @@ public class FacebookItem extends Item {
 			try {
 				URL mediaUrl = new URL(url);
 
-				String mediaId = SocialNetwork.Facebook+"#"+media.getId();
+				String mediaId = Source.Facebook+"#"+media.getId();
 				//url
 				MediaItem mediaItem = new MediaItem(mediaUrl);
 
 				//id
 				mediaItem.setId(mediaId);
 				//SocialNetwork Name
-				mediaItem.setStreamId(streamId);
+				mediaItem.setSource(source);
 				//Reference
 				mediaItem.setRef(id);
 				//Type 

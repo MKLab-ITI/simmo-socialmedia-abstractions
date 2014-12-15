@@ -3,7 +3,7 @@ package gr.iti.mklab.framework.abstractions.socialmedia.users;
 import com.tumblr.jumblr.types.Blog;
 import com.tumblr.jumblr.types.User;
 
-import gr.iti.mklab.framework.common.domain.SocialNetwork;
+import gr.iti.mklab.framework.common.domain.Source;
 import gr.iti.mklab.framework.common.domain.StreamUser;
 
 /**
@@ -21,13 +21,13 @@ public class TumblrStreamUser extends StreamUser {
 	public TumblrStreamUser(Blog blog) {
 		
 		//Id
-		id = SocialNetwork.Tumblr + "#"+blog.getName();
+		id = Source.Tumblr + "#"+blog.getName();
 		//The id of the user in the network
 		userid = blog.getName();
 		//The name of the blog
 		name = blog.getName();
 		//streamId
-		streamId = SocialNetwork.Tumblr.toString();
+		streamId = Source.Tumblr.toString();
 		//The description of the blog
 		blog.getDescription();
 		//Profile picture of the blog
@@ -42,7 +42,7 @@ public class TumblrStreamUser extends StreamUser {
 	public TumblrStreamUser(User user) {
 		
 		//Id
-		id = SocialNetwork.Tumblr + "#"+user.getName();
+		id = Source.Tumblr + "#"+user.getName();
 		
 		//The id of the user in the network
 		userid = user.getName();
@@ -51,7 +51,7 @@ public class TumblrStreamUser extends StreamUser {
 		name = user.getName();
 		
 		//streamId
-		streamId = SocialNetwork.Tumblr.toString();
+		streamId = Source.Tumblr.toString();
 		//Profile picture of the blog
 		//profileImage = blog.avatar();
 		//Likes of the blog

@@ -25,10 +25,10 @@ import gr.iti.mklab.framework.common.domain.Keyword;
 import gr.iti.mklab.framework.common.domain.MediaItem;
 import gr.iti.mklab.framework.common.domain.Account;
 import gr.iti.mklab.framework.common.domain.StreamUser;
+import gr.iti.mklab.framework.common.domain.feeds.AccountFeed;
 import gr.iti.mklab.framework.common.domain.feeds.KeywordsFeed;
 import gr.iti.mklab.framework.common.domain.feeds.ListFeed;
 import gr.iti.mklab.framework.common.domain.feeds.LocationFeed;
-import gr.iti.mklab.framework.common.domain.feeds.SourceFeed;
 import gr.iti.mklab.framework.retrievers.SocialMediaRetriever;
 
 /**
@@ -52,7 +52,7 @@ public class TumblrRetriever extends SocialMediaRetriever {
 
 	
 	@Override
-	public List<Item> retrieveUserFeeds(SourceFeed feed, Integer maxResults, Integer maxRequests){
+	public List<Item> retrieveUserFeeds(AccountFeed feed, Integer maxResults, Integer maxRequests){
 		List<Item> items = new ArrayList<Item>();
 		
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");

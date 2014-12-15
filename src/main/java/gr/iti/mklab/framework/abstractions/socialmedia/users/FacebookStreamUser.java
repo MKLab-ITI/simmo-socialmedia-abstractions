@@ -5,7 +5,7 @@ import com.restfb.types.Location;
 import com.restfb.types.Page;
 import com.restfb.types.User;
 
-import gr.iti.mklab.framework.common.domain.SocialNetwork;
+import gr.iti.mklab.framework.common.domain.Source;
 import gr.iti.mklab.framework.common.domain.StreamUser;
 
 /**
@@ -30,7 +30,7 @@ public class FacebookStreamUser extends StreamUser {
 		if (user == null) return;
 		
 		//Id
-		id = SocialNetwork.Facebook+"#"+user.getId();
+		id = Source.Facebook+"#"+user.getId();
 		
 		//The id of the user in the network
 		userid = user.getId();
@@ -47,7 +47,7 @@ public class FacebookStreamUser extends StreamUser {
 		username = user.getUsername();
 		
 		//streamId
-		streamId =  SocialNetwork.Facebook.toString();
+		streamId =  Source.Facebook.toString();
 		
 		//The description of the user
 		description = user.getAbout();
@@ -59,7 +59,6 @@ public class FacebookStreamUser extends StreamUser {
 		}
 		
 		profileImage = "https://graph.facebook.com/" + userid + "/picture";
-		imageUrl = profileImage;
 		
 		//Last time user's profile was updated
 		if(user.getUpdatedTime() != null)
@@ -84,7 +83,7 @@ public class FacebookStreamUser extends StreamUser {
 		if (page == null) return;
 		
 		//Id
-		id = SocialNetwork.Facebook+"#"+page.getId();
+		id = Source.Facebook+"#"+page.getId();
 		
 		//The id of the page in the network
 		userid = page.getId();
@@ -96,13 +95,10 @@ public class FacebookStreamUser extends StreamUser {
 		username = page.getUsername();
 		
 		//The name of the Social Network
-		streamId = SocialNetwork.Facebook.toString();
+		streamId = Source.Facebook.toString();
 		
 		//The description of the page
 		description = page.getAbout();
-		
-		//Link to the page
-		linkToProfile = page.getLink();
 		
 		pageUrl = page.getLink(); 
 		if(pageUrl == null) {
@@ -114,7 +110,6 @@ public class FacebookStreamUser extends StreamUser {
 		if(profileImage == null) {
 			profileImage = "https://graph.facebook.com/" + userid + "/picture";
 		}
-		imageUrl = profileImage;
 		
 		//Number of people talking about the page
 		followers = page.getTalkingAboutCount();
@@ -136,7 +131,7 @@ public class FacebookStreamUser extends StreamUser {
 		if (user == null) return;
 
 		//Id
-		id = SocialNetwork.Facebook+"#"+user.getId();
+		id = Source.Facebook+"#"+user.getId();
 		//The id of the page in the network
 		userid = user.getId();
 		//The name of the page
@@ -145,7 +140,6 @@ public class FacebookStreamUser extends StreamUser {
 		pageUrl = "https://www.facebook.com/profile.php?id="+userid;
 		//Avatar of the page
 		profileImage = "https://graph.facebook.com/" + userid + "/picture";
-		imageUrl = profileImage;
 		
 	}
 	

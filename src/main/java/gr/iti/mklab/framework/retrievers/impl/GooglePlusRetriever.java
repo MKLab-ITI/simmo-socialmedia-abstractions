@@ -34,10 +34,10 @@ import gr.iti.mklab.framework.common.domain.Keyword;
 import gr.iti.mklab.framework.common.domain.MediaItem;
 import gr.iti.mklab.framework.common.domain.Account;
 import gr.iti.mklab.framework.common.domain.StreamUser;
+import gr.iti.mklab.framework.common.domain.feeds.AccountFeed;
 import gr.iti.mklab.framework.common.domain.feeds.KeywordsFeed;
 import gr.iti.mklab.framework.common.domain.feeds.ListFeed;
 import gr.iti.mklab.framework.common.domain.feeds.LocationFeed;
-import gr.iti.mklab.framework.common.domain.feeds.SourceFeed;
 import gr.iti.mklab.framework.retrievers.SocialMediaRetriever;
 
 /**
@@ -70,7 +70,7 @@ public class GooglePlusRetriever extends SocialMediaRetriever {
 	}
 
 	@Override
-	public List<Item> retrieveUserFeeds(SourceFeed feed, Integer maxRequests, Integer maxResults) {
+	public List<Item> retrieveUserFeeds(AccountFeed feed, Integer maxRequests, Integer maxResults) {
 		
 		List<Item> items = new ArrayList<Item>();
 		
@@ -365,7 +365,7 @@ public class GooglePlusRetriever extends SocialMediaRetriever {
 		
 		Account source = new Account(null, 0);
 		source.setId(uid);
-		SourceFeed feed = new SourceFeed(source, new Date(System.currentTimeMillis()-24*3600000), "1");
+		AccountFeed feed = new AccountFeed(source, new Date(System.currentTimeMillis()-24*3600000), "1");
 		
 		Credentials credentials = new Credentials();
 		credentials.setKey("AIzaSyB-knYzMRW6tUzobP-V1hTWYAXEps1Wngk");

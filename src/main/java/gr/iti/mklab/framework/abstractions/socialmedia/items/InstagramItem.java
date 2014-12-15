@@ -13,7 +13,7 @@ import gr.iti.mklab.framework.abstractions.socialmedia.users.InstagramStreamUser
 import gr.iti.mklab.framework.common.domain.Item;
 import gr.iti.mklab.framework.common.domain.Location;
 import gr.iti.mklab.framework.common.domain.MediaItem;
-import gr.iti.mklab.framework.common.domain.SocialNetwork;
+import gr.iti.mklab.framework.common.domain.Source;
 
 /**
  * Class that holds the information of a instagram image
@@ -30,9 +30,9 @@ public class InstagramItem extends Item {
 			return;
 		
 		//Id
-		id = SocialNetwork.Instagram + "#" + image.getId();
+		id = Source.Instagram + "#" + image.getId();
 		//SocialNetwork Name
-		streamId =  SocialNetwork.Instagram.toString();
+		source =  Source.Instagram.toString();
 		//Timestamp of the creation of the photo
 		int createdTime = Integer.parseInt(image.getCreatedTime());
 		Date publicationDate = new Date((long) createdTime * 1000);
@@ -93,12 +93,12 @@ public class InstagramItem extends Item {
 				//url
 				MediaItem mediaItem = new MediaItem(mediaUrl);
 				
-				String mediaId = SocialNetwork.Instagram + "#"+image.getId(); 
+				String mediaId = Source.Instagram + "#"+image.getId(); 
 				
 				//id
 				mediaItem.setId(mediaId);
 				//SocialNetwork Name
-				mediaItem.setStreamId(streamId);
+				mediaItem.setSource(source);
 				//Reference
 				mediaItem.setRef(id);
 				//Type 

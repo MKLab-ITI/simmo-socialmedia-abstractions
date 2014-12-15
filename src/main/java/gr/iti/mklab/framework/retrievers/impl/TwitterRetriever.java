@@ -27,11 +27,11 @@ import gr.iti.mklab.framework.common.domain.Location;
 import gr.iti.mklab.framework.common.domain.MediaItem;
 import gr.iti.mklab.framework.common.domain.Account;
 import gr.iti.mklab.framework.common.domain.StreamUser;
+import gr.iti.mklab.framework.common.domain.feeds.AccountFeed;
 import gr.iti.mklab.framework.common.domain.feeds.Feed;
 import gr.iti.mklab.framework.common.domain.feeds.KeywordsFeed;
 import gr.iti.mklab.framework.common.domain.feeds.ListFeed;
 import gr.iti.mklab.framework.common.domain.feeds.LocationFeed;
-import gr.iti.mklab.framework.common.domain.feeds.SourceFeed;
 import gr.iti.mklab.framework.retrievers.SocialMediaRetriever;
 
 /**
@@ -66,7 +66,7 @@ public class TwitterRetriever extends SocialMediaRetriever {
 	}
 	
 	@Override
-	public List<Item> retrieveUserFeeds(SourceFeed feed, Integer maxRequests, Integer maxResults) {
+	public List<Item> retrieveUserFeeds(AccountFeed feed, Integer maxRequests, Integer maxResults) {
 		
 		List<Item> items = new ArrayList<Item>();
 		
@@ -399,11 +399,8 @@ public class TwitterRetriever extends SocialMediaRetriever {
 	public List<Item> retrieve(Feed feed,  Integer maxRequests, Integer maxResults) {
 		
 		switch(feed.getFeedtype()) {
-			case SOURCE:
-				SourceFeed userFeed = (SourceFeed) feed;
-				if(!userFeed.getAccount().getNetwork().equals("Twitter"))
-					return new ArrayList<Item>();
-				
+			case ACCOUNT:
+				AccountFeed userFeed = (AccountFeed) feed;				
 				return retrieveUserFeeds(userFeed, maxRequests, maxResults);
 				
 			case KEYWORDS:

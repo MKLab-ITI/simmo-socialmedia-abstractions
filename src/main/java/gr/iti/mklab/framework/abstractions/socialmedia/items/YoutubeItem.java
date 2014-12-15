@@ -19,7 +19,7 @@ import com.google.gdata.data.youtube.YtStatistics;
 import gr.iti.mklab.framework.abstractions.socialmedia.users.YoutubeStreamUser;
 import gr.iti.mklab.framework.common.domain.Item;
 import gr.iti.mklab.framework.common.domain.MediaItem;
-import gr.iti.mklab.framework.common.domain.SocialNetwork;
+import gr.iti.mklab.framework.common.domain.Source;
 
 /**
  * Class that holds the information of a youtube video
@@ -42,9 +42,9 @@ public class YoutubeItem extends Item {
 		
 		YouTubeMediaGroup mediaGroup = videoEntry.getMediaGroup();
 		//Id
-		id = SocialNetwork.Youtube+"#"+mediaGroup.getVideoId();
+		id = Source.Youtube+"#"+mediaGroup.getVideoId();
 		//SocialNetwork Name
-		streamId = SocialNetwork.Youtube.toString();
+		source = Source.Youtube.toString();
 		//Timestamp of the creation of the video
 		publicationTime = mediaGroup.getUploaded().getValue();
 		//Title of the video
@@ -111,12 +111,12 @@ public class YoutubeItem extends Item {
 			//url
 			MediaItem mediaItem = new MediaItem(url);
 			
-			String mediaId = SocialNetwork.Youtube + "#"+videoID; 
+			String mediaId = Source.Youtube + "#"+videoID; 
 			
 			//id
 			mediaItem.setId(mediaId);
 			//SocialNetwork Name
-			mediaItem.setStreamId(streamId);
+			mediaItem.setSource(source);
 			//Reference
 			mediaItem.setRef(id);
 			//Type 

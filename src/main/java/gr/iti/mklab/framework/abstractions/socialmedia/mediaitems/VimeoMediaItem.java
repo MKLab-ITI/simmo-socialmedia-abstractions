@@ -26,7 +26,7 @@ public class VimeoMediaItem extends MediaItem {
 		//Id
 		this.setId("Vimeo#"+video.id);
 		//SocialNetwork Name
-		this.setStreamId("Vimeo");
+		this.setSource("Vimeo");
 		//Type 
 		this.setType("video");
 		//Time of publication

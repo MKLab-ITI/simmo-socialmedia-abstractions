@@ -35,7 +35,7 @@ public class TwitPicMediaItem extends MediaItem {
 		//Id
 		this.setId("Twitpic#"+image.id);
 		//SocialNetwork Name
-		this.setStreamId("Twitpic");
+		this.setSource("Twitpic");
 		//Type 
 		this.setType("image");
 		//Time of publication

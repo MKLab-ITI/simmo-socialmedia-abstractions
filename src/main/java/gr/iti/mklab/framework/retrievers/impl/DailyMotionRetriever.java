@@ -19,10 +19,10 @@ import gr.iti.mklab.framework.abstractions.socialmedia.mediaitems.DailyMotionMed
 import gr.iti.mklab.framework.common.domain.Item;
 import gr.iti.mklab.framework.common.domain.MediaItem;
 import gr.iti.mklab.framework.common.domain.StreamUser;
+import gr.iti.mklab.framework.common.domain.feeds.AccountFeed;
 import gr.iti.mklab.framework.common.domain.feeds.KeywordsFeed;
 import gr.iti.mklab.framework.common.domain.feeds.ListFeed;
 import gr.iti.mklab.framework.common.domain.feeds.LocationFeed;
-import gr.iti.mklab.framework.common.domain.feeds.SourceFeed;
 import gr.iti.mklab.framework.retrievers.SocialMediaRetriever;
 
 /**
@@ -100,7 +100,7 @@ public class DailyMotionRetriever extends SocialMediaRetriever {
 	}
 
 	@Override
-	public List<Item> retrieveUserFeeds(SourceFeed feed, Integer maxRequests, Integer maxResults) throws Exception {
+	public List<Item> retrieveUserFeeds(AccountFeed feed, Integer maxRequests, Integer maxResults) throws Exception {
 		return new ArrayList<Item>();
 	}
 

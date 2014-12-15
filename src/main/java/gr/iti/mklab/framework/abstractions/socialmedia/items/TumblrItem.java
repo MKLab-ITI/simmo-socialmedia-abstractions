@@ -18,7 +18,7 @@ import com.tumblr.jumblr.types.VideoPost;
 import gr.iti.mklab.framework.abstractions.socialmedia.users.TumblrStreamUser;
 import gr.iti.mklab.framework.common.domain.Item;
 import gr.iti.mklab.framework.common.domain.MediaItem;
-import gr.iti.mklab.framework.common.domain.SocialNetwork;
+import gr.iti.mklab.framework.common.domain.Source;
 import gr.iti.mklab.framework.common.domain.WebPage;
 
 /**
@@ -43,10 +43,10 @@ public class TumblrItem extends Item {
 			
 		
 		//Id
-		id = SocialNetwork.Tumblr + "#" + post.getId();
+		id = Source.Tumblr + "#" + post.getId();
 		
 		//SocialNetwork Name
-		streamId = SocialNetwork.Tumblr.toString();
+		source = Source.Tumblr.toString();
 		
 		//Timestamp of the creation of the post
 		publicationTime = post.getTimestamp()*1000;
@@ -88,12 +88,12 @@ public class TumblrItem extends Item {
 						//url
 						MediaItem mediaItem = new MediaItem(url);
 					
-						String mediaId = SocialNetwork.Tumblr + "#"+post.getId()+"_"+number; 
+						String mediaId = Source.Tumblr + "#"+post.getId()+"_"+number; 
 						
 						//id
 						mediaItem.setId(mediaId);
 						//SocialNetwork Name
-						mediaItem.setStreamId(streamId);
+						mediaItem.setSource(source);
 						//Reference
 						mediaItem.setRef(id);
 						//Type 
@@ -190,12 +190,12 @@ public class TumblrItem extends Item {
 		
 			MediaItem mediaItem = new MediaItem(url);
 
-			String mediaId = SocialNetwork.Tumblr + "#"+post.getId()+"_"+number; 
+			String mediaId = Source.Tumblr + "#"+post.getId()+"_"+number; 
 			
 			//id
 			mediaItem.setId(mediaId);
 			//SocialNetwork Name
-			mediaItem.setStreamId(streamId);
+			mediaItem.setSource(source);
 			//Reference
 			mediaItem.setRef(id);
 			//Type 
@@ -222,7 +222,7 @@ public class TumblrItem extends Item {
     		String link = linkPost.getLinkUrl();
 			if (link != null) {
 				WebPage webPage = new WebPage(link, id);
-				webPage.setStreamId(streamId);
+				webPage.setSource(source);
 				webPages.add(webPage);
 			}
     	}

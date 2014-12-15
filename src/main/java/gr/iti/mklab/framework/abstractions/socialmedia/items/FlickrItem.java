@@ -15,7 +15,7 @@ import gr.iti.mklab.framework.abstractions.socialmedia.users.FlickrStreamUser;
 import gr.iti.mklab.framework.common.domain.Item;
 import gr.iti.mklab.framework.common.domain.Location;
 import gr.iti.mklab.framework.common.domain.MediaItem;
-import gr.iti.mklab.framework.common.domain.SocialNetwork;
+import gr.iti.mklab.framework.common.domain.Source;
 import gr.iti.mklab.framework.common.domain.StreamUser;
 
 /**
@@ -36,9 +36,9 @@ public class FlickrItem extends Item {
 		if (photo == null || photo.getId() == null) return;
 		
 		//Id
-		id = SocialNetwork.Flickr + "#" + photo.getId();
+		id = Source.Flickr + "#" + photo.getId();
 		//SocialNetwork Name
-		streamId = SocialNetwork.Flickr.toString();
+		source = Source.Flickr.toString();
 		//Timestamp of the creation of the photo
 		publicationTime = photo.getDatePosted().getTime();
 		//Title of the photo
@@ -105,12 +105,12 @@ public class FlickrItem extends Item {
 				//url
 				MediaItem mediaItem = new MediaItem(mediaUrl);
 				
-				String mediaId = SocialNetwork.Flickr + "#"+photo.getId(); 
+				String mediaId = Source.Flickr + "#"+photo.getId(); 
 				
 				//id
 				mediaItem.setId(mediaId);
 				//SocialNetwork Name
-				mediaItem.setStreamId(streamId);
+				mediaItem.setSource(source);
 				//Reference
 				mediaItem.setRef(id);
 				//Type 
