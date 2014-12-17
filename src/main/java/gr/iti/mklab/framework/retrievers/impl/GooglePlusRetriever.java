@@ -37,6 +37,7 @@ import gr.iti.mklab.framework.common.domain.feeds.AccountFeed;
 import gr.iti.mklab.framework.common.domain.feeds.GroupFeed;
 import gr.iti.mklab.framework.common.domain.feeds.KeywordsFeed;
 import gr.iti.mklab.framework.common.domain.feeds.LocationFeed;
+import gr.iti.mklab.framework.retrievers.RateLimitsMonitor;
 import gr.iti.mklab.framework.retrievers.SocialMediaRetriever;
 
 /**
@@ -56,9 +57,8 @@ public class GooglePlusRetriever extends SocialMediaRetriever {
 	private String userPrefix = "https://plus.google.com/+";
 	private String GooglePlusKey;
 
-	public GooglePlusRetriever(Credentials credentials, Integer maxRequestPerWindow, Long windowLenth) {
-		
-		super(credentials, maxRequestPerWindow, windowLenth);
+	public GooglePlusRetriever(Credentials credentials, RateLimitsMonitor rateLimitsMonitor) {
+		super(credentials, rateLimitsMonitor);
 		
 		GooglePlusKey = credentials.getKey();
 		GoogleCredential credential = new GoogleCredential();
@@ -361,7 +361,7 @@ public class GooglePlusRetriever extends SocialMediaRetriever {
 		Credentials credentials = new Credentials();
 		credentials.setKey("AIzaSyB-knYzMRW6tUzobP-V1hTWYAXEps1Wngk");
 		
-		GooglePlusRetriever retriever = new GooglePlusRetriever(credentials, 10, 10000l);
+		GooglePlusRetriever retriever = new GooglePlusRetriever(credentials, new RateLimitsMonitor(10, 10000l));
 		
 		List<Item> items = retriever.retrieveAccountFeed(feed, 1, 1000);
 		for(Item item : items) {

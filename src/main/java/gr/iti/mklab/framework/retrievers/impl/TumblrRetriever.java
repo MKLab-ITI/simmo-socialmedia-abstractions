@@ -18,6 +18,7 @@ import com.tumblr.jumblr.exceptions.JumblrException;
 import com.tumblr.jumblr.types.Blog;
 import com.tumblr.jumblr.types.Post;
 
+import gr.iti.mklab.framework.Credentials;
 import gr.iti.mklab.framework.abstractions.socialmedia.items.TumblrItem;
 import gr.iti.mklab.framework.abstractions.socialmedia.users.TumblrStreamUser;
 import gr.iti.mklab.framework.common.domain.Item;
@@ -28,6 +29,7 @@ import gr.iti.mklab.framework.common.domain.feeds.AccountFeed;
 import gr.iti.mklab.framework.common.domain.feeds.GroupFeed;
 import gr.iti.mklab.framework.common.domain.feeds.KeywordsFeed;
 import gr.iti.mklab.framework.common.domain.feeds.LocationFeed;
+import gr.iti.mklab.framework.retrievers.RateLimitsMonitor;
 import gr.iti.mklab.framework.retrievers.SocialMediaRetriever;
 
 /**
@@ -42,11 +44,11 @@ public class TumblrRetriever extends SocialMediaRetriever {
 	
 	private JumblrClient client;
 	
-	public TumblrRetriever(String consumerKey, String consumerSecret) {
+	public TumblrRetriever(Credentials credentials, RateLimitsMonitor rateLimitsMonitor) {
 		
-		super(null, null, null);
+		super(credentials, rateLimitsMonitor);
 		
-		client = new JumblrClient(consumerKey,consumerSecret);
+		client = new JumblrClient(credentials.getKey(), credentials.getSecret());
 	}
 
 	

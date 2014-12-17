@@ -26,6 +26,7 @@ import org.jinstagram.entity.users.feed.UserFeed;
 import org.jinstagram.entity.users.feed.UserFeedData;
 import org.jinstagram.auth.model.Token;
 
+import gr.iti.mklab.framework.Credentials;
 import gr.iti.mklab.framework.abstractions.socialmedia.items.InstagramItem;
 import gr.iti.mklab.framework.abstractions.socialmedia.users.InstagramStreamUser;
 import gr.iti.mklab.framework.common.domain.Item;
@@ -38,6 +39,7 @@ import gr.iti.mklab.framework.common.domain.feeds.GroupFeed;
 import gr.iti.mklab.framework.common.domain.feeds.KeywordsFeed;
 import gr.iti.mklab.framework.common.domain.feeds.LocationFeed;
 import gr.iti.mklab.framework.common.util.DateUtil;
+import gr.iti.mklab.framework.retrievers.RateLimitsMonitor;
 import gr.iti.mklab.framework.retrievers.SocialMediaRetriever;
 
 /**
@@ -58,19 +60,11 @@ public class InstagramRetriever extends SocialMediaRetriever {
 
 	private InstagramOembed instagramOembed;
 	
-	public InstagramRetriever(String clientId) {
+	public InstagramRetriever(Credentials credentials, RateLimitsMonitor rateLimitsMonitor) {
+		super(credentials, rateLimitsMonitor);
 		
-		super(null, null, null);
-		
-		this.instagram = new Instagram(clientId);
-		this.instagramOembed = new InstagramOembed();
-	}
-	
-	public InstagramRetriever(String key, String secret, String token) {
-		super(null, null, null);
-		
-		Token accessToken = new Token(token, secret); 
-		this.instagram = new Instagram(key);
+		Token accessToken = new Token(credentials.getAccessToken(), credentials.getAccessTokenSecret()); 
+		this.instagram = new Instagram(credentials.getKey());
 		this.instagram.setAccessToken(accessToken);
 		this.instagramOembed = new InstagramOembed();
 	}

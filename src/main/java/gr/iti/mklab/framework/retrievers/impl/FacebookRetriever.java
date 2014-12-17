@@ -33,6 +33,7 @@ import gr.iti.mklab.framework.common.domain.feeds.AccountFeed;
 import gr.iti.mklab.framework.common.domain.feeds.GroupFeed;
 import gr.iti.mklab.framework.common.domain.feeds.KeywordsFeed;
 import gr.iti.mklab.framework.common.domain.feeds.LocationFeed;
+import gr.iti.mklab.framework.retrievers.RateLimitsMonitor;
 import gr.iti.mklab.framework.retrievers.SocialMediaRetriever;
 
 /**
@@ -48,8 +49,8 @@ public class FacebookRetriever extends SocialMediaRetriever {
 	
 	private Logger  logger = Logger.getLogger(FacebookRetriever.class);
 	
-	public FacebookRetriever(Credentials credentials, Integer maxRequestPerWindow, Long windowLenth) {
-		super(credentials, maxRequestPerWindow, windowLenth);
+	public FacebookRetriever(Credentials credentials, RateLimitsMonitor rateLimitsMonitor) {
+		super(credentials, rateLimitsMonitor);
 		
 		facebookClient = new DefaultFacebookClient(credentials.getAccessToken());
 	}

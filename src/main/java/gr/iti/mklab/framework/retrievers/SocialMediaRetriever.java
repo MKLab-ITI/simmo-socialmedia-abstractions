@@ -16,8 +16,8 @@ import gr.iti.mklab.framework.common.domain.feeds.LocationFeed;
 /**
  * The interface for retrieving from social media - Currently the
  * social networks supprorted by the platform are the following:
- * YouTube,Google+,Twitter, Facebook,Flickr,Instagram,Topsy,Tumblr,
- * Vimeo,DailyMotion,Twitpic
+ * YouTube, Google+,Twitter, Facebook, Flickr, Instagram, Topsy, 
+ * Tumblr, Vimeo, DailyMotion, Twitpic
  * 
  * @author Manos Schinas
  * @email  manosetro@iti.gr
@@ -26,8 +26,8 @@ public abstract class SocialMediaRetriever implements Retriever {
 	
 	protected RateLimitsMonitor rateLimitsMonitor;
 
-	public SocialMediaRetriever(Credentials credentials, Integer maxRequestPerWindow, Long windowLenth) {
-		rateLimitsMonitor = new RateLimitsMonitor(maxRequestPerWindow, windowLenth);
+	public SocialMediaRetriever(Credentials credentials, RateLimitsMonitor rateLimitsMonitor) {
+		
 	}
 	
 	/**

@@ -32,6 +32,7 @@ import gr.iti.mklab.framework.common.domain.feeds.Feed;
 import gr.iti.mklab.framework.common.domain.feeds.GroupFeed;
 import gr.iti.mklab.framework.common.domain.feeds.KeywordsFeed;
 import gr.iti.mklab.framework.common.domain.feeds.LocationFeed;
+import gr.iti.mklab.framework.retrievers.RateLimitsMonitor;
 import gr.iti.mklab.framework.retrievers.SocialMediaRetriever;
 
 /**
@@ -54,9 +55,8 @@ public class FlickrRetriever extends SocialMediaRetriever {
 	private HashMap<String, StreamUser> userMap;
 	
 
-	public FlickrRetriever(Credentials credentials, Integer maxRequestPerWindow, Long windowLenth) {
-		
-		super(credentials, maxRequestPerWindow, windowLenth);
+	public FlickrRetriever(Credentials credentials, RateLimitsMonitor rateLimitsMonitor) {
+		super(credentials, rateLimitsMonitor);
 		
 		this.flickrKey = credentials.getKey();
 		this.flickrSecret = credentials.getSecret();
@@ -339,7 +339,7 @@ public class FlickrRetriever extends SocialMediaRetriever {
 		credentials.setKey(flickrKey);
 		credentials.setSecret(flickrSecret);
 		
-		FlickrRetriever retriever = new FlickrRetriever(credentials, 10, 10000l);
+		FlickrRetriever retriever = new FlickrRetriever(credentials, new RateLimitsMonitor(10, 10000l));
 		
 		Feed feed = new KeywordsFeed("\"uk\" amazing", new Date(System.currentTimeMillis()-14400000), "1");
 		

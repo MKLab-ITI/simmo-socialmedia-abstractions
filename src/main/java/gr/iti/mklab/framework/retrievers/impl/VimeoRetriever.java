@@ -14,6 +14,7 @@ import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.JsonObjectParser;
 import com.google.api.client.json.jackson2.JacksonFactory;
 
+import gr.iti.mklab.framework.Credentials;
 import gr.iti.mklab.framework.abstractions.socialmedia.mediaitems.VimeoMediaItem;
 import gr.iti.mklab.framework.abstractions.socialmedia.mediaitems.VimeoMediaItem.VimeoVideo;
 import gr.iti.mklab.framework.common.domain.Item;
@@ -24,6 +25,7 @@ import gr.iti.mklab.framework.common.domain.feeds.Feed;
 import gr.iti.mklab.framework.common.domain.feeds.GroupFeed;
 import gr.iti.mklab.framework.common.domain.feeds.KeywordsFeed;
 import gr.iti.mklab.framework.common.domain.feeds.LocationFeed;
+import gr.iti.mklab.framework.retrievers.RateLimitsMonitor;
 import gr.iti.mklab.framework.retrievers.SocialMediaRetriever;
 
 /**
@@ -39,9 +41,8 @@ public class VimeoRetriever extends SocialMediaRetriever {
 	private HttpRequestFactory requestFactory;
 	private String requestPrefix = "http://vimeo.com/api/v2/video/";
 	
-	public VimeoRetriever() {
-		
-		super(null, null, null);
+	public VimeoRetriever(Credentials credentials, RateLimitsMonitor rateLimitsMonitor) {
+		super(credentials, rateLimitsMonitor);
 		
 		requestFactory = HTTP_TRANSPORT.createRequestFactory(
 				new HttpRequestInitializer() {

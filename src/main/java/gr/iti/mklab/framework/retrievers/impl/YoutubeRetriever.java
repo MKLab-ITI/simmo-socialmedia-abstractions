@@ -36,6 +36,7 @@ import gr.iti.mklab.framework.common.domain.feeds.AccountFeed;
 import gr.iti.mklab.framework.common.domain.feeds.GroupFeed;
 import gr.iti.mklab.framework.common.domain.feeds.KeywordsFeed;
 import gr.iti.mklab.framework.common.domain.feeds.LocationFeed;
+import gr.iti.mklab.framework.retrievers.RateLimitsMonitor;
 import gr.iti.mklab.framework.retrievers.SocialMediaRetriever;
 
 /**
@@ -55,8 +56,8 @@ public class YoutubeRetriever extends SocialMediaRetriever {
 	
 	private YouTubeService service;
 	
-	public YoutubeRetriever(Credentials credentials, Integer maxRequestPerWindow, Long windowLenth) {			
-		super(credentials, maxRequestPerWindow, windowLenth);	
+	public YoutubeRetriever(Credentials credentials, RateLimitsMonitor rateLimitsMonitor) {			
+		super(credentials, rateLimitsMonitor);	
 		
 		this.service = new YouTubeService(credentials.getClientId(), credentials.getKey());
 	}

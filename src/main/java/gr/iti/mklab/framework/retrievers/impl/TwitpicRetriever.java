@@ -14,6 +14,7 @@ import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.JsonObjectParser;
 import com.google.api.client.json.jackson2.JacksonFactory;
 
+import gr.iti.mklab.framework.Credentials;
 import gr.iti.mklab.framework.abstractions.socialmedia.mediaitems.TwitPicMediaItem.TwitPicImage;
 import gr.iti.mklab.framework.abstractions.socialmedia.mediaitems.TwitPicMediaItem;
 import gr.iti.mklab.framework.common.domain.Item;
@@ -24,6 +25,7 @@ import gr.iti.mklab.framework.common.domain.feeds.Feed;
 import gr.iti.mklab.framework.common.domain.feeds.GroupFeed;
 import gr.iti.mklab.framework.common.domain.feeds.KeywordsFeed;
 import gr.iti.mklab.framework.common.domain.feeds.LocationFeed;
+import gr.iti.mklab.framework.retrievers.RateLimitsMonitor;
 import gr.iti.mklab.framework.retrievers.SocialMediaRetriever;
 
 /**
@@ -40,9 +42,9 @@ public class TwitpicRetriever extends SocialMediaRetriever {
 	
 	private HttpRequestFactory requestFactory;
 
-	public TwitpicRetriever() {
+	public TwitpicRetriever(Credentials credentials, RateLimitsMonitor rateLimitsMonitor) {
 		
-		super(null, null, null);
+		super(credentials, rateLimitsMonitor);
 		
 		requestFactory = HTTP_TRANSPORT.createRequestFactory(
 				new HttpRequestInitializer() {
