@@ -9,8 +9,8 @@ import gr.iti.mklab.framework.common.domain.MediaItem;
 import gr.iti.mklab.framework.common.domain.StreamUser;
 import gr.iti.mklab.framework.common.domain.feeds.AccountFeed;
 import gr.iti.mklab.framework.common.domain.feeds.Feed;
+import gr.iti.mklab.framework.common.domain.feeds.GroupFeed;
 import gr.iti.mklab.framework.common.domain.feeds.KeywordsFeed;
-import gr.iti.mklab.framework.common.domain.feeds.ListFeed;
 import gr.iti.mklab.framework.common.domain.feeds.LocationFeed;
 
 /**
@@ -18,8 +18,9 @@ import gr.iti.mklab.framework.common.domain.feeds.LocationFeed;
  * social networks supprorted by the platform are the following:
  * YouTube,Google+,Twitter, Facebook,Flickr,Instagram,Topsy,Tumblr,
  * Vimeo,DailyMotion,Twitpic
- * @author ailiakop
- * @email  ailiakop@iti.gr
+ * 
+ * @author Manos Schinas
+ * @email  manosetro@iti.gr
  */
 public abstract class SocialMediaRetriever implements Retriever {
 	
@@ -36,11 +37,11 @@ public abstract class SocialMediaRetriever implements Retriever {
 	 * @return
 	 * @throws Exception
 	 */
-	public List<Item> retrieveKeywordsFeeds(KeywordsFeed feed) throws Exception {
-		return retrieveKeywordsFeeds(feed, null, null);
+	public List<Item> retrieveKeywordsFeed(KeywordsFeed feed) throws Exception {
+		return retrieveKeywordsFeed(feed, null, null);
 	}
 	
-	public abstract List<Item> retrieveKeywordsFeeds(KeywordsFeed feed, Integer maxRequests, Integer maxResults) throws Exception;
+	public abstract List<Item> retrieveKeywordsFeed(KeywordsFeed feed, Integer maxRequests, Integer maxResults) throws Exception;
 	
 	/**
 	 * Retrieves a user feed that contains the user/users in 
@@ -49,11 +50,11 @@ public abstract class SocialMediaRetriever implements Retriever {
 	 * @return
 	 * @throws Exception
 	 */
-	public List<Item> retrieveUserFeeds(AccountFeed feed) throws Exception {
-		return retrieveUserFeeds(feed, null, null);
+	public List<Item> retrieveAccountFeed(AccountFeed feed) throws Exception {
+		return retrieveAccountFeed(feed, null, null);
 	}
 	
-	public abstract List<Item> retrieveUserFeeds(AccountFeed feed, Integer maxRequests, Integer maxResults) throws Exception;
+	public abstract List<Item> retrieveAccountFeed(AccountFeed feed, Integer maxRequests, Integer maxResults) throws Exception;
 	
 	/**
 	 * Retrieves a location feed that contains the coordinates of the location
@@ -62,12 +63,11 @@ public abstract class SocialMediaRetriever implements Retriever {
 	 * @return
 	 * @throws Exception
 	 */
-	public List<Item> retrieveLocationFeeds(LocationFeed feed) throws Exception {
-		return retrieveLocationFeeds(feed, null, null);
+	public List<Item> retrieveLocationFeed(LocationFeed feed) throws Exception {
+		return retrieveLocationFeed(feed, null, null);
 	}
 	
-	
-	public abstract List<Item> retrieveLocationFeeds(LocationFeed feed, Integer maxRequests, Integer maxResults) throws Exception;
+	public abstract List<Item> retrieveLocationFeed(LocationFeed feed, Integer maxRequests, Integer maxResults) throws Exception;
 
 	/**
 	 * Retrieves a list feed that contains the owner of a list an a slug 
@@ -76,12 +76,11 @@ public abstract class SocialMediaRetriever implements Retriever {
 	 * @return
 	 * @throws Exception
 	 */
-	public List<Item> retrieveListsFeeds(ListFeed feed) {
-		return retrieveListsFeeds(feed, null, null);
+	public List<Item> retrieveGroupFeed(GroupFeed feed) {
+		return retrieveGroupFeed(feed, null, null);
 	}
 	
-	
-	public abstract List<Item> retrieveListsFeeds(ListFeed feed, Integer maxRequests, Integer maxResults);
+	public abstract List<Item> retrieveGroupFeed(GroupFeed feed, Integer maxRequests, Integer maxResults);
 	
 	
 	/**
@@ -111,20 +110,19 @@ public abstract class SocialMediaRetriever implements Retriever {
 		switch(feed.getFeedtype()) {
 			case ACCOUNT:
 				AccountFeed userFeed = (AccountFeed) feed;				
-				return retrieveUserFeeds(userFeed);
+				return retrieveAccountFeed(userFeed, maxRequests, maxResults);
 			
 			case KEYWORDS:
 				KeywordsFeed keyFeed = (KeywordsFeed) feed;
-				return retrieveKeywordsFeeds(keyFeed);
+				return retrieveKeywordsFeed(keyFeed, maxRequests, maxResults);
 				
 			case LOCATION:
 				LocationFeed locationFeed = (LocationFeed) feed;
-				return retrieveLocationFeeds(locationFeed);
+				return retrieveLocationFeed(locationFeed, maxRequests, maxResults);
 			
-			case LIST:
-				ListFeed listFeed = (ListFeed) feed;
-				
-				return retrieveListsFeeds(listFeed);
+			case GROUP:
+				GroupFeed listFeed = (GroupFeed) feed;
+				return retrieveGroupFeed(listFeed, maxRequests, maxResults);
 				
 			default:
 				break;

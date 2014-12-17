@@ -34,8 +34,8 @@ import gr.iti.mklab.framework.common.domain.MediaItem;
 import gr.iti.mklab.framework.common.domain.Account;
 import gr.iti.mklab.framework.common.domain.StreamUser;
 import gr.iti.mklab.framework.common.domain.feeds.AccountFeed;
+import gr.iti.mklab.framework.common.domain.feeds.GroupFeed;
 import gr.iti.mklab.framework.common.domain.feeds.KeywordsFeed;
-import gr.iti.mklab.framework.common.domain.feeds.ListFeed;
 import gr.iti.mklab.framework.common.domain.feeds.LocationFeed;
 import gr.iti.mklab.framework.retrievers.SocialMediaRetriever;
 
@@ -69,7 +69,7 @@ public class GooglePlusRetriever extends SocialMediaRetriever {
 	}
 
 	@Override
-	public List<Item> retrieveUserFeeds(AccountFeed feed, Integer maxRequests, Integer maxResults) {
+	public List<Item> retrieveAccountFeed(AccountFeed feed, Integer maxRequests, Integer maxResults) {
 		
 		List<Item> items = new ArrayList<Item>();
 		
@@ -190,7 +190,7 @@ public class GooglePlusRetriever extends SocialMediaRetriever {
 	}
 	
 	@Override
-	public List<Item> retrieveKeywordsFeeds(KeywordsFeed feed, Integer maxRequests, Integer maxResults) {
+	public List<Item> retrieveKeywordsFeed(KeywordsFeed feed, Integer maxRequests, Integer maxResults) {
 		List<Item> items = new ArrayList<Item>();
 		
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
@@ -311,12 +311,12 @@ public class GooglePlusRetriever extends SocialMediaRetriever {
 		
 	}
 	@Override
-	public List<Item> retrieveLocationFeeds(LocationFeed feed, Integer maxRequests, Integer maxResults){
+	public List<Item> retrieveLocationFeed(LocationFeed feed, Integer maxRequests, Integer maxResults){
 		return new ArrayList<Item>();
     }
 	
 	@Override
-	public List<Item> retrieveListsFeeds(ListFeed feed, Integer maxRequests, Integer maxResults) {
+	public List<Item> retrieveGroupFeed(GroupFeed feed, Integer maxRequests, Integer maxResults) {
 		return new ArrayList<Item>();
 	}
 	
@@ -363,7 +363,7 @@ public class GooglePlusRetriever extends SocialMediaRetriever {
 		
 		GooglePlusRetriever retriever = new GooglePlusRetriever(credentials, 10, 10000l);
 		
-		List<Item> items = retriever.retrieveUserFeeds(feed, 1, 1000);
+		List<Item> items = retriever.retrieveAccountFeed(feed, 1, 1000);
 		for(Item item : items) {
 			System.out.println(item);
 		}

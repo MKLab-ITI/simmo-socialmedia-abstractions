@@ -34,8 +34,8 @@ import gr.iti.mklab.framework.common.domain.MediaItem;
 import gr.iti.mklab.framework.common.domain.Account;
 import gr.iti.mklab.framework.common.domain.StreamUser;
 import gr.iti.mklab.framework.common.domain.feeds.AccountFeed;
+import gr.iti.mklab.framework.common.domain.feeds.GroupFeed;
 import gr.iti.mklab.framework.common.domain.feeds.KeywordsFeed;
-import gr.iti.mklab.framework.common.domain.feeds.ListFeed;
 import gr.iti.mklab.framework.common.domain.feeds.LocationFeed;
 import gr.iti.mklab.framework.common.util.DateUtil;
 import gr.iti.mklab.framework.retrievers.SocialMediaRetriever;
@@ -76,7 +76,7 @@ public class InstagramRetriever extends SocialMediaRetriever {
 	}
 	
 	@Override
-	public List<Item> retrieveUserFeeds(AccountFeed feed, Integer maxRequests, Integer maxResults) {
+	public List<Item> retrieveAccountFeed(AccountFeed feed, Integer maxRequests, Integer maxResults) {
 		
 		List<Item> items = new ArrayList<Item>();
 		
@@ -158,7 +158,7 @@ public class InstagramRetriever extends SocialMediaRetriever {
 	}
 	
 	@Override
-	public List<Item> retrieveKeywordsFeeds(KeywordsFeed feed, Integer maxRequests, Integer maxResults) {
+	public List<Item> retrieveKeywordsFeed(KeywordsFeed feed, Integer maxRequests, Integer maxResults) {
 		List<Item> items = new ArrayList<Item>();
 		
 		Date lastItemDate = feed.getDateToRetrieve();
@@ -300,7 +300,7 @@ public class InstagramRetriever extends SocialMediaRetriever {
 	}
 	
 	@Override
-	public List<Item> retrieveLocationFeeds(LocationFeed feed, Integer maxRequests, Integer maxResults) {
+	public List<Item> retrieveLocationFeed(LocationFeed feed, Integer maxRequests, Integer maxResults) {
 		List<Item> items = new ArrayList<Item>();
 		
 		Date lastItemDate = feed.getDateToRetrieve();
@@ -395,7 +395,7 @@ public class InstagramRetriever extends SocialMediaRetriever {
     }
 	
 	@Override
-	public List<Item> retrieveListsFeeds(ListFeed feed, Integer maxRequests, Integer maxResults) {
+	public List<Item> retrieveGroupFeed(GroupFeed feed, Integer maxRequests, Integer maxResults) {
 		return new ArrayList<Item>();
 	}
 	

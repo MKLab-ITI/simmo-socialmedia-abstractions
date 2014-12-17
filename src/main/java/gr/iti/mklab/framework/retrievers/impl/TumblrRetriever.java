@@ -25,8 +25,8 @@ import gr.iti.mklab.framework.common.domain.MediaItem;
 import gr.iti.mklab.framework.common.domain.Account;
 import gr.iti.mklab.framework.common.domain.StreamUser;
 import gr.iti.mklab.framework.common.domain.feeds.AccountFeed;
+import gr.iti.mklab.framework.common.domain.feeds.GroupFeed;
 import gr.iti.mklab.framework.common.domain.feeds.KeywordsFeed;
-import gr.iti.mklab.framework.common.domain.feeds.ListFeed;
 import gr.iti.mklab.framework.common.domain.feeds.LocationFeed;
 import gr.iti.mklab.framework.retrievers.SocialMediaRetriever;
 
@@ -51,7 +51,7 @@ public class TumblrRetriever extends SocialMediaRetriever {
 
 	
 	@Override
-	public List<Item> retrieveUserFeeds(AccountFeed feed, Integer maxResults, Integer maxRequests){
+	public List<Item> retrieveAccountFeed(AccountFeed feed, Integer maxResults, Integer maxRequests){
 		List<Item> items = new ArrayList<Item>();
 		
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
@@ -137,7 +137,7 @@ public class TumblrRetriever extends SocialMediaRetriever {
 	}
 	
 	@Override
-	public List<Item> retrieveKeywordsFeeds(KeywordsFeed feed, Integer maxResults, Integer maxRequests) {
+	public List<Item> retrieveKeywordsFeed(KeywordsFeed feed, Integer maxResults, Integer maxRequests) {
 		
 		List<Item> items = new ArrayList<Item>();
 		
@@ -245,12 +245,12 @@ public class TumblrRetriever extends SocialMediaRetriever {
 	}
 
 	@Override
-	public List<Item> retrieveLocationFeeds(LocationFeed feed, Integer maxRequests, Integer maxResults) throws Exception {
+	public List<Item> retrieveLocationFeed(LocationFeed feed, Integer maxRequests, Integer maxResults) throws Exception {
 		return new ArrayList<Item>();
 	}
 	
 	@Override
-	public List<Item> retrieveListsFeeds(ListFeed feed, Integer maxResults, Integer maxRequests) {
+	public List<Item> retrieveGroupFeed(GroupFeed feed, Integer maxResults, Integer maxRequests) {
 		return new ArrayList<Item>();
 	}
 	

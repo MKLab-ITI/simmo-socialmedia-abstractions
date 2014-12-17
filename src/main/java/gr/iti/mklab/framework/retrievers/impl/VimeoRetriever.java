@@ -21,8 +21,8 @@ import gr.iti.mklab.framework.common.domain.MediaItem;
 import gr.iti.mklab.framework.common.domain.StreamUser;
 import gr.iti.mklab.framework.common.domain.feeds.AccountFeed;
 import gr.iti.mklab.framework.common.domain.feeds.Feed;
+import gr.iti.mklab.framework.common.domain.feeds.GroupFeed;
 import gr.iti.mklab.framework.common.domain.feeds.KeywordsFeed;
-import gr.iti.mklab.framework.common.domain.feeds.ListFeed;
 import gr.iti.mklab.framework.common.domain.feeds.LocationFeed;
 import gr.iti.mklab.framework.retrievers.SocialMediaRetriever;
 
@@ -84,17 +84,17 @@ public class VimeoRetriever extends SocialMediaRetriever {
 	}
 
 	@Override
-	public List<Item> retrieveKeywordsFeeds(KeywordsFeed feed) throws Exception {
+	public List<Item> retrieveKeywordsFeed(KeywordsFeed feed) throws Exception {
 		return new ArrayList<Item>();
 	}
 	
 	@Override
-	public List<Item> retrieveUserFeeds(AccountFeed feed) throws Exception {
+	public List<Item> retrieveAccountFeed(AccountFeed feed) throws Exception {
 		return new ArrayList<Item>();
 	}
 
 	@Override
-	public List<Item> retrieveLocationFeeds(LocationFeed feed) throws Exception {
+	public List<Item> retrieveLocationFeed(LocationFeed feed) throws Exception {
 		return new ArrayList<Item>();
 	}
 
@@ -105,7 +105,7 @@ public class VimeoRetriever extends SocialMediaRetriever {
 	}
 
 	@Override
-	public List<Item> retrieveListsFeeds(ListFeed feed) {
+	public List<Item> retrieveGroupFeed(GroupFeed feed) {
 		return new ArrayList<Item>();
 	}
 
@@ -116,25 +116,25 @@ public class VimeoRetriever extends SocialMediaRetriever {
 	}
 
 	@Override
-	public List<Item> retrieveKeywordsFeeds(KeywordsFeed feed,
+	public List<Item> retrieveKeywordsFeed(KeywordsFeed feed,
 			Integer maxRequests, Integer maxResults) throws Exception {
 		return null;
 	}
 
 	@Override
-	public List<Item> retrieveUserFeeds(AccountFeed feed, Integer maxRequests,
+	public List<Item> retrieveAccountFeed(AccountFeed feed, Integer maxRequests,
 			Integer maxResults) throws Exception {
 		return null;
 	}
 
 	@Override
-	public List<Item> retrieveLocationFeeds(LocationFeed feed,
+	public List<Item> retrieveLocationFeed(LocationFeed feed,
 			Integer maxRequests, Integer maxResults) throws Exception {
 		return null;
 	}
 
 	@Override
-	public List<Item> retrieveListsFeeds(ListFeed feed, Integer maxRequests,
+	public List<Item> retrieveGroupFeed(GroupFeed feed, Integer maxRequests,
 			Integer maxResults) {
 		return null;
 	}

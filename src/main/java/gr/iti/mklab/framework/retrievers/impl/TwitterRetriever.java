@@ -27,17 +27,16 @@ import gr.iti.mklab.framework.common.domain.MediaItem;
 import gr.iti.mklab.framework.common.domain.Account;
 import gr.iti.mklab.framework.common.domain.StreamUser;
 import gr.iti.mklab.framework.common.domain.feeds.AccountFeed;
-import gr.iti.mklab.framework.common.domain.feeds.Feed;
+import gr.iti.mklab.framework.common.domain.feeds.GroupFeed;
 import gr.iti.mklab.framework.common.domain.feeds.KeywordsFeed;
-import gr.iti.mklab.framework.common.domain.feeds.ListFeed;
 import gr.iti.mklab.framework.common.domain.feeds.LocationFeed;
 import gr.iti.mklab.framework.retrievers.SocialMediaRetriever;
 
 /**
  * Class responsible for retrieving Twitter content based on keywords, twitter users or locations
  * The retrieval process takes place through Twitter API (twitter4j)
- * @author ailiakop
- * @email  ailiakop@iti.gr
+ * @author Manos Schinas
+ * @email  manosetro@iti.gr
  */
 public class TwitterRetriever extends SocialMediaRetriever {
 	
@@ -65,7 +64,7 @@ public class TwitterRetriever extends SocialMediaRetriever {
 	}
 	
 	@Override
-	public List<Item> retrieveUserFeeds(AccountFeed feed, Integer maxRequests, Integer maxResults) {
+	public List<Item> retrieveAccountFeed(AccountFeed feed, Integer maxRequests, Integer maxResults) {
 		
 		List<Item> items = new ArrayList<Item>();
 		
@@ -153,7 +152,7 @@ public class TwitterRetriever extends SocialMediaRetriever {
 	}
 	
 	@Override
-	public List<Item> retrieveKeywordsFeeds(KeywordsFeed feed, Integer maxRequests, Integer maxResults) {
+	public List<Item> retrieveKeywordsFeed(KeywordsFeed feed, Integer maxRequests, Integer maxResults) {
 			
 		
 		List<Item> items = new ArrayList<Item>();
@@ -267,7 +266,7 @@ public class TwitterRetriever extends SocialMediaRetriever {
 	}
 	
 	@Override
-	public List<Item> retrieveLocationFeeds(LocationFeed feed, Integer maxRequests, Integer maxResults) {
+	public List<Item> retrieveLocationFeed(LocationFeed feed, Integer maxRequests, Integer maxResults) {
 		
 		List<Item> items = new ArrayList<Item>();
 		
@@ -350,7 +349,7 @@ public class TwitterRetriever extends SocialMediaRetriever {
 	}
 	
 	@Override
-	public List<Item> retrieveListsFeeds(ListFeed feed, Integer maxRequests, Integer maxResults) {
+	public List<Item> retrieveGroupFeed(GroupFeed feed, Integer maxRequests, Integer maxResults) {
 		
 		List<Item> items = new ArrayList<Item>();
 		
@@ -358,8 +357,8 @@ public class TwitterRetriever extends SocialMediaRetriever {
 
 		String label = feed.getLabel();
 			
-		String ownerScreenName = feed.getListOwner();
-		String slug = feed.getListSlug();
+		String ownerScreenName = feed.getGroupCreator();
+		String slug = feed.getGroupId();
 				
 		int page = 1;
 		Paging paging = new Paging(page, 200);
@@ -383,32 +382,6 @@ public class TwitterRetriever extends SocialMediaRetriever {
 			}
 		}
 		return items;
-	}
-	
-	@Override
-	public List<Item> retrieve(Feed feed,  Integer maxRequests, Integer maxResults) {
-		
-		switch(feed.getFeedtype()) {
-			case ACCOUNT:
-				AccountFeed userFeed = (AccountFeed) feed;				
-				return retrieveUserFeeds(userFeed, maxRequests, maxResults);
-				
-			case KEYWORDS:
-				KeywordsFeed keyFeed = (KeywordsFeed) feed;
-				return retrieveKeywordsFeeds(keyFeed, maxRequests, maxResults);
-			
-			case LOCATION:
-				LocationFeed locationFeed = (LocationFeed) feed;	
-				return retrieveLocationFeeds(locationFeed, maxRequests, maxResults);
-			
-			case LIST:
-				ListFeed listFeed = (ListFeed) feed;
-				return retrieveListsFeeds(listFeed, maxRequests, maxResults);
-				
-			default:
-				logger.error("Unkonwn Feed Type: " + feed);
-				return new ArrayList<Item>();
-		}
 	}
 	
 	
@@ -450,7 +423,7 @@ public class TwitterRetriever extends SocialMediaRetriever {
 	
 		AccountFeed feed = new AccountFeed(null, null, null);
 		
-		retriever.retrieveUserFeeds(feed);
+		retriever.retrieveAccountFeed(feed);
 	}
 	
 }

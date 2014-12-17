@@ -29,8 +29,8 @@ import gr.iti.mklab.framework.common.domain.Account;
 import gr.iti.mklab.framework.common.domain.StreamUser;
 import gr.iti.mklab.framework.common.domain.feeds.AccountFeed;
 import gr.iti.mklab.framework.common.domain.feeds.Feed;
+import gr.iti.mklab.framework.common.domain.feeds.GroupFeed;
 import gr.iti.mklab.framework.common.domain.feeds.KeywordsFeed;
-import gr.iti.mklab.framework.common.domain.feeds.ListFeed;
 import gr.iti.mklab.framework.common.domain.feeds.LocationFeed;
 import gr.iti.mklab.framework.retrievers.SocialMediaRetriever;
 
@@ -69,7 +69,7 @@ public class FlickrRetriever extends SocialMediaRetriever {
 	}
 	
 	@Override
-	public List<Item> retrieveUserFeeds(AccountFeed feed, Integer maxResults, Integer maxRequests) {
+	public List<Item> retrieveAccountFeed(AccountFeed feed, Integer maxResults, Integer maxRequests) {
 		
 		List<Item> items = new ArrayList<Item>();
 		
@@ -144,7 +144,7 @@ public class FlickrRetriever extends SocialMediaRetriever {
 	}
 	
 	@Override
-	public List<Item> retrieveKeywordsFeeds(KeywordsFeed feed, Integer maxResults, Integer maxRequests) {
+	public List<Item> retrieveKeywordsFeed(KeywordsFeed feed, Integer maxResults, Integer maxRequests) {
 		
 		List<Item> items = new ArrayList<Item>();
 		
@@ -235,7 +235,7 @@ public class FlickrRetriever extends SocialMediaRetriever {
 	}
 	
 	@Override
-	public List<Item> retrieveLocationFeeds(LocationFeed feed, Integer maxResults, Integer maxRequests){
+	public List<Item> retrieveLocationFeed(LocationFeed feed, Integer maxResults, Integer maxRequests){
 		
 		List<Item> items = new ArrayList<Item>();
 		
@@ -300,7 +300,7 @@ public class FlickrRetriever extends SocialMediaRetriever {
     }
 	
 	@Override
-	public List<Item> retrieveListsFeeds(ListFeed feed, Integer maxRequests, Integer maxResults) {
+	public List<Item> retrieveGroupFeed(GroupFeed feed, Integer maxRequests, Integer maxResults) {
 		return null;
 	}
 	
