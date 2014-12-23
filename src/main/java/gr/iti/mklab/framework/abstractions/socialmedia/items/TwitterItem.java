@@ -74,7 +74,7 @@ public class TwitterItem extends Item {
 		
 		//Title of the tweet
 		title = status.getText();
-		lang = status.getLang();
+		language = status.getLang();
 		
 		//Tags 
 		HashtagEntity[] hashtags = status.getHashtagEntities();
