@@ -11,7 +11,7 @@ import com.flickr4java.flickr.photos.GeoData;
 import com.flickr4java.flickr.photos.Photo;
 import com.flickr4java.flickr.tags.Tag;
 
-import gr.iti.mklab.framework.abstractions.socialmedia.users.FlickrStreamUser;
+import gr.iti.mklab.framework.abstractions.socialmedia.users.FlickrAccount;
 import gr.iti.mklab.framework.common.domain.Item;
 import gr.iti.mklab.framework.common.domain.Location;
 import gr.iti.mklab.framework.common.domain.MediaItem;
@@ -65,7 +65,7 @@ public class FlickrItem extends Item {
 		//User that posted the photo
         User user = photo.getOwner();
         if(user != null) {
-        	streamUser = new FlickrStreamUser(user);
+        	streamUser = new FlickrAccount(user);
         	uid = streamUser.getId();
         }
         

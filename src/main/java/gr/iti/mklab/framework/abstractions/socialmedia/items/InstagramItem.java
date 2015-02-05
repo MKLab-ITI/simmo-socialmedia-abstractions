@@ -4,12 +4,12 @@ import java.util.Date;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import gr.iti.mklab.framework.abstractions.socialmedia.users.InstagramAccount;
 import org.jinstagram.entity.common.Caption;
 import org.jinstagram.entity.common.ImageData;
 import org.jinstagram.entity.common.Images;
 import org.jinstagram.entity.users.feed.MediaFeedData;
 
-import gr.iti.mklab.framework.abstractions.socialmedia.users.InstagramStreamUser;
 import gr.iti.mklab.framework.common.domain.Item;
 import gr.iti.mklab.framework.common.domain.Location;
 import gr.iti.mklab.framework.common.domain.MediaItem;
@@ -56,7 +56,7 @@ public class InstagramItem extends Item {
 		
 		//User that posted the photo
         if(image.getUser() !=null){
-                streamUser = new InstagramStreamUser(image.getUser());
+                streamUser = new InstagramAccount(image.getUser());
                 uid = streamUser.getId();
         }
 		//Location
@@ -135,7 +135,7 @@ public class InstagramItem extends Item {
 
 	}
 	
-	public InstagramItem(MediaFeedData image,InstagramStreamUser user) throws MalformedURLException {
+	public InstagramItem(MediaFeedData image,InstagramAccount user) throws MalformedURLException {
 		this(image);
 		
 		//User that posted the post

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import gr.iti.mklab.framework.abstractions.socialmedia.users.InstagramAccount;
 import org.apache.log4j.Logger;
 import org.jinstagram.Instagram;
 import org.jinstagram.InstagramOembed;
@@ -28,7 +29,6 @@ import org.jinstagram.auth.model.Token;
 
 import gr.iti.mklab.framework.Credentials;
 import gr.iti.mklab.framework.abstractions.socialmedia.items.InstagramItem;
-import gr.iti.mklab.framework.abstractions.socialmedia.users.InstagramStreamUser;
 import gr.iti.mklab.framework.common.domain.Item;
 import gr.iti.mklab.framework.common.domain.Location;
 import gr.iti.mklab.framework.common.domain.MediaItem;
@@ -472,7 +472,7 @@ public class InstagramRetriever extends SocialMediaRetriever {
 				
 				User user = mediaData.getUser();
 				if(user != null) {
-					StreamUser streamUser = new InstagramStreamUser(user);
+					StreamUser streamUser = new InstagramAccount(user);
 					mediaItem.setUser(streamUser);
 					mediaItem.setUserId(streamUser.getId());
 				}
@@ -491,7 +491,7 @@ public class InstagramRetriever extends SocialMediaRetriever {
 		try {
 			UserInfo userInfo = instagram.getUserInfo(uid);
 			
-			StreamUser user = new InstagramStreamUser(userInfo.getData());
+			StreamUser user = new InstagramAccount(userInfo.getData());
 			return user;
 		}
 		catch(Exception e) {

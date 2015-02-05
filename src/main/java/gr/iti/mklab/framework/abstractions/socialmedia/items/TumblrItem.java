@@ -5,6 +5,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import gr.iti.mklab.framework.abstractions.socialmedia.users.TumblrAccount;
 import org.apache.log4j.Logger;
 
 import com.tumblr.jumblr.types.LinkPost;
@@ -15,7 +16,6 @@ import com.tumblr.jumblr.types.Post;
 import com.tumblr.jumblr.types.Video;
 import com.tumblr.jumblr.types.VideoPost;
 
-import gr.iti.mklab.framework.abstractions.socialmedia.users.TumblrStreamUser;
 import gr.iti.mklab.framework.common.domain.Item;
 import gr.iti.mklab.framework.common.domain.MediaItem;
 import gr.iti.mklab.framework.common.domain.Source;
@@ -229,7 +229,7 @@ public class TumblrItem extends Item {
 	
 	}
 	
-	public TumblrItem(Post post,TumblrStreamUser user) throws MalformedURLException{
+	public TumblrItem(Post post,TumblrAccount user) throws MalformedURLException{
 		this(post);
 		
 		//User that posted the post

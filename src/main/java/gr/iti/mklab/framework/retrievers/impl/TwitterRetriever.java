@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import gr.iti.mklab.framework.abstractions.socialmedia.users.TwitterAccount;
 import org.apache.log4j.Logger;
 
 import twitter4j.GeoLocation;
@@ -19,8 +20,7 @@ import twitter4j.User;
 import twitter4j.conf.Configuration;
 import twitter4j.conf.ConfigurationBuilder;
 import gr.iti.mklab.framework.Credentials;
-import gr.iti.mklab.framework.abstractions.socialmedia.items.TwitterItem;
-import gr.iti.mklab.framework.abstractions.socialmedia.users.TwitterStreamUser;
+import gr.iti.mklab.framework.abstractions.socialmedia.posts.TwitterItem;
 import gr.iti.mklab.framework.common.domain.Item;
 import gr.iti.mklab.framework.common.domain.Location;
 import gr.iti.mklab.framework.common.domain.MediaItem;
@@ -402,7 +402,7 @@ public class TwitterRetriever extends SocialMediaRetriever {
 			long userId = Long.parseLong(uid);
 			User user = twitter.showUser(userId);
 			
-			StreamUser streamUser = new TwitterStreamUser(user);
+			StreamUser streamUser = new TwitterAccount(user);
 			return streamUser;
 		}
 		catch(Exception e) {

@@ -6,8 +6,8 @@ import java.util.Date;
 
 import com.google.api.client.util.Key;
 
-import gr.iti.mklab.framework.abstractions.socialmedia.users.TwitPicStreamUser;
-import gr.iti.mklab.framework.abstractions.socialmedia.users.TwitPicStreamUser.TwitPicUser;
+import gr.iti.mklab.framework.abstractions.socialmedia.users.TwitPicAccount;
+import gr.iti.mklab.framework.abstractions.socialmedia.users.TwitPicAccount.TwitPicUser;
 import gr.iti.mklab.framework.common.domain.MediaItem;
 import gr.iti.mklab.framework.common.domain.StreamUser;
 
@@ -63,7 +63,7 @@ public class TwitPicMediaItem extends MediaItem {
 		this.setSize(image.width, image.height);
 		
 		this.setUserId(image.user_id);
-		StreamUser user = new TwitPicStreamUser(image.user);
+		StreamUser user = new TwitPicAccount(image.user);
 		this.setUser(user);
 	}
 

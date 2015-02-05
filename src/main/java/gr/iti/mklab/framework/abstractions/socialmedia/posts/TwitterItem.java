@@ -1,11 +1,7 @@
-package gr.iti.mklab.framework.abstractions.socialmedia.items;
+package gr.iti.mklab.framework.abstractions.socialmedia.posts;
 
-import gr.iti.mklab.framework.abstractions.socialmedia.users.TwitterStreamUser;
-import gr.iti.mklab.framework.common.domain.Item;
-import gr.iti.mklab.framework.common.domain.Location;
-import gr.iti.mklab.framework.common.domain.MediaItem;
-import gr.iti.mklab.framework.common.domain.Source;
-import gr.iti.mklab.framework.common.domain.WebPage;
+import gr.iti.mklab.framework.abstractions.socialmedia.Sources;
+import gr.iti.mklab.framework.abstractions.socialmedia.users.TwitterAccount;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -16,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import gr.iti.mklab.simmo.documents.Post;
 import twitter4j.GeoLocation;
 import twitter4j.HashtagEntity;
 import twitter4j.MediaEntity;
@@ -31,12 +28,7 @@ import twitter4j.UserMentionEntity;
  * @author manosetro
  * @email  manosetro@iti.gr
  */
-public class TwitterItem extends Item {
-	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+public class TwitterItem extends Post {
 	
     
 	public TwitterItem(Status status) {
@@ -44,19 +36,19 @@ public class TwitterItem extends Item {
 		if (status == null) return;
 		
 		//Id
-		id = Source.Twitter+"#"+status.getId();
-		//SocialNetwork Name
-		source = Source.Twitter.toString();
+        setId(Sources.TWITTER+"#"+status.getId());
+        //SocialNetwork Name
+        setPostId(Sources.TWITTER);
 		//Timestamp of the creation of the tweet
-		publicationTime = status.getCreatedAt().getTime();
+        setCreationDate(status.getCreatedAt());
 		//User that wrote the tweet
 		User user = status.getUser();
 		if (user != null) {
-			streamUser = new TwitterStreamUser(user);
+			streamUser = new TwitterAccount(user);
 			uid = streamUser.getId();
 		}
 		
-		url = "https://twitter.com/" + streamUser.getUsername() + "/statuses/" + status.getId();
+		url = "https://twitter.com/" + user.getScreenName() + "/statuses/" + status.getId();
 		
 		//Store/Update on the basis that it is an original tweet or a retweet
 		Status retweetStatus = status.getRetweetedStatus();

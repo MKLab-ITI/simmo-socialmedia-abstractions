@@ -1,4 +1,4 @@
-mklab-socialmedia-abstractions
+simmo-socialmedia-abstractions
 ========================
 
 

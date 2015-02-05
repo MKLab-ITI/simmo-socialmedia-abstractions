@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import gr.iti.mklab.framework.abstractions.socialmedia.users.FacebookAccount;
 import org.apache.log4j.Logger;
 
 import com.restfb.Connection;
@@ -24,7 +25,6 @@ import com.restfb.types.User;
 
 import gr.iti.mklab.framework.Credentials;
 import gr.iti.mklab.framework.abstractions.socialmedia.items.FacebookItem;
-import gr.iti.mklab.framework.abstractions.socialmedia.users.FacebookStreamUser;
 import gr.iti.mklab.framework.common.domain.Item;
 import gr.iti.mklab.framework.common.domain.MediaItem;
 import gr.iti.mklab.framework.common.domain.Account;
@@ -86,7 +86,7 @@ public class FacebookRetriever extends SocialMediaRetriever {
 			return items;
 		}
 		
-		FacebookStreamUser facebookUser = new FacebookStreamUser(page);
+		FacebookAccount facebookUser = new FacebookAccount(page);
 		for(List<Post> connectionPage : connection) {
 			
 			rateLimitsMonitor.check();
@@ -185,7 +185,7 @@ public class FacebookRetriever extends SocialMediaRetriever {
 							CategorizedFacebookType cUser = post.getFrom();
 							if(cUser != null) {
 								User user = facebookClient.fetchObject(cUser.getId(), User.class);
-								FacebookStreamUser facebookUser = new FacebookStreamUser(user);
+								FacebookAccount facebookUser = new FacebookAccount(user);
 								
 								fbItem = new FacebookItem(post, facebookUser);
 								fbItem.setList(label);
@@ -270,7 +270,7 @@ public class FacebookRetriever extends SocialMediaRetriever {
 			
 			CategorizedFacebookType from = photo.getFrom();
 			if(from != null) {
-				StreamUser streamUser = new FacebookStreamUser(from);
+				StreamUser streamUser = new FacebookAccount(from);
 				mediaItem.setUser(streamUser);
 				mediaItem.setUserId(streamUser.getUserid());
 			}
@@ -287,7 +287,7 @@ public class FacebookRetriever extends SocialMediaRetriever {
 	public StreamUser getStreamUser(String uid) {
 		try {
 			Page page = facebookClient.fetchObject(uid, Page.class);
-			StreamUser facebookUser = new FacebookStreamUser(page);
+			StreamUser facebookUser = new FacebookAccount(page);
 			return facebookUser;
 		}
 		catch(Exception e) {

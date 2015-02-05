@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import gr.iti.mklab.framework.abstractions.socialmedia.users.TumblrAccount;
 import org.apache.log4j.Logger;
 import org.scribe.exceptions.OAuthConnectionException;
 
@@ -20,7 +21,6 @@ import com.tumblr.jumblr.types.Post;
 
 import gr.iti.mklab.framework.Credentials;
 import gr.iti.mklab.framework.abstractions.socialmedia.items.TumblrItem;
-import gr.iti.mklab.framework.abstractions.socialmedia.users.TumblrStreamUser;
 import gr.iti.mklab.framework.common.domain.Item;
 import gr.iti.mklab.framework.common.domain.MediaItem;
 import gr.iti.mklab.framework.common.domain.Account;
@@ -72,7 +72,7 @@ public class TumblrRetriever extends SocialMediaRetriever {
 		}
 		
 		Blog blog = client.blogInfo(uName);
-		TumblrStreamUser tumblrStreamUser = new TumblrStreamUser(blog);
+		TumblrAccount tumblrStreamUser = new TumblrAccount(blog);
 		List<Post> posts;
 		Map<String,String> options = new HashMap<String,String>();
 		
@@ -212,7 +212,7 @@ public class TumblrRetriever extends SocialMediaRetriever {
 						//Get the blog
 						String blogName = post.getBlogName();
 						Blog blog = client.blogInfo(blogName);
-						TumblrStreamUser tumblrStreamUser = new TumblrStreamUser(blog);
+						TumblrAccount tumblrStreamUser = new TumblrAccount(blog);
 						
 						TumblrItem tumblrItem = null;
 						try {

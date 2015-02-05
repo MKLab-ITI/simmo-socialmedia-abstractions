@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import gr.iti.mklab.framework.abstractions.socialmedia.users.FlickrAccount;
 import org.apache.log4j.Logger;
 
 import com.flickr4java.flickr.Flickr;
@@ -22,7 +23,6 @@ import com.flickr4java.flickr.photos.SearchParameters;
 
 import gr.iti.mklab.framework.Credentials;
 import gr.iti.mklab.framework.abstractions.socialmedia.items.FlickrItem;
-import gr.iti.mklab.framework.abstractions.socialmedia.users.FlickrStreamUser;
 import gr.iti.mklab.framework.common.domain.Item;
 import gr.iti.mklab.framework.common.domain.MediaItem;
 import gr.iti.mklab.framework.common.domain.Account;
@@ -321,7 +321,7 @@ public class FlickrRetriever extends SocialMediaRetriever {
 			PeopleInterface peopleInterface = flickr.getPeopleInterface();
 			User user = peopleInterface.getInfo(uid);
 			
-			StreamUser streamUser = new FlickrStreamUser(user);
+			StreamUser streamUser = new FlickrAccount(user);
 			return streamUser;
 		}
 		catch(Exception e) {

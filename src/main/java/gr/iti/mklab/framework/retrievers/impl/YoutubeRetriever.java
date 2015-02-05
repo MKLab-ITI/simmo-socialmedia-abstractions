@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import gr.iti.mklab.framework.abstractions.socialmedia.items.YoutubeVideo;
+import gr.iti.mklab.framework.abstractions.socialmedia.users.YoutubeChannel;
 import org.apache.log4j.Logger;
 import org.joda.time.DateTime;
 
@@ -26,8 +28,6 @@ import com.google.gdata.data.youtube.YtStatistics;
 import com.google.gdata.util.ServiceException;
 
 import gr.iti.mklab.framework.Credentials;
-import gr.iti.mklab.framework.abstractions.socialmedia.items.YoutubeItem;
-import gr.iti.mklab.framework.abstractions.socialmedia.users.YoutubeStreamUser;
 import gr.iti.mklab.framework.common.domain.Item;
 import gr.iti.mklab.framework.common.domain.MediaItem;
 import gr.iti.mklab.framework.common.domain.Account;
@@ -109,7 +109,7 @@ public class YoutubeRetriever extends SocialMediaRetriever {
 					Date publicationDate = publishedDateTime.toDate();
 					
 					if(publicationDate.after(lastItemDate) && (video != null && video.getId() != null)) {
-						YoutubeItem ytItem = new YoutubeItem(video);
+						YoutubeVideo ytItem = new YoutubeVideo(video);
 						ytItem.setList(label);
 						
 						if(streamUser != null) {
@@ -214,7 +214,7 @@ public class YoutubeRetriever extends SocialMediaRetriever {
 					Date publicationDate = publishedDateTime.toDate();
 					
 					if(publicationDate.after(lastItemDate) && (video != null && video.getId() != null)){
-						YoutubeItem ytItem = new YoutubeItem(video);
+						YoutubeVideo ytItem = new YoutubeVideo(video);
 						ytItem.setList(label);
 						
 						StreamUser tempStreamUser = ytItem.getStreamUser();
@@ -378,7 +378,7 @@ public class YoutubeRetriever extends SocialMediaRetriever {
 			profileUrl = new URL(activityFeedUserUrlPrefix + uid);
 			UserProfileEntry userProfile = service.getEntry(profileUrl , UserProfileEntry.class);
 			
-			StreamUser user = new YoutubeStreamUser(userProfile);
+			StreamUser user = new YoutubeChannel(userProfile);
 			
 			return user;
 		} catch (MalformedURLException e) {
@@ -401,7 +401,7 @@ public class YoutubeRetriever extends SocialMediaRetriever {
 			profileUrl = new URL(u.getPageUrl());
 			UserProfileEntry userProfile = service.getEntry(profileUrl , UserProfileEntry.class);
 			
-			StreamUser user = new YoutubeStreamUser(userProfile);
+			StreamUser user = new YoutubeChannel(userProfile);
 			
 			return user;
 		} catch (MalformedURLException e) {

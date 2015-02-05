@@ -16,7 +16,7 @@ import com.restfb.types.Post.Comments;
 import com.restfb.types.Post.Likes;
 import com.restfb.types.User;
 
-import gr.iti.mklab.framework.abstractions.socialmedia.users.FacebookStreamUser;
+import gr.iti.mklab.framework.abstractions.socialmedia.users.FacebookAccount;
 import gr.iti.mklab.framework.common.domain.Item;
 import gr.iti.mklab.framework.common.domain.Location;
 import gr.iti.mklab.framework.common.domain.MediaItem;
@@ -345,7 +345,7 @@ public class FacebookItem extends Item {
 	}
     
 	
-	public FacebookItem(Post post, FacebookStreamUser user) {
+	public FacebookItem(Post post, FacebookAccount user) {
 		
 		this(post);
 		
@@ -391,12 +391,12 @@ public class FacebookItem extends Item {
 		
 		//User that posted the comment
 		if(user != null) {
-			streamUser = new FacebookStreamUser(user);
+			streamUser = new FacebookAccount(user);
 			uid = streamUser.getId();
 		}
 		else {
 			CategorizedFacebookType from = comment.getFrom();
-			streamUser = new FacebookStreamUser(from);
+			streamUser = new FacebookAccount(from);
 			uid = streamUser.getId();
 		}
 		

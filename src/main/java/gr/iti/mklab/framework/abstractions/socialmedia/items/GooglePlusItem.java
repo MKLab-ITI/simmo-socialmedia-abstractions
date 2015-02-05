@@ -5,6 +5,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import gr.iti.mklab.framework.abstractions.socialmedia.users.GooglePlusAccount;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -20,7 +21,6 @@ import com.google.api.services.plus.model.Activity.PlusObject.Attachments.Image;
 import com.google.api.services.plus.model.Activity.PlusObject.Attachments.Thumbnails;
 import com.google.api.services.plus.model.Comment;
 
-import gr.iti.mklab.framework.abstractions.socialmedia.users.GooglePlusStreamUser;
 import gr.iti.mklab.framework.common.domain.Item;
 import gr.iti.mklab.framework.common.domain.Location;
 import gr.iti.mklab.framework.common.domain.MediaItem;
@@ -51,7 +51,7 @@ public class GooglePlusItem extends Item {
 		//User that made the post
         Actor actor = activity.getActor();
         if(actor != null) {
-                streamUser = new GooglePlusStreamUser(actor);
+                streamUser = new GooglePlusAccount(actor);
                 uid = streamUser.getId();
         }
 		//Location
@@ -324,7 +324,7 @@ public class GooglePlusItem extends Item {
 		
 	}
 	
-	public GooglePlusItem(Activity activity, GooglePlusStreamUser user) {
+	public GooglePlusItem(Activity activity, GooglePlusAccount user) {
 		this(activity);
 		
 		//User that posted the post
@@ -335,7 +335,7 @@ public class GooglePlusItem extends Item {
 		
 	}
 	
-	public GooglePlusItem(Comment comment, Activity activity, GooglePlusStreamUser user){
+	public GooglePlusItem(Comment comment, Activity activity, GooglePlusAccount user){
 		
 		if (comment == null) return;
 		

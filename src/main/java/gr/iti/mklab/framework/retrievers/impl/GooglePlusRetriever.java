@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import gr.iti.mklab.framework.abstractions.socialmedia.users.GooglePlusAccount;
 import org.apache.log4j.Logger;
 
 import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
@@ -28,7 +29,6 @@ import com.google.api.services.plus.model.Person;
 
 import gr.iti.mklab.framework.Credentials;
 import gr.iti.mklab.framework.abstractions.socialmedia.items.GooglePlusItem;
-import gr.iti.mklab.framework.abstractions.socialmedia.users.GooglePlusStreamUser;
 import gr.iti.mklab.framework.common.domain.Item;
 import gr.iti.mklab.framework.common.domain.MediaItem;
 import gr.iti.mklab.framework.common.domain.Account;
@@ -340,7 +340,7 @@ public class GooglePlusRetriever extends SocialMediaRetriever {
 			Get getRequest = peopleSrv.get(uid);
 			Person person = getRequest.execute();
 			
-			StreamUser streamUser = new GooglePlusStreamUser(person);
+			StreamUser streamUser = new GooglePlusAccount(person);
 			
 			return streamUser;
 		} catch (IOException e) {
