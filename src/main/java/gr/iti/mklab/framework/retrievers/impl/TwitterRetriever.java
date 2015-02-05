@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import gr.iti.mklab.framework.abstractions.socialmedia.posts.TwitterPost;
 import gr.iti.mklab.framework.abstractions.socialmedia.users.TwitterAccount;
 import org.apache.log4j.Logger;
 
@@ -20,7 +21,6 @@ import twitter4j.User;
 import twitter4j.conf.Configuration;
 import twitter4j.conf.ConfigurationBuilder;
 import gr.iti.mklab.framework.Credentials;
-import gr.iti.mklab.framework.abstractions.socialmedia.posts.TwitterItem;
 import gr.iti.mklab.framework.common.domain.Item;
 import gr.iti.mklab.framework.common.domain.Location;
 import gr.iti.mklab.framework.common.domain.MediaItem;
@@ -118,7 +118,7 @@ public class TwitterRetriever extends SocialMediaRetriever {
 							}
 						}
 						
-						TwitterItem twitterItem = new TwitterItem(status);
+						TwitterPost twitterItem = new TwitterPost(status);
 						twitterItem.setList(label);
 						
 						items.add(twitterItem);
@@ -226,7 +226,7 @@ public class TwitterRetriever extends SocialMediaRetriever {
 							}
 						}
 						
-						TwitterItem twitterItem = new TwitterItem(status);
+						TwitterPost twitterItem = new TwitterPost(status);
 						twitterItem.setList(label);
 						
 						items.add(twitterItem);
@@ -310,7 +310,7 @@ public class TwitterRetriever extends SocialMediaRetriever {
 							}
 						}
 						
-						TwitterItem twitterItem = new TwitterItem(status);
+						TwitterPost twitterItem = new TwitterPost(status);
 						
 						items.add(twitterItem);
 					}
@@ -369,7 +369,7 @@ public class TwitterRetriever extends SocialMediaRetriever {
 				ResponseList<Status> response = twitter.getUserListStatuses(ownerScreenName, slug, paging);
 				for(Status status : response) {
 					if(status != null) {
-						TwitterItem twitterItem = new TwitterItem(status);
+						TwitterPost twitterItem = new TwitterPost(status);
 						twitterItem.setList(label);
 						
 						items.add(twitterItem);

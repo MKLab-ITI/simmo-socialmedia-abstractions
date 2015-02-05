@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import gr.iti.mklab.framework.abstractions.socialmedia.posts.TumblrPost;
 import gr.iti.mklab.framework.abstractions.socialmedia.users.TumblrAccount;
 import org.apache.log4j.Logger;
 import org.scribe.exceptions.OAuthConnectionException;
@@ -20,7 +21,6 @@ import com.tumblr.jumblr.types.Blog;
 import com.tumblr.jumblr.types.Post;
 
 import gr.iti.mklab.framework.Credentials;
-import gr.iti.mklab.framework.abstractions.socialmedia.items.TumblrItem;
 import gr.iti.mklab.framework.common.domain.Item;
 import gr.iti.mklab.framework.common.domain.MediaItem;
 import gr.iti.mklab.framework.common.domain.Account;
@@ -107,9 +107,9 @@ public class TumblrRetriever extends SocialMediaRetriever {
 					
 					if(publicationDate.after(lastItemDate) && post != null && post.getId() != null){
 						
-						TumblrItem tumblrItem = null;
+						TumblrPost tumblrItem = null;
 						try {
-							tumblrItem = new TumblrItem(post,tumblrStreamUser);
+							tumblrItem = new TumblrPost(post,tumblrStreamUser);
 						} catch (MalformedURLException e) {
 							
 							return items;
@@ -214,9 +214,9 @@ public class TumblrRetriever extends SocialMediaRetriever {
 						Blog blog = client.blogInfo(blogName);
 						TumblrAccount tumblrStreamUser = new TumblrAccount(blog);
 						
-						TumblrItem tumblrItem = null;
+						TumblrPost tumblrItem = null;
 						try {
-							tumblrItem = new TumblrItem(post, tumblrStreamUser);
+							tumblrItem = new TumblrPost(post, tumblrStreamUser);
 						} catch (MalformedURLException e) {
 							return items;
 						}
