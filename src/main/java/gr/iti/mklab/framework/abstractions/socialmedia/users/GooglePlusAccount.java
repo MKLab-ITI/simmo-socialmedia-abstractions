@@ -9,7 +9,7 @@ import org.mongodb.morphia.annotations.Entity;
 /**
  * Class that holds the information of a google plus user
  *
- * @author kandreadou
+ * @author ailiakop, kandreadou
  */
 @Entity("UserAccount")
 public class GooglePlusAccount extends UserAccount {
@@ -32,7 +32,7 @@ public class GooglePlusAccount extends UserAccount {
         username = actor.getDisplayName();
 
         //streamId
-        streamId = Sources.GOOGLE_PLUS;
+        source = Sources.GOOGLE_PLUS;
 
         //Profile picture of the user
         avatarBig = actor.getImage().getUrl();
@@ -65,7 +65,7 @@ public class GooglePlusAccount extends UserAccount {
         description = person.getTagline();
 
         //streamId
-        streamId = Sources.GOOGLE_PLUS;
+        source = Sources.GOOGLE_PLUS;
 
         //Profile picture of the user
         avatarBig = person.getImage().getUrl();

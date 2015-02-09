@@ -28,7 +28,7 @@ import twitter4j.UserMentionEntity;
 /**
  * Class that holds the information of a twitter status
  *
- * @author manosetro
+ * @author manosetro, kandreadou
  * @email manosetro@iti.gr
  */
 public class TwitterPost extends Post {
@@ -47,7 +47,7 @@ public class TwitterPost extends Post {
         //User that wrote the tweet
         User user = status.getUser();
         if (user != null) {
-            this.user = new TwitterAccount(user);
+            contributor = new TwitterAccount(user);
         }
 
         url = "https://twitter.com/" + user.getScreenName() + "/statuses/" + status.getId();
@@ -59,12 +59,21 @@ public class TwitterPost extends Post {
         addAnnotation(original);
 
         if (retweetStatus != null) {
-
-            Post reference = new Post();
-            reference.setId(Sources.TWITTER + "#" + retweetStatus.getId());
-            //TODO: set user to the reference post
-            //super.referencedUser = retweetStatus.getUser().getScreenName();
-            //super.referencedUserId = Source.Twitter + "#" + retweetStatus.getUser().getId();
+            User u = retweetStatus.getUser();
+            UserAccount retweeter = new UserAccount();
+            retweeter.setId(Sources.TWITTER + "#" + u.getId());
+            retweeter.setSource(Sources.TWITTER);
+            retweeter.setName(u.getScreenName());
+            retweeter.setDescription(u.getDescription());
+            retweeter.setAvatarBig(u.getProfileImageURL());
+            retweeter.setNumFollowers(u.getFollowersCount());
+            retweeter.setNumFriends(u.getFriendsCount());
+            retweeter.setNumFavourites(u.getFavouritesCount());
+            retweeter.setNumListed(u.getListedCount());
+            retweeter.setVerified(u.isVerified());
+            shared = retweeter;
+            //Post reference = new Post();
+            //reference.setId(Sources.TWITTER + "#" + retweetStatus.getId());
         }
 
         //Title of the tweet
@@ -83,14 +92,16 @@ public class TwitterPost extends Post {
             UserAccount mentioned = new UserAccount();
             mentioned.setId(Sources.TWITTER + "#" + mention.getId());
             mentioned.setName(mention.getScreenName());
-            mentioned.setStreamId(Sources.TWITTER);
+            mentioned.setSource(Sources.TWITTER);
             Mention m = new Mention(this, mentioned);
-            //TODO: add this mention somewhere
+            addAssociation(m);
         });
 
-        /*if (status.getInReplyToUserId() > 0) {
-            super.inReply = Source.Twitter + "#" + status.getInReplyToUserId();
-        }*/
+        if (status.getInReplyToUserId() > 0) {
+            UserAccount inReplyTo = new UserAccount();
+            inReplyTo.setId(Sources.TWITTER + "#" + status.getInReplyToUserId());
+            replied = inReplyTo;
+        }
 
         //Popularity
         numLikes = status.getFavoriteCount();
@@ -139,7 +150,7 @@ public class TwitterPost extends Post {
                     webpage.setId(id);
                     webpage.setSource(Sources.TWITTER);
                     webpage.setCreationDate(status.getCreatedAt());
-                    references.add(new Reference(webpage, Reference.ReferenceType.LINK));
+                    addAssociation(new Reference(this, webpage, Reference.ReferenceType.LINK));
                 } catch (Exception e) {
                     continue;
                 }
@@ -171,7 +182,7 @@ public class TwitterPost extends Post {
                     Image img = new Image();
                     img.setUrl(temp_url.toString());
                     img.setId(Sources.TWITTER + "#" + mediaEntity.getId());
-                    img.setStreamId(Sources.TWITTER);
+                    img.setSource(Sources.TWITTER);
                     img.setCreationDate(status.getCreatedAt());
                     //PageUrl
                     img.setWebPageUrl(pageUrl);
@@ -183,17 +194,15 @@ public class TwitterPost extends Post {
                     //Description
                     img.setDescription(description);
                     //Tags
-                    //img.setTags(tags);
+                    img.setTags(tags);
                     //Popularity
                     //img.setLikes(likes);
                     //img.setShares(shares);
                     //Author
-                    //if(streamUser != null) {
-                    //    mediaItem.setUser(streamUser);
-                    //    mediaItem.setUserId(streamUser.getId());
-                    //}
+                    img.setContributor(getContributor());
                     //Location
                     img.setLocation(location);
+                    img.setSourceDocumentId(id);
 
                     //Size
                     Map<Integer, Size> sizes = mediaEntity.getSizes();

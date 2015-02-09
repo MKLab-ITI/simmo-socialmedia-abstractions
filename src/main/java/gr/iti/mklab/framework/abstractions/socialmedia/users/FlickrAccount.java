@@ -9,7 +9,7 @@ import org.mongodb.morphia.annotations.Entity;
 /**
  * Class that holds the information of a flickr user
  *
- * @author kandreadou
+ * @author ailiakop, kandreadou
  */
 @Entity("UserAccount")
 public class FlickrAccount extends UserAccount {
@@ -27,7 +27,7 @@ public class FlickrAccount extends UserAccount {
         //The username of the user
         username = user.getUsername();
         //streamId
-        streamId = Sources.FLICKR;
+        source = Sources.FLICKR;
         //Profile picture of the user
         int iconFarm = user.getIconFarm();
         int iconServer = user.getIconServer();

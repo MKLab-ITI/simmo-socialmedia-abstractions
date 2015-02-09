@@ -25,8 +25,7 @@ import com.tumblr.jumblr.types.VideoPost;
 /**
  * Class that holds the information of a tumblr post
  *
- * @author ailiakop
- * @email ailiakop@iti.gr
+ * @author ailiakop, kandreadou
  */
 public class TumblrPost extends gr.iti.mklab.simmo.documents.Post {
 
@@ -39,7 +38,7 @@ public class TumblrPost extends gr.iti.mklab.simmo.documents.Post {
             return;
         }
 
-        setId(Sources.TUMBLR + "#" + post.getId());
+        id = Sources.TUMBLR + "#" + post.getId();
 
         //SocialNetwork Name
         type = Sources.TUMBLR.toString();
@@ -83,19 +82,16 @@ public class TumblrPost extends gr.iti.mklab.simmo.documents.Post {
                         Image img = new Image();
                         img.setUrl(url.toString());
                         img.setId(Sources.TUMBLR + "#" + post.getId() + "_" + number);
-                        img.setStreamId(Sources.TUMBLR);
+                        img.setSource(Sources.TUMBLR);
                         img.setCreationDate(creationDate);
                         img.setWebPageUrl(pageURL);
                         img.setTitle(title);
                         img.setDescription(caption);
                         img.setThumbnail(thumbnail);
+                        img.setTags(tags);
+                        img.setContributor(getContributor());
+                        img.setSourceDocumentId(id);
                         items.add(img);
-
-                        //Author
-                        //mediaItem.setUser(streamUser);
-
-                        //Tags
-                        //mediaItem.setTags(tags);
 
                     }
                 }
@@ -168,7 +164,7 @@ public class TumblrPost extends gr.iti.mklab.simmo.documents.Post {
             video.setUrl(url.toString());
             video.setId(Sources.TUMBLR + "#" + post.getId() + "_" + number);
             //SocialNetwork Name
-            video.setStreamId(Sources.TUMBLR);
+            video.setSource(Sources.TUMBLR);
             //Time of publication
             video.setCreationDate(creationDate);
             //PageUrl
@@ -177,6 +173,9 @@ public class TumblrPost extends gr.iti.mklab.simmo.documents.Post {
             video.setThumbnail(videoThumbnail);
             //Title
             video.setTitle(title);
+            video.setSourceDocumentId(id);
+            video.setTags(tags);
+            video.setContributor(getContributor());
 
             items.add(video);
 
@@ -189,7 +188,7 @@ public class TumblrPost extends gr.iti.mklab.simmo.documents.Post {
                 p.setUrl(link);
                 p.setId(id);
                 p.setSource(Sources.TUMBLR);
-                references.add(new Reference(p, Reference.ReferenceType.LINK));
+                addAssociation(new Reference(this, p, Reference.ReferenceType.LINK));
             }
         }
 
@@ -197,10 +196,7 @@ public class TumblrPost extends gr.iti.mklab.simmo.documents.Post {
 
     public TumblrPost(Post post, TumblrAccount user) throws MalformedURLException {
         this(post);
-
-        //User that posted the post
-        //streamUser = user;
-        //uid = streamUser.getId();
+        setContributor(user);
 
     }
 }

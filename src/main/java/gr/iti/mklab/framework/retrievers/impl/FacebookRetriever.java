@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import gr.iti.mklab.framework.abstractions.socialmedia.posts.FacebookPost;
 import gr.iti.mklab.framework.abstractions.socialmedia.users.FacebookAccount;
 import org.apache.log4j.Logger;
 
@@ -24,7 +25,6 @@ import com.restfb.types.Post.Comments;
 import com.restfb.types.User;
 
 import gr.iti.mklab.framework.Credentials;
-import gr.iti.mklab.framework.abstractions.socialmedia.items.FacebookItem;
 import gr.iti.mklab.framework.common.domain.Item;
 import gr.iti.mklab.framework.common.domain.MediaItem;
 import gr.iti.mklab.framework.common.domain.Account;
@@ -97,7 +97,7 @@ public class FacebookRetriever extends SocialMediaRetriever {
 				Date publicationDate = post.getCreatedTime();
 				
 				if(publicationDate.after(lastItemDate) && post!=null && post.getId() != null) {
-					FacebookItem facebookUpdate = new FacebookItem(post, facebookUser);
+					FacebookPost facebookUpdate = new FacebookPost(post, facebookUser);
 					facebookUpdate.setList(label);
 					
 					items.add(facebookUpdate);
@@ -105,7 +105,7 @@ public class FacebookRetriever extends SocialMediaRetriever {
 				    Comments comments = post.getComments();
 				    if(comments != null) {
 				    	for(Comment comment : comments.getData()) {
-			    			FacebookItem facebookComment = new FacebookItem(comment, post, null);
+			    			FacebookPost facebookComment = new FacebookPost(comment, post, null);
 			    			facebookComment.setList(label);
 			    			
 			    			items.add(facebookComment);
@@ -179,7 +179,7 @@ public class FacebookRetriever extends SocialMediaRetriever {
 					try {
 						if(publicationDate.after(lastItemDate) && post!=null && post.getId()!=null) {
 							
-							FacebookItem fbItem;
+							FacebookPost fbItem;
 							
 							//Get the user of the post
 							CategorizedFacebookType cUser = post.getFrom();
@@ -187,11 +187,11 @@ public class FacebookRetriever extends SocialMediaRetriever {
 								User user = facebookClient.fetchObject(cUser.getId(), User.class);
 								FacebookAccount facebookUser = new FacebookAccount(user);
 								
-								fbItem = new FacebookItem(post, facebookUser);
+								fbItem = new FacebookPost(post, facebookUser);
 								fbItem.setList(label);
 							}
 							else {
-								fbItem = new FacebookItem(post);
+								fbItem = new FacebookPost(post);
 								fbItem.setList(label);
 							}
 							

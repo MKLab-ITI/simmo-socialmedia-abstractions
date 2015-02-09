@@ -8,7 +8,7 @@ import twitter4j.User;
 /**
  * Class that holds the information of a twitter user
  *
- * @author kandreadou
+ * @author manosetro, kandreadou
  */
 @Entity("UserAccount")
 public class TwitterAccount extends UserAccount {
@@ -25,7 +25,7 @@ public class TwitterAccount extends UserAccount {
         //The username of the user
         username = user.getScreenName();
         //streamId
-        streamId = Sources.TWITTER;
+        source = Sources.TWITTER;
         //The description of the user
         description = user.getDescription();
         //Profile picture of the user

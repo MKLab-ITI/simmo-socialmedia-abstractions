@@ -12,7 +12,7 @@ import org.mongodb.morphia.annotations.Entity;
 /**
  * Class that holds the information of a facebook user or a facebook page
  *
- * @author kandreadou
+ * @author ailiakop, kandreadou
  */
 @Entity("UserAccount")
 public class FacebookAccount extends UserAccount {
@@ -45,7 +45,7 @@ public class FacebookAccount extends UserAccount {
         username = user.getUsername();
 
         //streamId
-        streamId = Sources.FACEBOOK;
+        source = Sources.FACEBOOK;
 
         //The description of the user
         description = user.getAbout();
@@ -94,7 +94,7 @@ public class FacebookAccount extends UserAccount {
         username = page.getUsername();
 
         //The name of the Social Network
-        streamId = Sources.FACEBOOK;
+        source = Sources.FACEBOOK;
 
         //The description of the page
         description = page.getAbout();

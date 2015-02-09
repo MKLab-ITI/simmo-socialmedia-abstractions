@@ -10,14 +10,14 @@ import org.mongodb.morphia.annotations.Entity;
 /**
  * Class that holds the information of a youtube user
  *
- * @author kandreadou
+ * @author ailiakop, kandreadou
  */
 @Entity("UserAccount")
 public class YoutubeChannel extends UserAccount {
 
     public YoutubeChannel(Channel c) {
         setId(Sources.YOUTUBE + '#' + c.getId());
-        setStreamId(Sources.YOUTUBE);
+        source = Sources.YOUTUBE;
         name = c.getSnippet().getTitle();
         description = c.getSnippet().getDescription();
         com.google.api.services.youtube.model.Thumbnail t = c.getSnippet().getThumbnails().getDefault();

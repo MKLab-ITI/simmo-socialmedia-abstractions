@@ -10,7 +10,7 @@ import org.mongodb.morphia.annotations.Entity;
 /**
  * Class that holds the information of a tumblr user
  *
- * @author kandreadou
+ * @author ailiakop, kandreadou
  */
 @Entity("UserAccount")
 public class TumblrAccount extends UserAccount {
@@ -24,7 +24,7 @@ public class TumblrAccount extends UserAccount {
         //The name of the blog
         name = blog.getName();
         //streamId
-        streamId = Sources.TUMBLR;
+        source = Sources.TUMBLR;
         //The description of the blog
         blog.getDescription();
         //Profile picture of the blog
@@ -48,7 +48,7 @@ public class TumblrAccount extends UserAccount {
         name = user.getName();
 
         //streamId
-        streamId = Sources.TUMBLR;
+        source = Sources.TUMBLR;
         //Profile picture of the blog
         numItems = user.getBlogs().size();
 

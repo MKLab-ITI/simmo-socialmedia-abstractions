@@ -10,7 +10,7 @@ import org.mongodb.morphia.annotations.Entity;
 /**
  * Class that holds the information of an instagram user
  *
- * @author kandreadou
+ * @author ailiakop, kandreadou
  */
 @Entity("UserAccount")
 public class InstagramAccount extends UserAccount {
@@ -29,7 +29,7 @@ public class InstagramAccount extends UserAccount {
         //The username of the user
         username = user.getUserName();
         //streamId
-        streamId = Sources.INSTAGRAM;
+        source = Sources.INSTAGRAM;
         //The description of the user
         description = user.getBio();
         //Profile picture of the user
@@ -53,7 +53,7 @@ public class InstagramAccount extends UserAccount {
         //The username of the user
         username = user.getUsername();
         //streamId
-        streamId = Sources.INSTAGRAM;
+        source = Sources.INSTAGRAM;
         //The description of the user
         description = user.getBio();
         //Profile picture of the user
