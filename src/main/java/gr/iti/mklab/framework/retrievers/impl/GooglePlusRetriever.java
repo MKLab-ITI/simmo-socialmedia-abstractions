@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import gr.iti.mklab.framework.abstractions.socialmedia.posts.GooglePlusPost;
 import gr.iti.mklab.framework.abstractions.socialmedia.users.GooglePlusAccount;
 import org.apache.log4j.Logger;
 
@@ -28,7 +29,6 @@ import com.google.api.services.plus.model.PeopleFeed;
 import com.google.api.services.plus.model.Person;
 
 import gr.iti.mklab.framework.Credentials;
-import gr.iti.mklab.framework.abstractions.socialmedia.items.GooglePlusItem;
 import gr.iti.mklab.framework.common.domain.Item;
 import gr.iti.mklab.framework.common.domain.MediaItem;
 import gr.iti.mklab.framework.common.domain.Account;
@@ -149,7 +149,7 @@ public class GooglePlusRetriever extends SocialMediaRetriever {
 					
 					if(publicationDate.after(lastItemDate) && activity != null && activity.getId() != null
 							&& items.size() < maxResults) {
-						GooglePlusItem googlePlusItem = new GooglePlusItem(activity);
+						GooglePlusPost googlePlusItem = new GooglePlusPost(activity);
 						googlePlusItem.setList(label);
 						
 						if(streamUser != null) {
@@ -257,7 +257,7 @@ public class GooglePlusRetriever extends SocialMediaRetriever {
 					}
 					
 					if(publicationDate.after(lastItemDate) && activity != null && activity.getId() != null) {
-						GooglePlusItem googlePlusItem = new GooglePlusItem(activity);
+						GooglePlusPost googlePlusItem = new GooglePlusPost(activity);
 						googlePlusItem.setList(label);
 						
 						String userID = googlePlusItem.getStreamUser().getUserid();

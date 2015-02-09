@@ -15,12 +15,14 @@ import gr.iti.mklab.simmo.associations.Reference;
 import gr.iti.mklab.simmo.documents.Webpage;
 import gr.iti.mklab.simmo.items.Image;
 import gr.iti.mklab.simmo.items.Text;
+import org.mongodb.morphia.annotations.Entity;
 
 /**
  * Class that holds the information of a facebook post
  *
  * @author ailiakop, kandreadou
  */
+@Entity("Post")
 public class FacebookPost extends gr.iti.mklab.simmo.documents.Post {
 
 

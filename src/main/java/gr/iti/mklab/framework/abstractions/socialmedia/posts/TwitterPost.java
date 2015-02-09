@@ -15,6 +15,7 @@ import gr.iti.mklab.simmo.documents.Post;
 import gr.iti.mklab.simmo.documents.Webpage;
 import gr.iti.mklab.simmo.items.Image;
 import gr.iti.mklab.simmo.util.Location;
+import org.mongodb.morphia.annotations.Entity;
 import twitter4j.GeoLocation;
 import twitter4j.HashtagEntity;
 import twitter4j.MediaEntity;
@@ -31,6 +32,7 @@ import twitter4j.UserMentionEntity;
  * @author manosetro, kandreadou
  * @email manosetro@iti.gr
  */
+@Entity("Post")
 public class TwitterPost extends Post {
 
 

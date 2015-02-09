@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import gr.iti.mklab.framework.abstractions.socialmedia.posts.InstagramPost;
 import gr.iti.mklab.framework.abstractions.socialmedia.users.InstagramAccount;
 import org.apache.log4j.Logger;
 import org.jinstagram.Instagram;
@@ -28,7 +29,6 @@ import org.jinstagram.entity.users.feed.UserFeedData;
 import org.jinstagram.auth.model.Token;
 
 import gr.iti.mklab.framework.Credentials;
-import gr.iti.mklab.framework.abstractions.socialmedia.items.InstagramItem;
 import gr.iti.mklab.framework.common.domain.Item;
 import gr.iti.mklab.framework.common.domain.Location;
 import gr.iti.mklab.framework.common.domain.MediaItem;
@@ -124,7 +124,7 @@ public class InstagramRetriever extends SocialMediaRetriever {
     					}
 						
 						if(mfeed != null && mfeed.getId() != null) {
-							InstagramItem instagramItem = new InstagramItem(mfeed);
+							InstagramPost instagramItem = new InstagramPost(mfeed);
 							instagramItem.setList(label);
 								
 							items.add(instagramItem);
@@ -220,9 +220,9 @@ public class InstagramRetriever extends SocialMediaRetriever {
 				}
 				
 				if(mfeed != null && mfeed.getId() != null){
-					InstagramItem instagramItem;
+					InstagramPost instagramItem;
 					try {
-						instagramItem = new InstagramItem(mfeed);
+						instagramItem = new InstagramPost(mfeed);
 						instagramItem.setList(label);
 						
 					} catch (MalformedURLException e) {
@@ -258,7 +258,7 @@ public class InstagramRetriever extends SocialMediaRetriever {
 								}
 								
 								if(mfeed != null && mfeed.getId() != null){
-									InstagramItem instagramItem = new InstagramItem(mfeed);
+									InstagramPost instagramItem = new InstagramPost(mfeed);
 									instagramItem.setList(label);
 									
 									items.add(instagramItem);
@@ -352,7 +352,7 @@ public class InstagramRetriever extends SocialMediaRetriever {
         					}
         					
         					if((mfeed != null && mfeed.getId() != null)){
-        						InstagramItem instagramItem = new InstagramItem(mfeed);
+        						InstagramPost instagramItem = new InstagramPost(mfeed);
         						
         						items.add(instagramItem);
         					}

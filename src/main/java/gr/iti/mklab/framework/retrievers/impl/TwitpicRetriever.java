@@ -15,8 +15,8 @@ import com.google.api.client.json.JsonObjectParser;
 import com.google.api.client.json.jackson2.JacksonFactory;
 
 import gr.iti.mklab.framework.Credentials;
-import gr.iti.mklab.framework.abstractions.socialmedia.mediaitems.TwitPicMediaItem.TwitPicImage;
-import gr.iti.mklab.framework.abstractions.socialmedia.mediaitems.TwitPicMediaItem;
+import gr.iti.mklab.framework.abstractions.socialmedia.media.TwitPicImage;
+import gr.iti.mklab.framework.abstractions.socialmedia.media.TwitPicImage.TwitPicImage;
 import gr.iti.mklab.framework.common.domain.Item;
 import gr.iti.mklab.framework.common.domain.MediaItem;
 import gr.iti.mklab.framework.common.domain.StreamUser;
@@ -65,7 +65,7 @@ public class TwitpicRetriever extends SocialMediaRetriever {
 			HttpResponse response = request.execute();
 			TwitPicImage image = response.parseAs(TwitPicImage.class);
 			if(image != null) {
-				MediaItem mediaItem = new TwitPicMediaItem(image);
+				MediaItem mediaItem = new TwitPicImage(image);
 				return mediaItem;
 			}
 		} catch (Exception e) {

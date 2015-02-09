@@ -1,24 +1,19 @@
-package gr.iti.mklab.framework.abstractions.socialmedia.items;
+package gr.iti.mklab.framework.abstractions.socialmedia.posts;
 
+import gr.iti.mklab.simmo.documents.Post;
 import org.jsoup.Jsoup;
 
 import com.sun.syndication.feed.synd.SyndEntry;
-
-import gr.iti.mklab.framework.common.domain.Item;
+import org.mongodb.morphia.annotations.Entity;
 
 /**
  * Class that holds the information of an RSS feed
- * @author ailiakop
- * @author ailiakop@iti.gr
+ * @author ailiakop, kandreadou
  */
-public class RSSItem extends Item {
-	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1413164596016357110L;
+@Entity("Post")
+public class RSSPost extends Post {
 
-	public RSSItem(SyndEntry rssEntry) {
+	public RSSPost(SyndEntry rssEntry) {
 		
 		if(rssEntry == null || rssEntry.getLink() == null)
 			return;
@@ -31,7 +26,7 @@ public class RSSItem extends Item {
 			description = extractDocumentContent(rssEntry.getDescription().getValue());
 		//Document's time of publication
 		
-		publicationTime = rssEntry.getPublishedDate().getTime();
+		creationDate = rssEntry.getPublishedDate();
 		//The url where the document can be found
 		url = rssEntry.getLink();
 		

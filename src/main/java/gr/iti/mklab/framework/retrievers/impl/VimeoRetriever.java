@@ -15,8 +15,7 @@ import com.google.api.client.json.JsonObjectParser;
 import com.google.api.client.json.jackson2.JacksonFactory;
 
 import gr.iti.mklab.framework.Credentials;
-import gr.iti.mklab.framework.abstractions.socialmedia.mediaitems.VimeoMediaItem;
-import gr.iti.mklab.framework.abstractions.socialmedia.mediaitems.VimeoMediaItem.VimeoVideo;
+import gr.iti.mklab.framework.abstractions.socialmedia.media.VimeoVideo;
 import gr.iti.mklab.framework.common.domain.Item;
 import gr.iti.mklab.framework.common.domain.MediaItem;
 import gr.iti.mklab.framework.common.domain.StreamUser;
@@ -61,9 +60,9 @@ public class VimeoRetriever extends SocialMediaRetriever {
 		try {
 			request = requestFactory.buildGetRequest(url);
 			HttpResponse response = request.execute();
-			VimeoVideo[] videos = response.parseAs(VimeoVideo[].class);
+			VimeoVideo.VimeoVideo[] videos = response.parseAs(VimeoVideo.VimeoVideo[].class);
 			if(videos != null && videos.length>0) {
-				MediaItem mediaItem = new VimeoMediaItem(videos[0]);
+				MediaItem mediaItem = new VimeoVideo(videos[0]);
 				return mediaItem;
 			}
 		} catch (Exception e) {

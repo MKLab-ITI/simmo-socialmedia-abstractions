@@ -15,8 +15,8 @@ import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.util.Key;
 
 import gr.iti.mklab.framework.Credentials;
-import gr.iti.mklab.framework.abstractions.socialmedia.mediaitems.DailyMotionMediaItem;
-import gr.iti.mklab.framework.abstractions.socialmedia.mediaitems.DailyMotionMediaItem.DailyMotionVideo;
+import gr.iti.mklab.framework.abstractions.socialmedia.media.DailyMotionVideo;
+import gr.iti.mklab.framework.abstractions.socialmedia.media.DailyMotionVideo.DailyMotionVideo;
 import gr.iti.mklab.framework.common.domain.Item;
 import gr.iti.mklab.framework.common.domain.MediaItem;
 import gr.iti.mklab.framework.common.domain.StreamUser;
@@ -79,7 +79,7 @@ public class DailyMotionRetriever extends SocialMediaRetriever {
 			DailyMotionVideo video = request.execute().parseAs(DailyMotionVideo.class);
 			
 			if(video != null) {
-				MediaItem mediaItem = new DailyMotionMediaItem(video);
+				MediaItem mediaItem = new DailyMotionVideo(video);
 				return mediaItem;
 			}
 			

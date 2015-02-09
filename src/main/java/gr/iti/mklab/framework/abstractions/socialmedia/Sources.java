@@ -18,4 +18,10 @@ public class Sources {
     public final static String FLICKR = "Flickr";
 
     public final static String FACEBOOK = "Facebook";
+
+    public final static String VIMEO = "Vimeo";
+
+    public final static String TWITPIC = "TwitPic";
+
+    public final static String DAILYMOTION = "DailyMotion";
 }

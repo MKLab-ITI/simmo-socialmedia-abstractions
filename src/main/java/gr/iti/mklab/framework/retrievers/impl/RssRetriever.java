@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import gr.iti.mklab.framework.abstractions.socialmedia.posts.RSSPost;
 import org.apache.log4j.Logger;
 
 import com.sun.syndication.feed.synd.SyndEntry;
@@ -14,7 +15,6 @@ import com.sun.syndication.feed.synd.SyndFeed;
 import com.sun.syndication.io.SyndFeedInput;
 import com.sun.syndication.io.XmlReader;
 
-import gr.iti.mklab.framework.abstractions.socialmedia.items.RSSItem;
 import gr.iti.mklab.framework.common.domain.Item;
 import gr.iti.mklab.framework.common.domain.feeds.Feed;
 import gr.iti.mklab.framework.common.domain.feeds.URLFeed;
@@ -72,7 +72,7 @@ public class RssRetriever implements Retriever {
 					if(rss.getPublishedDate() != null && rss.getPublishedDate().getTime()>0 && 
 							Math.abs(System.currentTimeMillis() - rss.getPublishedDate().getTime())<oneMonthPeriod) {
 								
-						RSSItem rssItem = new RSSItem(rss);
+						RSSPost rssItem = new RSSPost(rss);
 								
 						String label = feed.getLabel();
 						rssItem.setList(label);

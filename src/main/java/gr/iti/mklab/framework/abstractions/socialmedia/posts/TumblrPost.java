@@ -20,6 +20,7 @@ import com.tumblr.jumblr.types.PhotoSize;
 import com.tumblr.jumblr.types.Post;
 import com.tumblr.jumblr.types.Video;
 import com.tumblr.jumblr.types.VideoPost;
+import org.mongodb.morphia.annotations.Entity;
 
 
 /**
@@ -27,6 +28,7 @@ import com.tumblr.jumblr.types.VideoPost;
  *
  * @author ailiakop, kandreadou
  */
+@Entity("Post")
 public class TumblrPost extends gr.iti.mklab.simmo.documents.Post {
 
 
