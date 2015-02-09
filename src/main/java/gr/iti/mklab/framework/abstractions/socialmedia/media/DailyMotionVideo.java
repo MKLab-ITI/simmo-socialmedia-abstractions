@@ -37,7 +37,7 @@ public class DailyMotionVideo extends Video {
         //Popularity
         //comments = new Long(video.comments_total);
         numViews = video.views_total;
-        //ratings = new Float(video.ratings_total);
+        numRatings = video.ratings_total;
         //Location
         double[] geoloc = video.geoloc;
         if (geoloc != null && geoloc.length > 0) {

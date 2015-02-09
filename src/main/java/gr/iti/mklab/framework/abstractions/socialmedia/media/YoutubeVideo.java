@@ -1,10 +1,13 @@
-package gr.iti.mklab.framework.abstractions.socialmedia.items;
+package gr.iti.mklab.framework.abstractions.socialmedia.media;
 
 import java.util.Date;
 
+import com.google.api.services.youtube.model.Channel;
 import com.google.api.services.youtube.model.VideoContentDetails;
 import com.google.api.services.youtube.model.VideoStatistics;
 import gr.iti.mklab.framework.abstractions.socialmedia.Sources;
+import gr.iti.mklab.framework.abstractions.socialmedia.users.YoutubeChannel;
+import gr.iti.mklab.simmo.UserAccount;
 import gr.iti.mklab.simmo.items.Video;
 import org.apache.log4j.Logger;
 import org.mongodb.morphia.annotations.Entity;
@@ -23,15 +26,16 @@ public class YoutubeVideo extends Video {
 
     public YoutubeVideo(com.google.api.services.youtube.model.Video v) {
         setId(Sources.YOUTUBE + '#' + v.getId());
-        setStreamId(Sources.YOUTUBE);
+        setSource(Sources.YOUTUBE);
         title = v.getSnippet().getTitle();
         description = v.getSnippet().getDescription();
         creationDate = new Date(v.getSnippet().getPublishedAt().getValue());
         crawlDate = new Date();
         VideoStatistics statistics = v.getStatistics();
         if (statistics != null) {
-            numLikes = statistics.getFavoriteCount().longValue();
-            numViews = statistics.getViewCount().longValue();
+            numLikes = statistics.getFavoriteCount().intValue();
+            numViews = statistics.getViewCount().intValue();
+            numComments = statistics.getCommentCount().intValue();
         }
         VideoContentDetails details = v.getContentDetails();
         if (details != null) {
@@ -43,7 +47,14 @@ public class YoutubeVideo extends Video {
         setHeight(t.getHeight().intValue());
         url = "https://www.youtube.com/watch?v=" + v.getId();
         webPageUrl = url;
-        author = Sources.YOUTUBE + '#' + v.getSnippet().getChannelId();
+        UserAccount u = new UserAccount();
+        u.setId(Sources.YOUTUBE + '#' + v.getSnippet().getChannelId());
+        setContributor(u);
+    }
+
+    public YoutubeVideo(com.google.api.services.youtube.model.Video v, Channel c) {
+        this(v);
+        setContributor(new YoutubeChannel(c));
     }
 
 }

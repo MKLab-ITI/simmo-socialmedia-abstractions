@@ -198,8 +198,8 @@ public class TwitterPost extends Post {
                     //Tags
                     img.setTags(tags);
                     //Popularity
-                    //img.setLikes(likes);
-                    //img.setShares(shares);
+                    img.setNumLikes(numLikes);
+                    img.setNumShares(numShares);
                     //Author
                     img.setContributor(getContributor());
                     //Location

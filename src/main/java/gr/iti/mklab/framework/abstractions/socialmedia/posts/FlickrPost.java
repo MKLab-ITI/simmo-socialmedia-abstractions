@@ -118,8 +118,8 @@ public class FlickrPost extends Post {
                 //Tags
                 img.setTags(tags);
                 //Popularity
-                //mediaItem.setComments(new Long(photo.getComments()));
-                //mediaItem.setViews(new Long(photo.getViews()));
+                img.setNumComments(numComments);
+                img.setNumViews(photo.getViews());
                 //Location
                 img.setLocation(location);
                 addItem(img);

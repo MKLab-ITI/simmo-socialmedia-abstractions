@@ -51,8 +51,8 @@ public class TwitPicImage extends Image {
             this.setTags(Arrays.asList(image.tags.split(",")));
         }
         //Popularity
-        //comments = new Long(image.number_of_comments);
-        //numViews = new Long(image.views);
+        numComments = image.number_of_comments;
+        numViews = image.views;
         //Size
         setWidth(image.width);
         setHeight(image.height);

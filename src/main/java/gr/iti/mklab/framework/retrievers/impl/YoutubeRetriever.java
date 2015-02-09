@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import gr.iti.mklab.framework.abstractions.socialmedia.items.YoutubeVideo;
+import gr.iti.mklab.framework.abstractions.socialmedia.media.YoutubeVideo;
 import gr.iti.mklab.framework.abstractions.socialmedia.users.YoutubeChannel;
 import org.apache.log4j.Logger;
 import org.joda.time.DateTime;

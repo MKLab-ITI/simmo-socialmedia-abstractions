@@ -38,9 +38,8 @@ The project includes three set of packages, `eu.socialsensor.framework.streams`,
 
 Abstractions project is dependent to other two SocialSensor projects : 
 
-1. <a href="https://github.com/socialsensor/socialsensor-framework-common"> Socialsensor-framework-common</a> : The project contain main classes and interfaces to be used by other SocialSensor projects
-2. <a href="https://github.com/socialsensor/socialsensor-framework-client"> Socialsensor-framework-client</a> : The wrappers for handling information in/from the supported databases (MongoDB,Solr,Lucene).
+1. <a href="https://github.com/MKLab-ITI/simmo.git"> SIMMO</a> : The project contains the SIMMO data model and helper methods for CRUD and search operations for MongoDB.
 
 <h3><u>Contact for further details about the project</u></h3>
 
-Aikaterini Iliakopoulou (ailiakop@iti.gr), Manos Schinas (manosetro@iti.gr), Symeon Papadopoulos (papadop@iti.gr)
+Aikaterini Iliakopoulou (ailiakop@iti.gr), Manos Schinas (manosetro@iti.gr), Symeon Papadopoulos (papadop@iti.gr), Katerina Andreadou (kandreadou@iti.gr)

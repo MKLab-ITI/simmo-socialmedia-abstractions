@@ -163,8 +163,8 @@ public class GooglePlusPost extends Post {
                         //Tags
                         v.setTags(tags);
                         //Popularity
-                        //mediaItem.setLikes(likes);
-                        //mediaItem.setShares(shares);
+                        v.setNumLikes(numLikes);
+                        v.setNumShares(numShares);
                         addItem(v);
                     }
                 } else if (type.equals("photo")) {
@@ -213,8 +213,8 @@ public class GooglePlusPost extends Post {
                         //Tags
                         img.setTags(tags);
                         //Popularity
-                        //mediaItem.setLikes(likes);
-                        //mediaItem.setShares(shares);
+                        img.setNumLikes(numLikes);
+                        img.setNumShares(numShares);
                         //Size
                         img.setWidth(width);
                         img.setHeight(height);
@@ -263,8 +263,8 @@ public class GooglePlusPost extends Post {
                             //Tags
                             img.setTags(tags);
                             //Popularity
-                            //mediaItem.setLikes(likes);
-                            //mediaItem.setShares(shares);
+                            img.setNumLikes(numLikes);
+                            img.setNumShares(numShares);
                             //Size
                             Long width = image.getImage().getWidth();
                             Long height = image.getImage().getHeight();

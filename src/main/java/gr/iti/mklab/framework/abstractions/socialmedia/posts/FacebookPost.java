@@ -152,14 +152,10 @@ public class FacebookPost extends gr.iti.mklab.simmo.documents.Post {
                             //SocialNetwork Name
                             img.setSource(Sources.FACEBOOK);
                             //Reference
-                            //mediaItem.setRef(id);
+                            img.setSourceDocumentId(id);
                             //Time of publication
                             img.setCreationDate(post.getCreatedTime());
-                            //Author
-                            /*if (streamUser != null) {
-                                mediaItem.setUser(streamUser);
-                                mediaItem.setUserId(streamUser.getId());
-                            }*/
+                            img.setContributor(getContributor());
 
                             //PageUrl
                             String pageUrl = post.getLink();
@@ -172,10 +168,11 @@ public class FacebookPost extends gr.iti.mklab.simmo.documents.Post {
                             //Description
                             img.setDescription(description);
                             //Tags
+                            img.setTags(tags);
                             //img.setTags(tags);
                             //Popularity
-                            //img.setLikes(likes);
-                            //img.setShares(shares);
+                            img.setNumLikes(numLikes);
+                            img.setNumShares(numShares);
                             addItem(img);
                         }
                     }

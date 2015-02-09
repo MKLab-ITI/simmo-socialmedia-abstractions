@@ -7,10 +7,12 @@ import gr.iti.mklab.framework.abstractions.socialmedia.Sources;
 import gr.iti.mklab.simmo.UserAccount;
 import org.mongodb.morphia.annotations.Entity;
 
+import java.util.Date;
+
 /**
  * Class that holds the information of a youtube user
  *
- * @author ailiakop, kandreadou
+ * @author kandreadou
  */
 @Entity("UserAccount")
 public class YoutubeChannel extends UserAccount {
@@ -27,6 +29,8 @@ public class YoutubeChannel extends UserAccount {
             setNumFollowers(s.getSubscriberCount().intValue());
         }
         pageUrl = "https://www.youtube.com/channel/" + c.getId();
+        numItems = s.getVideoCount().intValue();
+        creationDate = new Date(c.getSnippet().getPublishedAt().getValue());
     }
 
 }

@@ -109,8 +109,8 @@ public class InstagramPost extends Post {
                 //Tags
                 img.setTags(tags);
                 //Popularity
-                //img.setLikes(likes);
-                //img.setComments(new Long(image.getComments().getCount()));
+                img.setNumLikes(numLikes);
+                img.setNumComments(image.getComments().getCount());
                 //Location
                 img.setLocation(location);
                 addItem(img);

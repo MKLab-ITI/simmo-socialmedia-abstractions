@@ -50,7 +50,7 @@ public class VimeoVideo extends Video {
 		//Popularity
 		numLikes = video.stats_number_of_likes;
 		numViews = video.stats_number_of_plays;
-		//this.numComments = video.stats_number_of_comments;
+		numComments = video.stats_number_of_comments;
 		//Size
         setWidth(video.width);
         setHeight(video.height);
