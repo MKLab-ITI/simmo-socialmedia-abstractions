@@ -25,7 +25,6 @@ import gr.iti.mklab.framework.Credentials;
 import gr.iti.mklab.framework.feeds.AccountFeed;
 import gr.iti.mklab.framework.feeds.GroupFeed;
 import gr.iti.mklab.framework.feeds.KeywordsFeed;
-import gr.iti.mklab.framework.retrievers.RateLimitsMonitor;
 import gr.iti.mklab.framework.retrievers.SocialMediaRetriever;
 import gr.iti.mklab.simmo.UserAccount;
 import gr.iti.mklab.simmo.documents.Post;
@@ -43,8 +42,8 @@ public class FacebookRetriever extends SocialMediaRetriever {
 	
 	private Logger  logger = Logger.getLogger(FacebookRetriever.class);
 	
-	public FacebookRetriever(Credentials credentials, RateLimitsMonitor rateLimitsMonitor) {
-		super(credentials, rateLimitsMonitor);
+	public FacebookRetriever(Credentials credentials) {
+		super(credentials);
 		
 		facebookClient = new DefaultFacebookClient(credentials.getAccessToken());
 	}
@@ -79,10 +78,7 @@ public class FacebookRetriever extends SocialMediaRetriever {
 		}
 		
 		FacebookAccount facebookUser = new FacebookAccount(page);
-		for(List<com.restfb.types.Post> connectionPage : connection) {
-			
-			rateLimitsMonitor.check();
-			
+		for(List<com.restfb.types.Post> connectionPage : connection) {	
 			totalRequests++;
 			for(com.restfb.types.Post post : connectionPage) {	
 				

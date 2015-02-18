@@ -24,7 +24,6 @@ import gr.iti.mklab.framework.Credentials;
 import gr.iti.mklab.framework.feeds.AccountFeed;
 import gr.iti.mklab.framework.feeds.GroupFeed;
 import gr.iti.mklab.framework.feeds.KeywordsFeed;
-import gr.iti.mklab.framework.retrievers.RateLimitsMonitor;
 import gr.iti.mklab.framework.retrievers.SocialMediaRetriever;
 import gr.iti.mklab.simmo.UserAccount;
 import gr.iti.mklab.simmo.documents.Post;
@@ -41,9 +40,9 @@ public class TumblrRetriever extends SocialMediaRetriever {
 	
 	private JumblrClient client;
 	
-	public TumblrRetriever(Credentials credentials, RateLimitsMonitor rateLimitsMonitor) {
+	public TumblrRetriever(Credentials credentials) {
 		
-		super(credentials, rateLimitsMonitor);
+		super(credentials);
 		
 		client = new JumblrClient(credentials.getKey(), credentials.getSecret());
 	}

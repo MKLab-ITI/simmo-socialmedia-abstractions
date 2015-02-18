@@ -24,7 +24,6 @@ import gr.iti.mklab.framework.Credentials;
 import gr.iti.mklab.framework.feeds.AccountFeed;
 import gr.iti.mklab.framework.feeds.GroupFeed;
 import gr.iti.mklab.framework.feeds.KeywordsFeed;
-import gr.iti.mklab.framework.retrievers.RateLimitsMonitor;
 import gr.iti.mklab.framework.retrievers.SocialMediaRetriever;
 import gr.iti.mklab.simmo.UserAccount;
 import gr.iti.mklab.simmo.documents.Post;
@@ -43,9 +42,9 @@ public class TwitterRetriever extends SocialMediaRetriever {
 	private Twitter twitter = null;
 	private TwitterFactory tf = null;
 	
-	public TwitterRetriever(Credentials credentials, RateLimitsMonitor rateLimitsMonitor) {
+	public TwitterRetriever(Credentials credentials) {
 		
-		super(credentials, rateLimitsMonitor);
+		super(credentials);
 		
 		ConfigurationBuilder cb = new ConfigurationBuilder();
 		cb.setJSONStoreEnabled(false)
@@ -405,7 +404,7 @@ public class TwitterRetriever extends SocialMediaRetriever {
 		credentials.setAccessToken("2547837110-IcVqpQiE764M6FPoYZ9oxwK6QhJGwwaTjX0syZm");
 		credentials.setAccessTokenSecret("wxQuDS6JODxBsZeIv8pHD4jYcVY3Ypsva6vbT7qjejpGA");
 		
-		TwitterRetriever retriever = new TwitterRetriever(credentials, new RateLimitsMonitor(1, 60000L));
+		TwitterRetriever retriever = new TwitterRetriever(credentials);
 	
 		AccountFeed feed = new AccountFeed(null, null, null);
 		

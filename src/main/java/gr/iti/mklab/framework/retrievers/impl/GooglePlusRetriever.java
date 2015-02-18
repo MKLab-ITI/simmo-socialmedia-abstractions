@@ -33,7 +33,6 @@ import gr.iti.mklab.framework.Credentials;
 import gr.iti.mklab.framework.feeds.AccountFeed;
 import gr.iti.mklab.framework.feeds.GroupFeed;
 import gr.iti.mklab.framework.feeds.KeywordsFeed;
-import gr.iti.mklab.framework.retrievers.RateLimitsMonitor;
 import gr.iti.mklab.framework.retrievers.SocialMediaRetriever;
 import gr.iti.mklab.simmo.UserAccount;
 import gr.iti.mklab.simmo.documents.Post;
@@ -55,8 +54,8 @@ public class GooglePlusRetriever extends SocialMediaRetriever {
 	private String userPrefix = "https://plus.google.com/+";
 	private String GooglePlusKey;
 
-	public GooglePlusRetriever(Credentials credentials, RateLimitsMonitor rateLimitsMonitor) {
-		super(credentials, rateLimitsMonitor);
+	public GooglePlusRetriever(Credentials credentials) {
+		super(credentials);
 		
 		GooglePlusKey = credentials.getKey();
 		GoogleCredential credential = new GoogleCredential();

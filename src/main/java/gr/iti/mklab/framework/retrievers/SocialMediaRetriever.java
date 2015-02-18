@@ -21,10 +21,8 @@ import gr.iti.mklab.simmo.UserAccount;
  * @email  manosetro@iti.gr
  */
 public abstract class SocialMediaRetriever implements Retriever {
-	
-	protected RateLimitsMonitor rateLimitsMonitor;
 
-	public SocialMediaRetriever(Credentials credentials, RateLimitsMonitor rateLimitsMonitor) {
+	public SocialMediaRetriever(Credentials credentials) {
 		
 	}
 	
