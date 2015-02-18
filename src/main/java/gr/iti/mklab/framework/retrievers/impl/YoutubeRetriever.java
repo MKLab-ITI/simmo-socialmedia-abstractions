@@ -66,7 +66,7 @@ public class YoutubeRetriever extends SocialMediaRetriever {
 		
 		List<Post> items = new ArrayList<Post>();
 		
-		Date lastItemDate = feed.getDateToRetrieve();
+		Date lastItemDate = feed.getSinceDate();
 		String label = feed.getLabel();
 		
 		boolean isFinished = false;
@@ -153,7 +153,7 @@ public class YoutubeRetriever extends SocialMediaRetriever {
 		
 		List<Post> items = new ArrayList<Post>();
 		
-		Date lastItemDate = feed.getDateToRetrieve();
+		Date lastItemDate = feed.getSinceDate();
 		String label = feed.getLabel();
 		
 		int startIndex = 1;
@@ -256,7 +256,7 @@ public class YoutubeRetriever extends SocialMediaRetriever {
 		}
 		
 		Date dateToRetrieve = new Date(System.currentTimeMillis() - (24*3600*1000));
-		feed.setDateToRetrieve(dateToRetrieve);
+		feed.setSinceDate(dateToRetrieve);
 		
 		return items;
 	}

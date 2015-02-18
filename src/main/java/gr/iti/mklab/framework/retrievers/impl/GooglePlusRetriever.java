@@ -72,7 +72,7 @@ public class GooglePlusRetriever extends SocialMediaRetriever {
 		
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
 		
-		Date lastItemDate = feed.getDateToRetrieve();
+		Date lastItemDate = feed.getSinceDate();
 		String label = feed.getLabel();
 		
 		int numberOfRequests = 0;
@@ -180,7 +180,7 @@ public class GooglePlusRetriever extends SocialMediaRetriever {
 
 		// The next request will retrieve only items of the last day
 		Date dateToRetrieve = new Date(System.currentTimeMillis() - (24*3600*1000));
-		feed.setDateToRetrieve(dateToRetrieve);
+		feed.setSinceDate(dateToRetrieve);
 		
 		return items;
 	}
@@ -191,7 +191,7 @@ public class GooglePlusRetriever extends SocialMediaRetriever {
 		List<Post> items = new ArrayList<Post>();
 		
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
-		Date lastItemDate = feed.getDateToRetrieve();
+		Date lastItemDate = feed.getSinceDate();
 		String label = feed.getLabel();
 		
 		int totalRequests = 0;
@@ -303,7 +303,7 @@ public class GooglePlusRetriever extends SocialMediaRetriever {
 		
 		// The next request will retrieve only items of the last day
 		Date dateToRetrieve = new Date(System.currentTimeMillis() - (24*3600*1000));
-		feed.setDateToRetrieve(dateToRetrieve);
+		feed.setSinceDate(dateToRetrieve);
 		
 		return items;
 		

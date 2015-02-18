@@ -55,7 +55,7 @@ public class FacebookRetriever extends SocialMediaRetriever {
 
 		Integer totalRequests = 0;
 		
-		Date lastItemDate = feed.getDateToRetrieve();
+		Date lastItemDate = feed.getSinceDate();
 		String label = feed.getLabel();
 		
 		boolean isFinished = false;
@@ -122,7 +122,7 @@ public class FacebookRetriever extends SocialMediaRetriever {
 		
 		List<Post> items = new ArrayList<Post>();
 		
-		Date lastItemDate = feed.getDateToRetrieve();
+		Date lastItemDate = feed.getSinceDate();
 		String label = feed.getLabel();
 		
 		boolean isFinished = false;

@@ -5,22 +5,22 @@ import java.util.Date;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
 
-@Entity(noClassnameStored = true)
+@Entity
 public class Feed {
 
 	@Id
 	protected String id = null;
 
-	protected Date dateToRetrieve = null;
+	protected Date since = null;
 
-	protected Integer totalNumberOfItems = 0;
-	
 	protected FeedType feedType;
+	
+	protected String source;
 	
 	protected String label;
 	
-	public Feed(Date date, FeedType feedType) {
-		this.dateToRetrieve = date;
+	public Feed(Date since, FeedType feedType) {
+		this.since = since;
 		this.feedType = feedType;
 		
 	}
@@ -49,22 +49,21 @@ public class Feed {
 		this.label = label;
 	}
 	
-	public Date getDateToRetrieve() {
-		return dateToRetrieve;
+	public  String getSource() {
+		return source;
 	}
 	
-	public void setDateToRetrieve(Date dateToRetrieve) {
-		this.dateToRetrieve = dateToRetrieve;
+	public  void setSource(String source) {
+		this.source = source;
 	}
 	
-	public  Integer getTotalNumberOfItems() {
-		return this.totalNumberOfItems;
+	public Date getSinceDate() {
+		return since;
 	}
 	
-	public  void setTotalNumberOfItems(Integer totalNumberOfItems) {
-		this.totalNumberOfItems += totalNumberOfItems;
+	public void setSinceDate(Date since) {
+		this.since = since;
 	}
-	
 	
 	@Entity(noClassnameStored = true)
 	public enum FeedType {

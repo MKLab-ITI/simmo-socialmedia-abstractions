@@ -68,7 +68,7 @@ public class TwitterRetriever extends SocialMediaRetriever {
 		
 		Integer numberOfRequests = 0;
 		
-		Date sinceDate = feed.getDateToRetrieve();
+		Date sinceDate = feed.getSinceDate();
 		Date newSinceDate = sinceDate;
 		
 		// TODO: Add feed label on 
@@ -141,7 +141,7 @@ public class TwitterRetriever extends SocialMediaRetriever {
 				break;
 			}
 		}
-		feed.setDateToRetrieve(newSinceDate);
+		feed.setSinceDate(newSinceDate);
 		return posts;
 		
 	}
@@ -155,7 +155,7 @@ public class TwitterRetriever extends SocialMediaRetriever {
 		int count = 100;
 		int numberOfRequests = 0;
 
-		Date sinceDate = feed.getDateToRetrieve();
+		Date sinceDate = feed.getSinceDate();
 		Date newSinceDate = sinceDate;
 		
 		// TODO: Add feed label on 
@@ -256,7 +256,7 @@ public class TwitterRetriever extends SocialMediaRetriever {
 			logger.error(e.getMessage());
 		}	
 	
-		feed.setDateToRetrieve(newSinceDate);
+		feed.setSinceDate(newSinceDate);
 		return posts;
 	}
 	

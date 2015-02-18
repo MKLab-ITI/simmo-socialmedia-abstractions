@@ -2,11 +2,11 @@
   	
   	<modelVersion>4.0.0</modelVersion>
   	<groupId>gr.iti.mklab</groupId>
-  	<artifactId>mklab-socialmedia-abstractions</artifactId>
+  	<artifactId>simmo-socialmedia-abstractions</artifactId>
   	<version>0.1-SNAPSHOT</version>
   	<packaging>jar</packaging>
   	
-	<name>socialmedia-abstractions</name>
+	<name>simmo-socialmedia-abstractions</name>
     <url>https://github.com/MKLab-ITI/mklab-socialmedia-abstractions</url>
     <description>Contains data abstractions for mapping a number of different social networks to a single representation.</description>
       

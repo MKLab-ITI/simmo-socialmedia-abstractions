@@ -68,7 +68,7 @@ public class FlickrRetriever extends SocialMediaRetriever {
 		
 		List<Post> items = new ArrayList<Post>();
 		
-		Date dateToRetrieve = feed.getDateToRetrieve();
+		Date dateToRetrieve = feed.getSinceDate();
 		String label = feed.getLabel();
 		
 		int page=1, pages=1; //pagination
@@ -132,7 +132,7 @@ public class FlickrRetriever extends SocialMediaRetriever {
 		
 		// The next request will retrieve only items of the last day
 		dateToRetrieve = new Date(System.currentTimeMillis() - (24*3600*1000));
-		feed.setDateToRetrieve(dateToRetrieve);
+		feed.setSinceDate(dateToRetrieve);
 		
 		return items;
 	}
@@ -142,7 +142,7 @@ public class FlickrRetriever extends SocialMediaRetriever {
 		
 		List<Post> items = new ArrayList<Post>();
 		
-		Date dateToRetrieve = feed.getDateToRetrieve();
+		Date dateToRetrieve = feed.getSinceDate();
 		String label = feed.getLabel();
 		
 		int page=1, pages=1;
@@ -223,7 +223,7 @@ public class FlickrRetriever extends SocialMediaRetriever {
 //				" [ " + lastItemDate + " - " + new Date(System.currentTimeMillis()) + " ]");
 		
 		dateToRetrieve = new Date(System.currentTimeMillis() - (24*3600*1000));
-		feed.setDateToRetrieve(dateToRetrieve);
+		feed.setSinceDate(dateToRetrieve);
 		
 		return items;
 	}
