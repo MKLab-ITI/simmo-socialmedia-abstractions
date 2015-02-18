@@ -16,17 +16,14 @@ import com.google.api.client.json.jackson2.JacksonFactory;
 
 import gr.iti.mklab.framework.Credentials;
 import gr.iti.mklab.framework.abstractions.socialmedia.media.TwitPicImage;
-import gr.iti.mklab.framework.abstractions.socialmedia.media.TwitPicImage.TwitPicImage;
-import gr.iti.mklab.framework.common.domain.Item;
-import gr.iti.mklab.framework.common.domain.MediaItem;
-import gr.iti.mklab.framework.common.domain.StreamUser;
-import gr.iti.mklab.framework.common.domain.feeds.AccountFeed;
-import gr.iti.mklab.framework.common.domain.feeds.Feed;
-import gr.iti.mklab.framework.common.domain.feeds.GroupFeed;
-import gr.iti.mklab.framework.common.domain.feeds.KeywordsFeed;
-import gr.iti.mklab.framework.common.domain.feeds.LocationFeed;
+import gr.iti.mklab.framework.feeds.AccountFeed;
+import gr.iti.mklab.framework.feeds.Feed;
+import gr.iti.mklab.framework.feeds.GroupFeed;
+import gr.iti.mklab.framework.feeds.KeywordsFeed;
 import gr.iti.mklab.framework.retrievers.RateLimitsMonitor;
 import gr.iti.mklab.framework.retrievers.SocialMediaRetriever;
+import gr.iti.mklab.simmo.UserAccount;
+import gr.iti.mklab.simmo.documents.Post;
 
 /**
  * The retriever that implements the Twitpic simplified retriever
@@ -55,86 +52,56 @@ public class TwitpicRetriever extends SocialMediaRetriever {
 				});
 	}
 	
+	/*
 	public MediaItem getMediaItem(String shortId) {
-		
-		GenericUrl requestUrl = new GenericUrl(requestPrefix + shortId);
-		
-		HttpRequest request;
 		try {
-			request = requestFactory.buildGetRequest(requestUrl);
+			GenericUrl requestUrl = new GenericUrl(requestPrefix + shortId);
+			HttpRequest request = requestFactory.buildGetRequest(requestUrl);
 			HttpResponse response = request.execute();
 			TwitPicImage image = response.parseAs(TwitPicImage.class);
 			if(image != null) {
 				MediaItem mediaItem = new TwitPicImage(image);
 				return mediaItem;
 			}
-		} catch (Exception e) {
-		}
-		
+		} catch (Exception e) { }	
+		return null;
+	}
+	 */
+	
+	@Override
+	public List<Post> retrieveKeywordsFeed(KeywordsFeed feed) throws Exception {
+		return new ArrayList<Post>();
+	}
+
+	@Override
+	public List<Post> retrieveAccountFeed(AccountFeed feed) throws Exception {
+		return new ArrayList<Post>();
+	}
+
+	@Override
+	public UserAccount getStreamUser(String uid) {
 		return null;
 	}
 
 	@Override
-	public List<Item> retrieve(Feed feed) {
-		return new ArrayList<Item>();
+	public List<Post> retrieveGroupFeed(GroupFeed feed) {
+		return new ArrayList<Post>();
 	}
 
 	@Override
-	public void stop() {
-		
-	}
-
-	@Override
-	public List<Item> retrieveKeywordsFeed(KeywordsFeed feed) throws Exception {
-		return new ArrayList<Item>();
-	}
-
-	@Override
-	public List<Item> retrieveAccountFeed(AccountFeed feed) throws Exception {
-		return new ArrayList<Item>();
-	}
-
-	@Override
-	public List<Item> retrieveLocationFeed(LocationFeed feed) throws Exception {
-		return new ArrayList<Item>();
-	}
-
-	@Override
-	public StreamUser getStreamUser(String uid) {
-		return null;
-	}
-
-	@Override
-	public List<Item> retrieveGroupFeed(GroupFeed feed) {
-		return new ArrayList<Item>();
-	}
-
-	@Override
-	public List<Item> retrieve(Feed feed, Integer maxRequests,
-			Integer maxResults) {
-		return null;
-	}
-
-	@Override
-	public List<Item> retrieveKeywordsFeed(KeywordsFeed feed,
+	public List<Post> retrieveKeywordsFeed(KeywordsFeed feed,
 			Integer maxRequests, Integer maxResults) throws Exception {
 		return null;
 	}
 
 	@Override
-	public List<Item> retrieveAccountFeed(AccountFeed feed, Integer maxRequests,
+	public List<Post> retrieveAccountFeed(AccountFeed feed, Integer maxRequests,
 			Integer maxResults) throws Exception {
 		return null;
 	}
 
 	@Override
-	public List<Item> retrieveLocationFeed(LocationFeed feed,
-			Integer maxRequests, Integer maxResults) throws Exception {
-		return null;
-	}
-
-	@Override
-	public List<Item> retrieveGroupFeed(GroupFeed feed, Integer maxRequests,
+	public List<Post> retrieveGroupFeed(GroupFeed feed, Integer maxRequests,
 			Integer maxResults) {
 		return null;
 	}

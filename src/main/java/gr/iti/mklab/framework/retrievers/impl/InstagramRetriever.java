@@ -8,6 +8,7 @@ import java.util.List;
 
 import gr.iti.mklab.framework.abstractions.socialmedia.posts.InstagramPost;
 import gr.iti.mklab.framework.abstractions.socialmedia.users.InstagramAccount;
+
 import org.apache.log4j.Logger;
 import org.jinstagram.Instagram;
 import org.jinstagram.InstagramOembed;
@@ -29,18 +30,13 @@ import org.jinstagram.entity.users.feed.UserFeedData;
 import org.jinstagram.auth.model.Token;
 
 import gr.iti.mklab.framework.Credentials;
-import gr.iti.mklab.framework.common.domain.Item;
-import gr.iti.mklab.framework.common.domain.Location;
-import gr.iti.mklab.framework.common.domain.MediaItem;
-import gr.iti.mklab.framework.common.domain.Account;
-import gr.iti.mklab.framework.common.domain.StreamUser;
-import gr.iti.mklab.framework.common.domain.feeds.AccountFeed;
-import gr.iti.mklab.framework.common.domain.feeds.GroupFeed;
-import gr.iti.mklab.framework.common.domain.feeds.KeywordsFeed;
-import gr.iti.mklab.framework.common.domain.feeds.LocationFeed;
-import gr.iti.mklab.framework.common.util.DateUtil;
+import gr.iti.mklab.framework.feeds.AccountFeed;
+import gr.iti.mklab.framework.feeds.GroupFeed;
+import gr.iti.mklab.framework.feeds.KeywordsFeed;
 import gr.iti.mklab.framework.retrievers.RateLimitsMonitor;
 import gr.iti.mklab.framework.retrievers.SocialMediaRetriever;
+import gr.iti.mklab.simmo.UserAccount;
+import gr.iti.mklab.simmo.documents.Post;
 
 /**
  * Class responsible for retrieving Instagram content based on keywords or instagram users or locations
@@ -70,18 +66,16 @@ public class InstagramRetriever extends SocialMediaRetriever {
 	}
 	
 	@Override
-	public List<Item> retrieveAccountFeed(AccountFeed feed, Integer maxRequests, Integer maxResults) {
+	public List<Post> retrieveAccountFeed(AccountFeed feed, Integer maxRequests, Integer maxResults) {
 		
-		List<Item> items = new ArrayList<Item>();
+		List<Post> items = new ArrayList<Post>();
 		
 		Date lastItemDate = feed.getDateToRetrieve();
 		String label = feed.getLabel();
 		
 		int numberOfRequests = 0;
 	
-		Account source = feed.getAccount();
-		String uName = source.getName();
-		
+		String uName = feed.getUsername();
 		if(uName == null) {
 			logger.error("#Instagram : No source feed");
 			return items;
@@ -125,7 +119,7 @@ public class InstagramRetriever extends SocialMediaRetriever {
 						
 						if(mfeed != null && mfeed.getId() != null) {
 							InstagramPost instagramItem = new InstagramPost(mfeed);
-							instagramItem.setList(label);
+							//instagramItem.setList(label);
 								
 							items.add(instagramItem);
 						}
@@ -152,8 +146,8 @@ public class InstagramRetriever extends SocialMediaRetriever {
 	}
 	
 	@Override
-	public List<Item> retrieveKeywordsFeed(KeywordsFeed feed, Integer maxRequests, Integer maxResults) {
-		List<Item> items = new ArrayList<Item>();
+	public List<Post> retrieveKeywordsFeed(KeywordsFeed feed, Integer maxRequests, Integer maxResults) {
+		List<Post> items = new ArrayList<Post>();
 		
 		Date lastItemDate = feed.getDateToRetrieve();
 		String label = feed.getLabel();
@@ -223,7 +217,7 @@ public class InstagramRetriever extends SocialMediaRetriever {
 					InstagramPost instagramItem;
 					try {
 						instagramItem = new InstagramPost(mfeed);
-						instagramItem.setList(label);
+						//instagramItem.setList(label);
 						
 					} catch (MalformedURLException e) {
 						logger.error("Instagram retriever exception: " + e.getMessage());
@@ -259,7 +253,7 @@ public class InstagramRetriever extends SocialMediaRetriever {
 								
 								if(mfeed != null && mfeed.getId() != null){
 									InstagramPost instagramItem = new InstagramPost(mfeed);
-									instagramItem.setList(label);
+									//instagramItem.setList(label);
 									
 									items.add(instagramItem);
 								}
@@ -293,7 +287,7 @@ public class InstagramRetriever extends SocialMediaRetriever {
 		return items;
 	}
 	
-	@Override
+	/*
 	public List<Item> retrieveLocationFeed(LocationFeed feed, Integer maxRequests, Integer maxResults) {
 		List<Item> items = new ArrayList<Item>();
 		
@@ -387,20 +381,14 @@ public class InstagramRetriever extends SocialMediaRetriever {
 		
     	return items;
     }
+	*/
 	
 	@Override
-	public List<Item> retrieveGroupFeed(GroupFeed feed, Integer maxRequests, Integer maxResults) {
-		return new ArrayList<Item>();
-	}
-	
-	@Override
-	public void stop() {
-		if(instagram != null){
-			instagram = null;
-		}
+	public List<Post> retrieveGroupFeed(GroupFeed feed, Integer maxRequests, Integer maxResults) {
+		return new ArrayList<Post>();
 	}
 
-	@Override
+	/*
 	public MediaItem getMediaItem(String shortId) {
 		try {
 			String id = getMediaId("http://instagram.com/p/"+shortId);
@@ -485,13 +473,14 @@ public class InstagramRetriever extends SocialMediaRetriever {
 		
 		return null;
 	}
+	*/
 	
 	@Override
-	public StreamUser getStreamUser(String uid) {
+	public UserAccount getStreamUser(String uid) {
 		try {
 			UserInfo userInfo = instagram.getUserInfo(uid);
 			
-			StreamUser user = new InstagramAccount(userInfo.getData());
+			UserAccount user = new InstagramAccount(userInfo.getData());
 			return user;
 		}
 		catch(Exception e) {

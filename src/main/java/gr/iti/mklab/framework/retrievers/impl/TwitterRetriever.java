@@ -6,9 +6,9 @@ import java.util.List;
 
 import gr.iti.mklab.framework.abstractions.socialmedia.posts.TwitterPost;
 import gr.iti.mklab.framework.abstractions.socialmedia.users.TwitterAccount;
+
 import org.apache.log4j.Logger;
 
-import twitter4j.GeoLocation;
 import twitter4j.Paging;
 import twitter4j.Query;
 import twitter4j.QueryResult;
@@ -21,17 +21,13 @@ import twitter4j.User;
 import twitter4j.conf.Configuration;
 import twitter4j.conf.ConfigurationBuilder;
 import gr.iti.mklab.framework.Credentials;
-import gr.iti.mklab.framework.common.domain.Item;
-import gr.iti.mklab.framework.common.domain.Location;
-import gr.iti.mklab.framework.common.domain.MediaItem;
-import gr.iti.mklab.framework.common.domain.Account;
-import gr.iti.mklab.framework.common.domain.StreamUser;
-import gr.iti.mklab.framework.common.domain.feeds.AccountFeed;
-import gr.iti.mklab.framework.common.domain.feeds.GroupFeed;
-import gr.iti.mklab.framework.common.domain.feeds.KeywordsFeed;
-import gr.iti.mklab.framework.common.domain.feeds.LocationFeed;
+import gr.iti.mklab.framework.feeds.AccountFeed;
+import gr.iti.mklab.framework.feeds.GroupFeed;
+import gr.iti.mklab.framework.feeds.KeywordsFeed;
 import gr.iti.mklab.framework.retrievers.RateLimitsMonitor;
 import gr.iti.mklab.framework.retrievers.SocialMediaRetriever;
+import gr.iti.mklab.simmo.UserAccount;
+import gr.iti.mklab.simmo.documents.Post;
 
 /**
  * Class responsible for retrieving Twitter content based on keywords, twitter users or locations
@@ -65,25 +61,25 @@ public class TwitterRetriever extends SocialMediaRetriever {
 	}
 	
 	@Override
-	public List<Item> retrieveAccountFeed(AccountFeed feed, Integer maxRequests, Integer maxResults) {
+	public List<Post> retrieveAccountFeed(AccountFeed feed, Integer maxRequests, Integer maxResults) {
 		
-		List<Item> items = new ArrayList<Item>();
+		List<Post> posts = new ArrayList<Post>();
 		
 		int count = 200;
 		
 		Integer numberOfRequests = 0;
 		
-		Account source = feed.getAccount();
-		if(source == null)
-			return items;
-		
 		Date sinceDate = feed.getDateToRetrieve();
 		Date newSinceDate = sinceDate;
 		
-		String label = feed.getLabel();
+		// TODO: Add feed label on 
+		String feedLabel = feed.getLabel();
 		
-		String userId = source.getId();
-		String screenName = source.getName();
+		String userId = feed.getId();
+		String screenName = feed.getUsername();
+		
+		if(userId==null && screenName==null)
+			return posts;
 		
 		int page = 1;
 		Paging paging = new Paging(page, count);
@@ -118,16 +114,15 @@ public class TwitterRetriever extends SocialMediaRetriever {
 							}
 						}
 						
-						TwitterPost twitterItem = new TwitterPost(status);
-						twitterItem.setList(label);
+						TwitterPost post = new TwitterPost(status);
 						
-						items.add(twitterItem);
+						posts.add(post);
 					}
 				}
 				
-				if(items.size() > maxResults) {
+				if(posts.size() > maxResults) {
 					if(loggingEnabled)
-						if(loggingEnabled)logger.info("totalRetrievedItems: " + items.size() + " > " + maxResults);
+						if(loggingEnabled)logger.info("totalRetrievedItems: " + posts.size() + " > " + maxResults);
 					break;
 				}
 				if(numberOfRequests >= maxRequests) {
@@ -148,15 +143,15 @@ public class TwitterRetriever extends SocialMediaRetriever {
 			}
 		}
 		feed.setDateToRetrieve(newSinceDate);
-		return items;
+		return posts;
 		
 	}
 	
 	@Override
-	public List<Item> retrieveKeywordsFeed(KeywordsFeed feed, Integer maxRequests, Integer maxResults) {
+	public List<Post> retrieveKeywordsFeed(KeywordsFeed feed, Integer maxRequests, Integer maxResults) {
 			
 		
-		List<Item> items = new ArrayList<Item>();
+		List<Post> posts = new ArrayList<Post>();
 		
 		int count = 100;
 		int numberOfRequests = 0;
@@ -164,12 +159,13 @@ public class TwitterRetriever extends SocialMediaRetriever {
 		Date sinceDate = feed.getDateToRetrieve();
 		Date newSinceDate = sinceDate;
 		
-		String label = feed.getLabel();
+		// TODO: Add feed label on 
+		String feedLabel = feed.getLabel();
 		
 		List<String> keywords = feed.getKeywords();
 		if(keywords == null || keywords.isEmpty()) {
 			logger.error("#Twitter : No keywords feed");
-			return items;
+			return posts;
 		}
 		
 		
@@ -182,7 +178,7 @@ public class TwitterRetriever extends SocialMediaRetriever {
 		}
 		
 		if(tags.equals("")) 
-			return items;
+			return posts;
 		
 		//Set the query
 		if(loggingEnabled)
@@ -226,16 +222,15 @@ public class TwitterRetriever extends SocialMediaRetriever {
 							}
 						}
 						
-						TwitterPost twitterItem = new TwitterPost(status);
-						twitterItem.setList(label);
+						TwitterPost post = new TwitterPost(status);
 						
-						items.add(twitterItem);
+						posts.add(post);
 					}
 				}
 				
-				if(items.size() > maxResults) {
+				if(posts.size() > maxResults) {
 					if(loggingEnabled)
-						logger.info("totalRetrievedItems: " + items.size() + " > " + maxResults);
+						logger.info("totalRetrievedItems: " + posts.size() + " > " + maxResults);
 					break;
 				}
 				if(numberOfRequests >= maxRequests) {
@@ -263,10 +258,10 @@ public class TwitterRetriever extends SocialMediaRetriever {
 		}	
 	
 		feed.setDateToRetrieve(newSinceDate);
-		return items;
+		return posts;
 	}
 	
-	@Override
+	/*
 	public List<Item> retrieveLocationFeed(LocationFeed feed, Integer maxRequests, Integer maxResults) {
 		
 		List<Item> items = new ArrayList<Item>();
@@ -348,15 +343,17 @@ public class TwitterRetriever extends SocialMediaRetriever {
 		
 		return items;
 	}
+	*/
 	
 	@Override
-	public List<Item> retrieveGroupFeed(GroupFeed feed, Integer maxRequests, Integer maxResults) {
+	public List<Post> retrieveGroupFeed(GroupFeed feed, Integer maxRequests, Integer maxResults) {
 		
-		List<Item> items = new ArrayList<Item>();
+		List<Post> posts = new ArrayList<Post>();
 		
 		Integer numberOfRequests = 0;
 
-		String label = feed.getLabel();
+		// TODO: Add feed label on 
+		String feedLabel = feed.getLabel();
 			
 		String ownerScreenName = feed.getGroupCreator();
 		String slug = feed.getGroupId();
@@ -370,9 +367,8 @@ public class TwitterRetriever extends SocialMediaRetriever {
 				for(Status status : response) {
 					if(status != null) {
 						TwitterPost twitterItem = new TwitterPost(status);
-						twitterItem.setList(label);
-						
-						items.add(twitterItem);
+
+						posts.add(twitterItem);
 					}
 				}
 					
@@ -382,28 +378,17 @@ public class TwitterRetriever extends SocialMediaRetriever {
 				break;
 			}
 		}
-		return items;
-	}
-	
-	
-	@Override
-	public void stop() {
-		twitter = null;
+		return posts;
 	}
 
 	@Override
-	public MediaItem getMediaItem(String id) {
-		return null;
-	}
-
-	@Override
-	public StreamUser getStreamUser(String uid) {
+	public UserAccount getStreamUser(String uid) {
 		try {
 			long userId = Long.parseLong(uid);
 			User user = twitter.showUser(userId);
 			
-			StreamUser streamUser = new TwitterAccount(user);
-			return streamUser;
+			UserAccount userAccount = new TwitterAccount(user);
+			return userAccount;
 		}
 		catch(Exception e) {
 			logger.error(e);

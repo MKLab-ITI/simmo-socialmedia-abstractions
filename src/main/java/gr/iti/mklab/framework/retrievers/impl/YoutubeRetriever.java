@@ -9,6 +9,7 @@ import java.util.List;
 
 import gr.iti.mklab.framework.abstractions.socialmedia.media.YoutubeVideo;
 import gr.iti.mklab.framework.abstractions.socialmedia.users.YoutubeChannel;
+
 import org.apache.log4j.Logger;
 import org.joda.time.DateTime;
 
@@ -28,16 +29,14 @@ import com.google.gdata.data.youtube.YtStatistics;
 import com.google.gdata.util.ServiceException;
 
 import gr.iti.mklab.framework.Credentials;
-import gr.iti.mklab.framework.common.domain.Item;
-import gr.iti.mklab.framework.common.domain.MediaItem;
-import gr.iti.mklab.framework.common.domain.Account;
-import gr.iti.mklab.framework.common.domain.StreamUser;
-import gr.iti.mklab.framework.common.domain.feeds.AccountFeed;
-import gr.iti.mklab.framework.common.domain.feeds.GroupFeed;
-import gr.iti.mklab.framework.common.domain.feeds.KeywordsFeed;
-import gr.iti.mklab.framework.common.domain.feeds.LocationFeed;
+import gr.iti.mklab.framework.feeds.AccountFeed;
+import gr.iti.mklab.framework.feeds.GroupFeed;
+import gr.iti.mklab.framework.feeds.KeywordsFeed;
 import gr.iti.mklab.framework.retrievers.RateLimitsMonitor;
 import gr.iti.mklab.framework.retrievers.SocialMediaRetriever;
+import gr.iti.mklab.simmo.UserAccount;
+import gr.iti.mklab.simmo.documents.Post;
+import gr.iti.mklab.simmo.items.Video;
 
 /**
  * Class responsible for retrieving YouTube content based on keywords and YouTube users 
@@ -64,17 +63,16 @@ public class YoutubeRetriever extends SocialMediaRetriever {
 
 	
 	@Override
-	public List<Item> retrieveAccountFeed(AccountFeed feed, Integer maxResults, Integer maxRequests) {
+	public List<Post> retrieveAccountFeed(AccountFeed feed, Integer maxResults, Integer maxRequests) {
 		
-		List<Item> items = new ArrayList<Item>();
+		List<Post> items = new ArrayList<Post>();
 		
 		Date lastItemDate = feed.getDateToRetrieve();
 		String label = feed.getLabel();
 		
 		boolean isFinished = false;
 		
-		Account source = feed.getAccount();
-		String uName = source.getName();
+		String uName = feed.getUsername();
 		
 		int numberOfRequests = 0;
 		
@@ -83,7 +81,7 @@ public class YoutubeRetriever extends SocialMediaRetriever {
 			return items;
 		}
 				
-		StreamUser streamUser = getStreamUser(uName);
+		UserAccount streamUser = getStreamUser(uName);
 		if(loggingEnabled)
 			logger.info("#YouTube : Retrieving User Feed : "+uName);
 		
@@ -109,6 +107,7 @@ public class YoutubeRetriever extends SocialMediaRetriever {
 					Date publicationDate = publishedDateTime.toDate();
 					
 					if(publicationDate.after(lastItemDate) && (video != null && video.getId() != null)) {
+						/*
 						YoutubeVideo ytItem = new YoutubeVideo(video);
 						ytItem.setList(label);
 						
@@ -118,6 +117,8 @@ public class YoutubeRetriever extends SocialMediaRetriever {
 						}
 						
 						items.add(ytItem);
+						*/
+						
 					}
 					
 					if(items.size() > maxResults || numberOfRequests > maxRequests) {
@@ -149,9 +150,9 @@ public class YoutubeRetriever extends SocialMediaRetriever {
 	}
 	
 	@Override
-	public List<Item> retrieveKeywordsFeed(KeywordsFeed feed, Integer maxRequests, Integer maxResults) throws Exception {
+	public List<Post> retrieveKeywordsFeed(KeywordsFeed feed, Integer maxRequests, Integer maxResults) throws Exception {
 		
-		List<Item> items = new ArrayList<Item>();
+		List<Post> items = new ArrayList<Post>();
 		
 		Date lastItemDate = feed.getDateToRetrieve();
 		String label = feed.getLabel();
@@ -214,6 +215,7 @@ public class YoutubeRetriever extends SocialMediaRetriever {
 					Date publicationDate = publishedDateTime.toDate();
 					
 					if(publicationDate.after(lastItemDate) && (video != null && video.getId() != null)){
+						/*
 						YoutubeVideo ytItem = new YoutubeVideo(video);
 						ytItem.setList(label);
 						
@@ -227,6 +229,7 @@ public class YoutubeRetriever extends SocialMediaRetriever {
 						}
 
 						items.add(ytItem);
+						*/
 					}
 					
 					if(items.size() > maxResults || numberOfRequests >= maxRequests) {
@@ -260,13 +263,8 @@ public class YoutubeRetriever extends SocialMediaRetriever {
 	}
 	
 	@Override
-	public List<Item> retrieveLocationFeed(LocationFeed feed, Integer maxResults, Integer maxRequests) {
-		return new ArrayList<Item>();
-    }
-	
-	@Override
-	public List<Item> retrieveGroupFeed(GroupFeed feed, Integer maxResults, Integer maxRequests) {
-		return new ArrayList<Item>();
+	public List<Post> retrieveGroupFeed(GroupFeed feed, Integer maxResults, Integer maxRequests) {
+		return new ArrayList<Post>();
 	}
 
 	public void stop(){
@@ -282,7 +280,7 @@ public class YoutubeRetriever extends SocialMediaRetriever {
 		return new URL(urlStr.toString());
 	}
 		
-	public MediaItem getMediaItem(String id) {
+	public Video getMediaItem(String id) {
 		try {
 			URL entryUrl = new URL(activityFeedVideoUrlPrefix +"/"+ id);
 			VideoEntry entry = service.getEntry(entryUrl, VideoEntry.class);
@@ -313,8 +311,9 @@ public class YoutubeRetriever extends SocialMediaRetriever {
 					MediaDescription desc = mediaGroup.getDescription();
 					String description = desc==null ? "" : desc.getPlainTextContent();
 					//url
-					MediaItem mediaItem = new MediaItem(url);
+					Video video = null;//new YoutubeVideo(url);
 					
+					/*
 					//id
 					mediaItem.setId(mediaId);
 					//SocialNetwork Name
@@ -361,8 +360,9 @@ public class YoutubeRetriever extends SocialMediaRetriever {
 						mediaItem.setUser(user);
 						mediaItem.setUserId(user.getId());
 					}
+					*/
 					
-					return mediaItem;
+					return video;
 				}
 			}
 		} catch (Exception e) {
@@ -372,13 +372,13 @@ public class YoutubeRetriever extends SocialMediaRetriever {
 	}
 
 	@Override
-	public StreamUser getStreamUser(String uid) {
+	public UserAccount getStreamUser(String uid) {
 		URL profileUrl;
 		try {
 			profileUrl = new URL(activityFeedUserUrlPrefix + uid);
 			UserProfileEntry userProfile = service.getEntry(profileUrl , UserProfileEntry.class);
 			
-			StreamUser user = new YoutubeChannel(userProfile);
+			UserAccount user = null;//new UserAccount(userProfile);
 			
 			return user;
 		} catch (MalformedURLException e) {
@@ -389,26 +389,6 @@ public class YoutubeRetriever extends SocialMediaRetriever {
 			logger.error(e.getMessage());
 		} catch (ServiceException e) {
 			//e.printStackTrace();
-			logger.error(e.getMessage());
-		}
-		
-		return null;
-	}
-
-	private StreamUser getStreamUser(StreamUser u) {
-		URL profileUrl;
-		try {
-			profileUrl = new URL(u.getPageUrl());
-			UserProfileEntry userProfile = service.getEntry(profileUrl , UserProfileEntry.class);
-			
-			StreamUser user = new YoutubeChannel(userProfile);
-			
-			return user;
-		} catch (MalformedURLException e) {
-			logger.error(e.getMessage());
-		} catch (IOException e) {
-			logger.error(e.getMessage());
-		} catch (ServiceException e) {
 			logger.error(e.getMessage());
 		}
 		

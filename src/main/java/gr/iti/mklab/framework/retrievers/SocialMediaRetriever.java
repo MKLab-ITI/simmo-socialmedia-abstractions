@@ -4,14 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import gr.iti.mklab.framework.Credentials;
-import gr.iti.mklab.framework.common.domain.Item;
-import gr.iti.mklab.framework.common.domain.MediaItem;
-import gr.iti.mklab.framework.common.domain.StreamUser;
-import gr.iti.mklab.framework.common.domain.feeds.AccountFeed;
-import gr.iti.mklab.framework.common.domain.feeds.Feed;
-import gr.iti.mklab.framework.common.domain.feeds.GroupFeed;
-import gr.iti.mklab.framework.common.domain.feeds.KeywordsFeed;
-import gr.iti.mklab.framework.common.domain.feeds.LocationFeed;
+import gr.iti.mklab.framework.feeds.AccountFeed;
+import gr.iti.mklab.framework.feeds.Feed;
+import gr.iti.mklab.framework.feeds.GroupFeed;
+import gr.iti.mklab.framework.feeds.KeywordsFeed;
+import gr.iti.mklab.simmo.documents.Post;
+import gr.iti.mklab.simmo.UserAccount;
 
 /**
  * The interface for retrieving from social media - Currently the
@@ -37,11 +35,11 @@ public abstract class SocialMediaRetriever implements Retriever {
 	 * @return
 	 * @throws Exception
 	 */
-	public List<Item> retrieveKeywordsFeed(KeywordsFeed feed) throws Exception {
+	public List<Post> retrieveKeywordsFeed(KeywordsFeed feed) throws Exception {
 		return retrieveKeywordsFeed(feed, null, null);
 	}
 	
-	public abstract List<Item> retrieveKeywordsFeed(KeywordsFeed feed, Integer maxRequests, Integer maxResults) throws Exception;
+	public abstract List<Post> retrieveKeywordsFeed(KeywordsFeed feed, Integer maxRequests, Integer maxResults) throws Exception;
 	
 	/**
 	 * Retrieves a user feed that contains the user/users in 
@@ -50,25 +48,12 @@ public abstract class SocialMediaRetriever implements Retriever {
 	 * @return
 	 * @throws Exception
 	 */
-	public List<Item> retrieveAccountFeed(AccountFeed feed) throws Exception {
+	public List<Post> retrieveAccountFeed(AccountFeed feed) throws Exception {
 		return retrieveAccountFeed(feed, null, null);
 	}
 	
-	public abstract List<Item> retrieveAccountFeed(AccountFeed feed, Integer maxRequests, Integer maxResults) throws Exception;
+	public abstract List<Post> retrieveAccountFeed(AccountFeed feed, Integer maxRequests, Integer maxResults) throws Exception;
 	
-	/**
-	 * Retrieves a location feed that contains the coordinates of the location
-	 * that the retrieved content must come from.
-	 * @param feed
-	 * @return
-	 * @throws Exception
-	 */
-	public List<Item> retrieveLocationFeed(LocationFeed feed) throws Exception {
-		return retrieveLocationFeed(feed, null, null);
-	}
-	
-	public abstract List<Item> retrieveLocationFeed(LocationFeed feed, Integer maxRequests, Integer maxResults) throws Exception;
-
 	/**
 	 * Retrieves a list feed that contains the owner of a list an a slug 
 	 * used for the description of the list.
@@ -76,11 +61,11 @@ public abstract class SocialMediaRetriever implements Retriever {
 	 * @return
 	 * @throws Exception
 	 */
-	public List<Item> retrieveGroupFeed(GroupFeed feed) {
+	public List<Post> retrieveGroupFeed(GroupFeed feed) {
 		return retrieveGroupFeed(feed, null, null);
 	}
 	
-	public abstract List<Item> retrieveGroupFeed(GroupFeed feed, Integer maxRequests, Integer maxResults);
+	public abstract List<Post> retrieveGroupFeed(GroupFeed feed, Integer maxRequests, Integer maxResults);
 	
 	
 	/**
@@ -89,23 +74,15 @@ public abstract class SocialMediaRetriever implements Retriever {
 	 * @param uid
 	 * @return a StreamUser instance
 	 */
-	public abstract StreamUser getStreamUser(String uid);
-	
-	/**
-	 * Retrieves the info for a specific media object on the basis
-	 * of its id in the social network
-	 * @param id
-	 * @return a MediaItem instance
-	 */
-	public abstract MediaItem getMediaItem(String id);
+	public abstract UserAccount getStreamUser(String uid);
 	
 	@Override
-	public List<Item> retrieve(Feed feed) throws Exception {
+	public List<Post> retrieve(Feed feed) throws Exception {
 		return retrieve(feed, null, null);
 	}
 	
 	@Override
-	public List<Item> retrieve (Feed feed, Integer maxRequests, Integer maxResults) throws Exception {
+	public List<Post> retrieve (Feed feed, Integer maxRequests, Integer maxResults) throws Exception {
 	
 		switch(feed.getFeedtype()) {
 			case ACCOUNT:
@@ -115,10 +92,6 @@ public abstract class SocialMediaRetriever implements Retriever {
 			case KEYWORDS:
 				KeywordsFeed keyFeed = (KeywordsFeed) feed;
 				return retrieveKeywordsFeed(keyFeed, maxRequests, maxResults);
-				
-			case LOCATION:
-				LocationFeed locationFeed = (LocationFeed) feed;
-				return retrieveLocationFeed(locationFeed, maxRequests, maxResults);
 			
 			case GROUP:
 				GroupFeed listFeed = (GroupFeed) feed;
@@ -128,7 +101,7 @@ public abstract class SocialMediaRetriever implements Retriever {
 				break;
 		}
 	
-		return new ArrayList<Item>();
+		return new ArrayList<Post>();
 	}
 	
 }

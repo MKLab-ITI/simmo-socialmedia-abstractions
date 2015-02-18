@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.List;
 
 import gr.iti.mklab.framework.abstractions.socialmedia.posts.RSSPost;
+
 import org.apache.log4j.Logger;
 
 import com.sun.syndication.feed.synd.SyndEntry;
@@ -15,10 +16,10 @@ import com.sun.syndication.feed.synd.SyndFeed;
 import com.sun.syndication.io.SyndFeedInput;
 import com.sun.syndication.io.XmlReader;
 
-import gr.iti.mklab.framework.common.domain.Item;
-import gr.iti.mklab.framework.common.domain.feeds.Feed;
-import gr.iti.mklab.framework.common.domain.feeds.URLFeed;
+import gr.iti.mklab.framework.feeds.Feed;
+import gr.iti.mklab.framework.feeds.URLFeed;
 import gr.iti.mklab.framework.retrievers.Retriever;
+import gr.iti.mklab.simmo.documents.Post;
 
 /**
  * Class for retrieving rss feeds from official sources
@@ -33,14 +34,14 @@ public class RssRetriever implements Retriever {
 	private long oneMonthPeriod = 2592000000L;
 	
 	@Override
-	public List<Item> retrieve(Feed feed) throws Exception {
+	public List<Post> retrieve(Feed feed) throws Exception {
 		return retrieve(feed, null, null);
 	}
 		
 	@Override
-	public List<Item> retrieve(Feed feed, Integer maxRequests, Integer maxResults) throws Exception {
+	public List<Post> retrieve(Feed feed, Integer maxRequests, Integer maxResults) throws Exception {
 		
-		List<Item> items = new ArrayList<Item>();
+		List<Post> items = new ArrayList<Post>();
 		
 		URLFeed ufeed = (URLFeed) feed;
 		System.out.println("["+new Date()+"] Retrieving RSS Feed: " + ufeed.getURL());
@@ -75,7 +76,7 @@ public class RssRetriever implements Retriever {
 						RSSPost rssItem = new RSSPost(rss);
 								
 						String label = feed.getLabel();
-						rssItem.setList(label);
+						//rssItem.setList(label);
 						
 						items.add(rssItem);	
 						totalRetrievedItems++;
@@ -98,12 +99,6 @@ public class RssRetriever implements Retriever {
 		}
 	
 		return items;
-	}
-
-	
-	@Override
-	public void stop() {
-	
 	}
 	
 	public static void main(String...args) throws Exception {

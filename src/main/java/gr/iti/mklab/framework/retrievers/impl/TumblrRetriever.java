@@ -12,25 +12,22 @@ import java.util.Map;
 
 import gr.iti.mklab.framework.abstractions.socialmedia.posts.TumblrPost;
 import gr.iti.mklab.framework.abstractions.socialmedia.users.TumblrAccount;
+
 import org.apache.log4j.Logger;
 import org.scribe.exceptions.OAuthConnectionException;
 
 import com.tumblr.jumblr.JumblrClient;
 import com.tumblr.jumblr.exceptions.JumblrException;
 import com.tumblr.jumblr.types.Blog;
-import com.tumblr.jumblr.types.Post;
 
 import gr.iti.mklab.framework.Credentials;
-import gr.iti.mklab.framework.common.domain.Item;
-import gr.iti.mklab.framework.common.domain.MediaItem;
-import gr.iti.mklab.framework.common.domain.Account;
-import gr.iti.mklab.framework.common.domain.StreamUser;
-import gr.iti.mklab.framework.common.domain.feeds.AccountFeed;
-import gr.iti.mklab.framework.common.domain.feeds.GroupFeed;
-import gr.iti.mklab.framework.common.domain.feeds.KeywordsFeed;
-import gr.iti.mklab.framework.common.domain.feeds.LocationFeed;
+import gr.iti.mklab.framework.feeds.AccountFeed;
+import gr.iti.mklab.framework.feeds.GroupFeed;
+import gr.iti.mklab.framework.feeds.KeywordsFeed;
 import gr.iti.mklab.framework.retrievers.RateLimitsMonitor;
 import gr.iti.mklab.framework.retrievers.SocialMediaRetriever;
+import gr.iti.mklab.simmo.UserAccount;
+import gr.iti.mklab.simmo.documents.Post;
 
 /**
  * Class responsible for retrieving Tumblr content based on keywords or tumblr users
@@ -53,8 +50,9 @@ public class TumblrRetriever extends SocialMediaRetriever {
 
 	
 	@Override
-	public List<Item> retrieveAccountFeed(AccountFeed feed, Integer maxResults, Integer maxRequests){
-		List<Item> items = new ArrayList<Item>();
+	public List<Post> retrieveAccountFeed(AccountFeed feed, Integer maxResults, Integer maxRequests){
+		
+		List<Post> items = new ArrayList<Post>();
 		
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
 		Date lastItemDate = feed.getDateToRetrieve();
@@ -63,9 +61,7 @@ public class TumblrRetriever extends SocialMediaRetriever {
 		
 		boolean isFinished = false;
 		
-		Account source = feed.getAccount();
-		String uName = source.getName();
-		
+		String uName = feed.getUsername();
 		if(uName == null){
 			logger.info("#Tumblr : No source feed");
 			return null;
@@ -73,7 +69,7 @@ public class TumblrRetriever extends SocialMediaRetriever {
 		
 		Blog blog = client.blogInfo(uName);
 		TumblrAccount tumblrStreamUser = new TumblrAccount(blog);
-		List<Post> posts;
+		List<com.tumblr.jumblr.types.Post> posts;
 		Map<String,String> options = new HashMap<String,String>();
 		
 		Integer offset = 0;
@@ -90,7 +86,7 @@ public class TumblrRetriever extends SocialMediaRetriever {
 			
 			numberOfRequests ++;
 			
-			for(Post post : posts){
+			for(com.tumblr.jumblr.types.Post post : posts){
 				
 				if(post.getType().equals("photo") || post.getType().equals("video") || post.getType().equals("link")){
 					
@@ -139,9 +135,9 @@ public class TumblrRetriever extends SocialMediaRetriever {
 	}
 	
 	@Override
-	public List<Item> retrieveKeywordsFeed(KeywordsFeed feed, Integer maxResults, Integer maxRequests) {
+	public List<Post> retrieveKeywordsFeed(KeywordsFeed feed, Integer maxResults, Integer maxRequests) {
 		
-		List<Item> items = new ArrayList<Item>();
+		List<Post> items = new ArrayList<Post>();
 		
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
 		Date currentDate = new Date(System.currentTimeMillis());
@@ -180,7 +176,7 @@ public class TumblrRetriever extends SocialMediaRetriever {
 			Long checkTimestamp = indexDate.getTime();
 			Integer check = checkTimestamp.intValue();
 			options.put("featured_timestamp", check.toString());
-			List<Post> posts;
+			List<com.tumblr.jumblr.types.Post> posts;
 			try{
 				posts = client.tagged(tags);
 			}catch(JumblrException e){
@@ -194,7 +190,7 @@ public class TumblrRetriever extends SocialMediaRetriever {
 			
 			numberOfRequests ++;
 			
-			for(Post post : posts){
+			for(com.tumblr.jumblr.types.Post post : posts){
 				
 				if(post.getType().equals("photo") || post.getType().equals("video") ||  post.getType().equals("link")) {
 					
@@ -247,21 +243,10 @@ public class TumblrRetriever extends SocialMediaRetriever {
 	}
 
 	@Override
-	public List<Item> retrieveLocationFeed(LocationFeed feed, Integer maxRequests, Integer maxResults) throws Exception {
-		return new ArrayList<Item>();
+	public List<Post> retrieveGroupFeed(GroupFeed feed, Integer maxResults, Integer maxRequests) {
+		return new ArrayList<Post>();
 	}
-	
-	@Override
-	public List<Item> retrieveGroupFeed(GroupFeed feed, Integer maxResults, Integer maxRequests) {
-		return new ArrayList<Item>();
-	}
-	
-	@Override
-	public void stop() {
-		if(client != null){
-			client = null;
-		}
-	}
+
 	public class DateUtil
 	{
 	    public Date addDays(Date date, int days)
@@ -272,14 +257,11 @@ public class TumblrRetriever extends SocialMediaRetriever {
 	        return cal.getTime();
 	    }
 	}
-	@Override
-	public MediaItem getMediaItem(String id) {
-		return null;
-	}
+
 
 
 	@Override
-	public StreamUser getStreamUser(String uid) {
+	public UserAccount getStreamUser(String uid) {
 		return null;
 	}
 

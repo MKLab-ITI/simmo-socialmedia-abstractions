@@ -9,10 +9,10 @@ import java.util.Set;
 
 import gr.iti.mklab.framework.abstractions.socialmedia.posts.FlickrPost;
 import gr.iti.mklab.framework.abstractions.socialmedia.users.FlickrAccount;
+
 import org.apache.log4j.Logger;
 
 import com.flickr4java.flickr.Flickr;
-import com.flickr4java.flickr.FlickrException;
 import com.flickr4java.flickr.REST;
 import com.flickr4java.flickr.people.PeopleInterface;
 import com.flickr4java.flickr.people.User;
@@ -23,17 +23,13 @@ import com.flickr4java.flickr.photos.PhotosInterface;
 import com.flickr4java.flickr.photos.SearchParameters;
 
 import gr.iti.mklab.framework.Credentials;
-import gr.iti.mklab.framework.common.domain.Item;
-import gr.iti.mklab.framework.common.domain.MediaItem;
-import gr.iti.mklab.framework.common.domain.Account;
-import gr.iti.mklab.framework.common.domain.StreamUser;
-import gr.iti.mklab.framework.common.domain.feeds.AccountFeed;
-import gr.iti.mklab.framework.common.domain.feeds.Feed;
-import gr.iti.mklab.framework.common.domain.feeds.GroupFeed;
-import gr.iti.mklab.framework.common.domain.feeds.KeywordsFeed;
-import gr.iti.mklab.framework.common.domain.feeds.LocationFeed;
+import gr.iti.mklab.framework.feeds.AccountFeed;
+import gr.iti.mklab.framework.feeds.GroupFeed;
+import gr.iti.mklab.framework.feeds.KeywordsFeed;
 import gr.iti.mklab.framework.retrievers.RateLimitsMonitor;
 import gr.iti.mklab.framework.retrievers.SocialMediaRetriever;
+import gr.iti.mklab.simmo.UserAccount;
+import gr.iti.mklab.simmo.documents.Post;
 
 /**
  * Class responsible for retrieving Flickr content based on keywords,users or location coordinates
@@ -52,7 +48,7 @@ public class FlickrRetriever extends SocialMediaRetriever {
 
 	private Flickr flickr;
 
-	private HashMap<String, StreamUser> userMap;
+	private HashMap<String, UserAccount> userMap;
 	
 
 	public FlickrRetriever(Credentials credentials, RateLimitsMonitor rateLimitsMonitor) {
@@ -61,7 +57,7 @@ public class FlickrRetriever extends SocialMediaRetriever {
 		this.flickrKey = credentials.getKey();
 		this.flickrSecret = credentials.getSecret();
 		
-		userMap = new HashMap<String, StreamUser>();
+		userMap = new HashMap<String, UserAccount>();
 		
 		Flickr.debugStream = false;
 		
@@ -69,9 +65,9 @@ public class FlickrRetriever extends SocialMediaRetriever {
 	}
 	
 	@Override
-	public List<Item> retrieveAccountFeed(AccountFeed feed, Integer maxResults, Integer maxRequests) {
+	public List<Post> retrieveAccountFeed(AccountFeed feed, Integer maxResults, Integer maxRequests) {
 		
-		List<Item> items = new ArrayList<Item>();
+		List<Post> items = new ArrayList<Post>();
 		
 		Date dateToRetrieve = feed.getDateToRetrieve();
 		String label = feed.getLabel();
@@ -82,8 +78,7 @@ public class FlickrRetriever extends SocialMediaRetriever {
 		
 		//Here we search the user by the userId given (NSID) - 
 		// however we can get NSID via flickrAPI given user's username
-		Account source = feed.getAccount();
-		String userID = source.getId();
+		String userID = feed.getId();
 		
 		if(userID == null) {
 			logger.info("#Flickr : No source feed");
@@ -119,14 +114,14 @@ public class FlickrRetriever extends SocialMediaRetriever {
 			for(Photo photo : photos) {
 
 				String userid = photo.getOwner().getId();
-				StreamUser streamUser = userMap.get(userid);
+				UserAccount streamUser = userMap.get(userid);
 				if(streamUser == null) {
 					streamUser = getStreamUser(userid);
 					userMap.put(userid, streamUser);
 				}
 
-				FlickrPost flickrItem = new FlickrPost(photo, streamUser);
-				flickrItem.setList(label);
+				FlickrPost flickrItem = new FlickrPost(photo);
+				//flickrItem.setList(label);
 				
 				items.add(flickrItem);
 			}
@@ -144,9 +139,9 @@ public class FlickrRetriever extends SocialMediaRetriever {
 	}
 	
 	@Override
-	public List<Item> retrieveKeywordsFeed(KeywordsFeed feed, Integer maxResults, Integer maxRequests) {
+	public List<Post> retrieveKeywordsFeed(KeywordsFeed feed, Integer maxResults, Integer maxRequests) {
 		
-		List<Item> items = new ArrayList<Item>();
+		List<Post> items = new ArrayList<Post>();
 		
 		Date dateToRetrieve = feed.getDateToRetrieve();
 		String label = feed.getLabel();
@@ -211,14 +206,14 @@ public class FlickrRetriever extends SocialMediaRetriever {
 			for(Photo photo : photos) {
 
 				String userid = photo.getOwner().getId();
-				StreamUser streamUser = userMap.get(userid);
+				UserAccount streamUser = userMap.get(userid);
 				if(streamUser == null) {
 					streamUser = getStreamUser(userid);
 					userMap.put(userid, streamUser);
 				}
 
-				FlickrPost flickrItem = new FlickrPost(photo, streamUser);
-				flickrItem.setList(label);
+				FlickrPost flickrItem = new FlickrPost(photo);
+				//flickrItem.setList(label);
 				
 				items.add(flickrItem);
 			}
@@ -233,11 +228,11 @@ public class FlickrRetriever extends SocialMediaRetriever {
 		
 		return items;
 	}
-	
-	@Override
-	public List<Item> retrieveLocationFeed(LocationFeed feed, Integer maxResults, Integer maxRequests){
+
+	/*
+	public List<Post> retrieveLocationFeed(LocationFeed feed, Integer maxResults, Integer maxRequests){
 		
-		List<Item> items = new ArrayList<Item>();
+		List<Post> items = new ArrayList<Post>();
 		
 		Date dateToRetrieve = feed.getDateToRetrieve();
 		String label = feed.getLabel();
@@ -279,15 +274,15 @@ public class FlickrRetriever extends SocialMediaRetriever {
 			for(Photo photo : photos) {
 
 				String userid = photo.getOwner().getId();
-				StreamUser streamUser = userMap.get(userid);
+				UserAccount streamUser = userMap.get(userid);
 				if(streamUser == null) {
 					streamUser = getStreamUser(userid);
 
 					userMap.put(userid, streamUser);
 				}
 
-				FlickrPost flickrItem = new FlickrPost(photo, streamUser);
-				flickrItem.setList(label);
+				FlickrPost flickrItem = new FlickrPost(photo);
+				//flickrItem.setList(label);
 				
 				items.add(flickrItem);
 			}
@@ -298,53 +293,26 @@ public class FlickrRetriever extends SocialMediaRetriever {
 		
 		return items;
     }
+	*/
 	
 	@Override
-	public List<Item> retrieveGroupFeed(GroupFeed feed, Integer maxRequests, Integer maxResults) {
+	public List<Post> retrieveGroupFeed(GroupFeed feed, Integer maxRequests, Integer maxResults) {
 		return null;
 	}
 	
 	@Override
-	public void stop(){
-		if(flickr != null)
-			flickr = null;
-	}
-	
-	@Override
-	public MediaItem getMediaItem(String id) {
-		return null;
-	}
-	
-	@Override
-	public StreamUser getStreamUser(String uid) {
+	public UserAccount getStreamUser(String uid) {
 		try {
 			PeopleInterface peopleInterface = flickr.getPeopleInterface();
 			User user = peopleInterface.getInfo(uid);
 			
-			StreamUser streamUser = new FlickrAccount(user);
+			UserAccount streamUser = new FlickrAccount(user);
 			return streamUser;
 		}
 		catch(Exception e) {
 			return null;
 		}
 		
-	}
-	
-	public static void main(String...args) throws Exception {
-		
-		String flickrKey = "029eab4d06c40e08670d78055bf61205";
-		String flickrSecret = "bc4105126a4dfb8c";
-		
-		Credentials credentials = new Credentials();
-		credentials.setKey(flickrKey);
-		credentials.setSecret(flickrSecret);
-		
-		FlickrRetriever retriever = new FlickrRetriever(credentials, new RateLimitsMonitor(10, 10000l));
-		
-		Feed feed = new KeywordsFeed("\"uk\" amazing", new Date(System.currentTimeMillis()-14400000), "1");
-		
-		List<Item> items = retriever.retrieve(feed, 1, 1000);
-		System.out.println(items.size());
 	}
 	
 }

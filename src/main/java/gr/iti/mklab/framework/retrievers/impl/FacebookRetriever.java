@@ -1,13 +1,12 @@
 package gr.iti.mklab.framework.retrievers.impl;
 
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import gr.iti.mklab.framework.abstractions.socialmedia.posts.FacebookPost;
 import gr.iti.mklab.framework.abstractions.socialmedia.users.FacebookAccount;
+
 import org.apache.log4j.Logger;
 
 import com.restfb.Connection;
@@ -20,21 +19,16 @@ import com.restfb.types.CategorizedFacebookType;
 import com.restfb.types.Comment;
 import com.restfb.types.Page;
 import com.restfb.types.Photo;
-import com.restfb.types.Post;
-import com.restfb.types.Post.Comments;
 import com.restfb.types.User;
 
 import gr.iti.mklab.framework.Credentials;
-import gr.iti.mklab.framework.common.domain.Item;
-import gr.iti.mklab.framework.common.domain.MediaItem;
-import gr.iti.mklab.framework.common.domain.Account;
-import gr.iti.mklab.framework.common.domain.StreamUser;
-import gr.iti.mklab.framework.common.domain.feeds.AccountFeed;
-import gr.iti.mklab.framework.common.domain.feeds.GroupFeed;
-import gr.iti.mklab.framework.common.domain.feeds.KeywordsFeed;
-import gr.iti.mklab.framework.common.domain.feeds.LocationFeed;
+import gr.iti.mklab.framework.feeds.AccountFeed;
+import gr.iti.mklab.framework.feeds.GroupFeed;
+import gr.iti.mklab.framework.feeds.KeywordsFeed;
 import gr.iti.mklab.framework.retrievers.RateLimitsMonitor;
 import gr.iti.mklab.framework.retrievers.SocialMediaRetriever;
+import gr.iti.mklab.simmo.UserAccount;
+import gr.iti.mklab.simmo.documents.Post;
 
 /**
  * Class responsible for retrieving facebook content based on keywords or facebook users/facebook pages
@@ -56,9 +50,9 @@ public class FacebookRetriever extends SocialMediaRetriever {
 	}
 
 	@Override
-	public List<Item> retrieveAccountFeed(AccountFeed feed, Integer maxRequests, Integer maxResults) {
+	public List<Post> retrieveAccountFeed(AccountFeed feed, Integer maxRequests, Integer maxResults) {
 		
-		List<Item> items = new ArrayList<Item>();
+		List<Post> items = new ArrayList<Post>();
 
 		Integer totalRequests = 0;
 		
@@ -67,19 +61,17 @@ public class FacebookRetriever extends SocialMediaRetriever {
 		
 		boolean isFinished = false;
 		
-		Account source = feed.getAccount();
-		
-		String userName = source.getName();
+		String userName = feed.getUsername();
 		if(userName == null) {
 			logger.error("#Facebook : No source feed");
 			return items;
 		}
-		String userFeed = source.getName()+"/feed";
+		String userFeed = userName+"/feed";
 		
-		Connection<Post> connection;
+		Connection<com.restfb.types.Post> connection;
 		User page;
 		try {
-			connection = facebookClient.fetchConnection(userFeed , Post.class);
+			connection = facebookClient.fetchConnection(userFeed , com.restfb.types.Post.class);
 			page = facebookClient.fetchObject(userName, User.class);
 		}
 		catch(Exception e) {
@@ -87,26 +79,26 @@ public class FacebookRetriever extends SocialMediaRetriever {
 		}
 		
 		FacebookAccount facebookUser = new FacebookAccount(page);
-		for(List<Post> connectionPage : connection) {
+		for(List<com.restfb.types.Post> connectionPage : connection) {
 			
 			rateLimitsMonitor.check();
 			
 			totalRequests++;
-			for(Post post : connectionPage) {	
+			for(com.restfb.types.Post post : connectionPage) {	
 				
 				Date publicationDate = post.getCreatedTime();
 				
 				if(publicationDate.after(lastItemDate) && post!=null && post.getId() != null) {
-					FacebookPost facebookUpdate = new FacebookPost(post, facebookUser);
-					facebookUpdate.setList(label);
+					FacebookPost facebookPost = new FacebookPost(post, facebookUser);
+					//facebookUpdate.setList(label);
 					
-					items.add(facebookUpdate);
+					items.add(facebookPost);
 					
-				    Comments comments = post.getComments();
+					com.restfb.types.Post.Comments comments = post.getComments();
 				    if(comments != null) {
 				    	for(Comment comment : comments.getData()) {
 			    			FacebookPost facebookComment = new FacebookPost(comment, post, null);
-			    			facebookComment.setList(label);
+			    			//facebookComment.setList(label);
 			    			
 			    			items.add(facebookComment);
 			    		} 
@@ -130,9 +122,9 @@ public class FacebookRetriever extends SocialMediaRetriever {
 	}
 	
 	@Override
-	public List<Item> retrieveKeywordsFeed(KeywordsFeed feed, Integer maxRequests, Integer maxResults) {
+	public List<Post> retrieveKeywordsFeed(KeywordsFeed feed, Integer maxRequests, Integer maxResults) {
 		
-		List<Item> items = new ArrayList<Item>();
+		List<Post> items = new ArrayList<Post>();
 		
 		Date lastItemDate = feed.getDateToRetrieve();
 		String label = feed.getLabel();
@@ -159,9 +151,9 @@ public class FacebookRetriever extends SocialMediaRetriever {
 		if(tags.equals(""))
 			return items;
 		
-		Connection<Post> connection = null;
+		Connection<com.restfb.types.Post> connection = null;
 		try {
-			connection = facebookClient.fetchConnection("search", Post.class, Parameter.with("q", tags), Parameter.with("type", "post"));
+			connection = facebookClient.fetchConnection("search", com.restfb.types.Post.class, Parameter.with("q", tags), Parameter.with("type", "post"));
 		}catch(FacebookResponseStatusException e) {
 			logger.error(e.getMessage());
 			return items;
@@ -172,8 +164,8 @@ public class FacebookRetriever extends SocialMediaRetriever {
 		}
 		
 		try {
-			for(List<Post> connectionPage : connection) {
-				for(Post post : connectionPage) {	
+			for(List<com.restfb.types.Post> connectionPage : connection) {
+				for(com.restfb.types.Post post : connectionPage) {	
 					
 					Date publicationDate = post.getCreatedTime();
 					try {
@@ -188,11 +180,11 @@ public class FacebookRetriever extends SocialMediaRetriever {
 								FacebookAccount facebookUser = new FacebookAccount(user);
 								
 								fbItem = new FacebookPost(post, facebookUser);
-								fbItem.setList(label);
+								//fbItem.setList(label);
 							}
 							else {
 								fbItem = new FacebookPost(post);
-								fbItem.setList(label);
+								//fbItem.setList(label);
 							}
 							
 							items.add(fbItem);
@@ -224,24 +216,12 @@ public class FacebookRetriever extends SocialMediaRetriever {
 		return items;
 	}
 	
-	
-	public List<Item> retrieveLocationFeed(LocationFeed feed, Integer maxRequests, Integer maxResults) {
-		return new ArrayList<Item>();
-	}
-	
 	@Override
-	public List<Item> retrieveGroupFeed(GroupFeed feed, Integer maxRequests, Integer maxResults) {
-		return new ArrayList<Item>();
-	}
-	
-	
-	@Override
-	public void stop(){
-		if(facebookClient != null)
-			facebookClient = null;
+	public List<Post> retrieveGroupFeed(GroupFeed feed, Integer maxRequests, Integer maxResults) {
+		return new ArrayList<Post>();
 	}
 
-	@Override
+	/*
 	public MediaItem getMediaItem(String mediaId) {
 		Photo photo = facebookClient.fetchObject(mediaId, Photo.class);
 		
@@ -270,7 +250,7 @@ public class FacebookRetriever extends SocialMediaRetriever {
 			
 			CategorizedFacebookType from = photo.getFrom();
 			if(from != null) {
-				StreamUser streamUser = new FacebookAccount(from);
+				UserAccount streamUser = new FacebookAccount(from);
 				mediaItem.setUser(streamUser);
 				mediaItem.setUserId(streamUser.getUserid());
 			}
@@ -282,12 +262,13 @@ public class FacebookRetriever extends SocialMediaRetriever {
 		
 		return mediaItem;
 	}
-
+	*/
+	
 	@Override
-	public StreamUser getStreamUser(String uid) {
+	public UserAccount getStreamUser(String uid) {
 		try {
 			Page page = facebookClient.fetchObject(uid, Page.class);
-			StreamUser facebookUser = new FacebookAccount(page);
+			UserAccount facebookUser = new FacebookAccount(page);
 			return facebookUser;
 		}
 		catch(Exception e) {

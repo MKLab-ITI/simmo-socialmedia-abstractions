@@ -16,16 +16,13 @@ import com.google.api.client.util.Key;
 
 import gr.iti.mklab.framework.Credentials;
 import gr.iti.mklab.framework.abstractions.socialmedia.media.DailyMotionVideo;
-import gr.iti.mklab.framework.abstractions.socialmedia.media.DailyMotionVideo.DailyMotionVideo;
-import gr.iti.mklab.framework.common.domain.Item;
-import gr.iti.mklab.framework.common.domain.MediaItem;
-import gr.iti.mklab.framework.common.domain.StreamUser;
-import gr.iti.mklab.framework.common.domain.feeds.AccountFeed;
-import gr.iti.mklab.framework.common.domain.feeds.GroupFeed;
-import gr.iti.mklab.framework.common.domain.feeds.KeywordsFeed;
-import gr.iti.mklab.framework.common.domain.feeds.LocationFeed;
+import gr.iti.mklab.framework.feeds.AccountFeed;
+import gr.iti.mklab.framework.feeds.GroupFeed;
+import gr.iti.mklab.framework.feeds.KeywordsFeed;
 import gr.iti.mklab.framework.retrievers.RateLimitsMonitor;
 import gr.iti.mklab.framework.retrievers.SocialMediaRetriever;
+import gr.iti.mklab.simmo.UserAccount;
+import gr.iti.mklab.simmo.documents.Post;
 
 /**
  * The retriever that implements the Daily Motion wrapper
@@ -69,54 +66,40 @@ public class DailyMotionRetriever extends SocialMediaRetriever {
 	/**
 	 * Returns the retrieved media item
 	 */
+	/*
 	public MediaItem getMediaItem(String id) {
-		
-		DailyMotionUrl url = new DailyMotionUrl(requestPrefix + id);
-		
-		HttpRequest request;
 		try {
-			request = requestFactory.buildGetRequest(url);
+			DailyMotionUrl url = new DailyMotionUrl(requestPrefix + id);
+			HttpRequest request = requestFactory.buildGetRequest(url);
 			DailyMotionVideo video = request.execute().parseAs(DailyMotionVideo.class);
-			
 			if(video != null) {
 				MediaItem mediaItem = new DailyMotionVideo(video);
 				return mediaItem;
 			}
-			
 		} catch (Exception e) {
-			
+
 		}
+		return null;
+	}
+	*/
 
+	@Override
+	public List<Post> retrieveKeywordsFeed(KeywordsFeed feed, Integer maxRequests, Integer maxResults) throws Exception {
+		return new ArrayList<Post>();
+	}
+
+	@Override
+	public List<Post> retrieveAccountFeed(AccountFeed feed, Integer maxRequests, Integer maxResults) throws Exception {
+		return new ArrayList<Post>();
+	}
+
+	@Override
+	public UserAccount getStreamUser(String uid) {
 		return null;
 	}
 
 	@Override
-	public void stop() {
-		
-	}
-
-	@Override
-	public List<Item> retrieveKeywordsFeed(KeywordsFeed feed, Integer maxRequests, Integer maxResults) throws Exception {
-		return new ArrayList<Item>();
-	}
-
-	@Override
-	public List<Item> retrieveAccountFeed(AccountFeed feed, Integer maxRequests, Integer maxResults) throws Exception {
-		return new ArrayList<Item>();
-	}
-
-	@Override
-	public List<Item> retrieveLocationFeed(LocationFeed feed, Integer maxRequests, Integer maxResults) throws Exception {
-		return new ArrayList<Item>();
-	}
-
-	@Override
-	public StreamUser getStreamUser(String uid) {
-		return null;
-	}
-
-	@Override
-	public List<Item> retrieveGroupFeed(GroupFeed feed, Integer maxRequests, Integer maxResults) {
-		return new ArrayList<Item>();
+	public List<Post> retrieveGroupFeed(GroupFeed feed, Integer maxRequests, Integer maxResults) {
+		return new ArrayList<Post>();
 	}
 }

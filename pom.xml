@@ -42,13 +42,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
     
-    <dependencies>
-    	<!-- Social Sensor -->
-        <dependency>
-            <groupId>eu.socialsensor</groupId>
-            <artifactId>socialsensor-framework-common</artifactId>
-            <version>0.2.2</version>
-        </dependency>
+    <dependencies>         
         <!-- SIMMO -->
         <dependency>
     		<groupId>gr.iti.mklab</groupId>
