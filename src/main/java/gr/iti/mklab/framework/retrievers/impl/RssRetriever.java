@@ -17,7 +17,7 @@ import com.sun.syndication.io.SyndFeedInput;
 import com.sun.syndication.io.XmlReader;
 
 import gr.iti.mklab.framework.feeds.Feed;
-import gr.iti.mklab.framework.feeds.URLFeed;
+import gr.iti.mklab.framework.feeds.RssFeed;
 import gr.iti.mklab.framework.retrievers.Retriever;
 import gr.iti.mklab.simmo.documents.Post;
 
@@ -43,7 +43,7 @@ public class RssRetriever implements Retriever {
 		
 		List<Post> items = new ArrayList<Post>();
 		
-		URLFeed ufeed = (URLFeed) feed;
+		RssFeed ufeed = (RssFeed) feed;
 		System.out.println("["+new Date()+"] Retrieving RSS Feed: " + ufeed.getURL());
 		
 		Integer totalRetrievedItems = 0;
@@ -75,7 +75,7 @@ public class RssRetriever implements Retriever {
 								
 						RSSPost rssItem = new RSSPost(rss);
 								
-						String label = feed.getLabel();
+						//String label = feed.getLabel();
 						//rssItem.setList(label);
 						
 						items.add(rssItem);	
@@ -104,7 +104,7 @@ public class RssRetriever implements Retriever {
 	public static void main(String...args) throws Exception {
 		RssRetriever retriever = new RssRetriever();
 		
-		Feed feed = new URLFeed("http://ecowatch.com/feed/", new Date(System.currentTimeMillis()-3600000), "ecowatch");
+		Feed feed = new RssFeed("ecowatch", "http://ecowatch.com/feed/", new Date(System.currentTimeMillis()-3600000));
 		
 		retriever.retrieve(feed);
 	}

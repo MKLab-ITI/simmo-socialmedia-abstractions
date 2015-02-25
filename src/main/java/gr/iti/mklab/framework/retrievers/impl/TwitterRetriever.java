@@ -22,6 +22,7 @@ import twitter4j.conf.Configuration;
 import twitter4j.conf.ConfigurationBuilder;
 import gr.iti.mklab.framework.Credentials;
 import gr.iti.mklab.framework.feeds.AccountFeed;
+import gr.iti.mklab.framework.feeds.Feed;
 import gr.iti.mklab.framework.feeds.GroupFeed;
 import gr.iti.mklab.framework.feeds.KeywordsFeed;
 import gr.iti.mklab.framework.retrievers.SocialMediaRetriever;
@@ -61,6 +62,12 @@ public class TwitterRetriever extends SocialMediaRetriever {
 	
 	@Override
 	public List<Post> retrieveAccountFeed(AccountFeed feed, Integer maxRequests, Integer maxResults) {
+		
+		if(maxRequests == null)
+			maxRequests = 1;
+		
+		if(maxResults == null)
+			maxResults = 500;
 		
 		List<Post> posts = new ArrayList<Post>();
 		
@@ -124,6 +131,7 @@ public class TwitterRetriever extends SocialMediaRetriever {
 						if(loggingEnabled)logger.info("totalRetrievedItems: " + posts.size() + " > " + maxResults);
 					break;
 				}
+				
 				if(numberOfRequests >= maxRequests) {
 					if(loggingEnabled)	
 						if(loggingEnabled)logger.info("numberOfRequests: " + numberOfRequests + " > " + maxRequests);
@@ -399,16 +407,32 @@ public class TwitterRetriever extends SocialMediaRetriever {
 	public static void main(String...args) throws Exception {
 		
 		Credentials credentials = new Credentials ();
-		credentials.setKey("UVWoIsZoP16ndCkEI2gOUNCWV");
-		credentials.setSecret("OckCuM5AynOXH0NsxpqQHNfBTfWPVp5BA20S8Xd8AtMzNy4OO3");
-		credentials.setAccessToken("2547837110-IcVqpQiE764M6FPoYZ9oxwK6QhJGwwaTjX0syZm");
-		credentials.setAccessTokenSecret("wxQuDS6JODxBsZeIv8pHD4jYcVY3Ypsva6vbT7qjejpGA");
+		credentials.setKey("");
+		credentials.setSecret("");
+		credentials.setAccessToken("");
+		credentials.setAccessTokenSecret("");
 		
 		TwitterRetriever retriever = new TwitterRetriever(credentials);
 	
-		AccountFeed feed = new AccountFeed(null, null, null);
+		Date since = new Date(System.currentTimeMillis()-9600000);
+		Feed feed = new AccountFeed("398789134", null, since);
+		//Feed feed = new KeywordsFeed("1", "obama", since);
 		
-		retriever.retrieveAccountFeed(feed);
+		
+		List<Post> posts = retriever.retrieve(feed);
+		System.out.println(posts.size() + " posts found!");
+		
+		for(Post post : posts) {
+			System.out.println(post.getId());
+			System.out.println(post.getContributor().getUsername());
+			System.out.println(post.getContributor().getId());
+			System.out.println(post.getTitle());
+			System.out.println(post.getType());
+			System.out.println(post.getCreationDate());
+			System.out.println(post.getLanguage());
+			System.out.println("==============================");
+		}
+		
 	}
 	
 }

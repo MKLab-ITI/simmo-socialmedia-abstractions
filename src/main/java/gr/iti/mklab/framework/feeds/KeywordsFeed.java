@@ -4,12 +4,13 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.mongodb.morphia.annotations.Entity;
-
-@Entity(noClassnameStored = true)
 public class KeywordsFeed extends Feed {
 	
 	private List<String> keywords = new ArrayList<String>();
+	
+	public KeywordsFeed() {
+		
+	}
 	
 	public KeywordsFeed(String id, String keyword, Date since) {
 		super(since, Feed.FeedType.KEYWORDS);

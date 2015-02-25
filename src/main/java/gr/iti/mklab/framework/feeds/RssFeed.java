@@ -2,17 +2,17 @@ package gr.iti.mklab.framework.feeds;
 
 import java.util.Date;
 
-import org.mongodb.morphia.annotations.Entity;
-
-@Entity(noClassnameStored = true)
-public class URLFeed extends Feed {
+public class RssFeed extends Feed {
 	
 	private String url = null;
 	
 	private String network = null;
 	
-	
-	public URLFeed(String url, Date since, String id) {
+	public RssFeed() {
+		
+	}
+
+	public RssFeed(String id, String url, Date since) {
 		super(since, Feed.FeedType.URL);
 		this.url = url;
 		this.id = id;

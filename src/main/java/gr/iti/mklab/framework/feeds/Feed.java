@@ -5,7 +5,7 @@ import java.util.Date;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
 
-@Entity
+@Entity(value="feeds", noClassnameStored=false)
 public class Feed {
 
 	@Id
@@ -18,6 +18,10 @@ public class Feed {
 	protected String source;
 	
 	protected String label;
+	
+	public Feed() {
+		
+	}
 	
 	public Feed(Date since, FeedType feedType) {
 		this.since = since;

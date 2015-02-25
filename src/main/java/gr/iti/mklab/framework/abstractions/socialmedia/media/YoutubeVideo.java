@@ -9,7 +9,6 @@ import gr.iti.mklab.framework.abstractions.socialmedia.Sources;
 import gr.iti.mklab.framework.abstractions.socialmedia.users.YoutubeChannel;
 import gr.iti.mklab.simmo.UserAccount;
 import gr.iti.mklab.simmo.items.Video;
-import org.apache.log4j.Logger;
 import org.mongodb.morphia.annotations.Entity;
 
 
@@ -21,8 +20,6 @@ import org.mongodb.morphia.annotations.Entity;
  */
 @Entity("Video")
 public class YoutubeVideo extends Video {
-
-    private Logger logger = Logger.getLogger(YoutubeVideo.class);
 
     public YoutubeVideo(com.google.api.services.youtube.model.Video v) {
         setId(Sources.YOUTUBE + '#' + v.getId());

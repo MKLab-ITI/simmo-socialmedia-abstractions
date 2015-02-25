@@ -7,6 +7,10 @@ public class GroupFeed extends Feed {
 	private String groupId;
 	private String groupCreator;
 
+	public GroupFeed() {
+		
+	}
+	
 	public GroupFeed(String groupCreator, String groupId, Date since, String id) {
 		super(since, Feed.FeedType.GROUP);
 		this.id = id;
