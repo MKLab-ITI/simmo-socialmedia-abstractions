@@ -54,8 +54,13 @@ public class GooglePlusRetriever extends SocialMediaRetriever {
 	private String userPrefix = "https://plus.google.com/+";
 	private String GooglePlusKey;
 
-	public GooglePlusRetriever(Credentials credentials) {
+	public GooglePlusRetriever(Credentials credentials) throws Exception {
 		super(credentials);
+		
+		if (credentials.getKey() == null) {
+			logger.error("GooglePlus requires authentication.");
+			throw new Exception("GooglePlus requires authentication.");
+		}
 		
 		GooglePlusKey = credentials.getKey();
 		GoogleCredential credential = new GoogleCredential();

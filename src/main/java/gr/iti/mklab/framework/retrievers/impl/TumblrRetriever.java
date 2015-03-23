@@ -40,9 +40,12 @@ public class TumblrRetriever extends SocialMediaRetriever {
 	
 	private JumblrClient client;
 	
-	public TumblrRetriever(Credentials credentials) {
-		
+	public TumblrRetriever(Credentials credentials) throws Exception {		
 		super(credentials);
+		if (credentials.getKey() == null || credentials.getSecret() == null) {
+			logger.error("Tumblr requires authentication.");
+			throw new Exception("Tumblr requires authentication.");
+		}
 		
 		client = new JumblrClient(credentials.getKey(), credentials.getSecret());
 	}

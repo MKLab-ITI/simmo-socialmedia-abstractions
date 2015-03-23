@@ -95,6 +95,7 @@
     		<artifactId>twitter4j-stream</artifactId>
     		<version>4.0.2</version>
     	</dependency>
+    	
     	<dependency>
     		<groupId>org.twitter4j</groupId>
     		<artifactId>twitter4j-core</artifactId>
@@ -121,6 +122,7 @@
             <artifactId>rome</artifactId>
             <version>1.0</version>
         </dependency>
+        
         <dependency>
 			<groupId>org.rometools</groupId>
 			<artifactId>rome-modules</artifactId>
@@ -183,6 +185,17 @@
 		</pluginManagement>
 
         <plugins>	
+        	<plugin>
+				<groupId>org.sonatype.plugins</groupId>
+				<artifactId>nexus-staging-maven-plugin</artifactId>
+				<version>1.6.3</version>
+				<extensions>true</extensions>
+				<configuration>
+					<serverId>sonatype-nexus-staging</serverId>
+					<nexusUrl>https://oss.sonatype.org/</nexusUrl>
+					<autoReleaseAfterClose>true</autoReleaseAfterClose>
+				</configuration>
+			</plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -191,9 +204,7 @@
                     <source>1.8</source>
                     <target>1.8</target>
                 </configuration>
-         
             </plugin>
-      
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
@@ -207,7 +218,6 @@
                     </execution>
                 </executions>
             </plugin>
-            
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
@@ -221,7 +231,6 @@
                     </execution>
                 </executions>
             </plugin>
-            
             <plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-gpg-plugin</artifactId>

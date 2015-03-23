@@ -54,8 +54,13 @@ public class YoutubeRetriever extends SocialMediaRetriever {
 	
 	private YouTubeService service;
 	
-	public YoutubeRetriever(Credentials credentials) {			
+	public YoutubeRetriever(Credentials credentials) throws Exception {			
 		super(credentials);	
+		
+		if (credentials.getClientId() == null || credentials.getKey() == null) {
+			logger.error("YouTube requires authentication.");
+			throw new Exception("YouTube requires authentication.");
+		}
 		
 		this.service = new YouTubeService(credentials.getClientId(), credentials.getKey());
 	}

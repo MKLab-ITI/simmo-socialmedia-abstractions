@@ -1,7 +1,6 @@
 package gr.iti.mklab.framework.retrievers.impl;
 
 import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -13,13 +12,7 @@ import org.apache.log4j.Logger;
 import org.jinstagram.Instagram;
 import org.jinstagram.InstagramOembed;
 import org.jinstagram.exceptions.InstagramException;
-import org.jinstagram.entity.common.Caption;
-import org.jinstagram.entity.common.ImageData;
-import org.jinstagram.entity.common.Images;
 import org.jinstagram.entity.common.Pagination;
-import org.jinstagram.entity.common.User;
-import org.jinstagram.entity.locations.LocationSearchFeed;
-import org.jinstagram.entity.media.MediaInfoFeed;
 import org.jinstagram.entity.oembed.OembedInformation;
 import org.jinstagram.entity.tags.TagMediaFeed;
 import org.jinstagram.entity.users.basicinfo.UserInfo;
@@ -40,8 +33,8 @@ import gr.iti.mklab.simmo.documents.Post;
 /**
  * Class responsible for retrieving Instagram content based on keywords or instagram users or locations
  * The retrieval process takes place through Instagram API
- * @author ailiakop
- * @email  ailiakop@iti.gr
+ * @author manosetro
+ * @email  manosetro@iti.gr
  */
 public class InstagramRetriever extends SocialMediaRetriever {
 	
@@ -55,8 +48,14 @@ public class InstagramRetriever extends SocialMediaRetriever {
 
 	private InstagramOembed instagramOembed;
 	
-	public InstagramRetriever(Credentials credentials) {
+	public InstagramRetriever(Credentials credentials) throws Exception {
 		super(credentials);
+		
+		if (credentials.getKey() == null || credentials.getSecret() == null 
+				|| credentials.getAccessToken() == null) {
+			logger.error("Instagram requires authentication.");
+			throw new Exception("Instagram requires authentication.");
+		}
 		
 		Token accessToken = new Token(credentials.getAccessToken(), credentials.getAccessTokenSecret()); 
 		this.instagram = new Instagram(credentials.getKey());

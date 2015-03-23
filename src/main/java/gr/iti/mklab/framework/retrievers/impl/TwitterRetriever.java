@@ -43,9 +43,15 @@ public class TwitterRetriever extends SocialMediaRetriever {
 	private Twitter twitter = null;
 	private TwitterFactory tf = null;
 	
-	public TwitterRetriever(Credentials credentials) {
+	public TwitterRetriever(Credentials credentials) throws Exception {
 		
 		super(credentials);
+		
+		if (credentials.getKey() == null || credentials.getSecret() == null ||
+				credentials.getAccessToken() == null || credentials.getAccessTokenSecret() == null) {
+			logger.error("Twitter requires authentication.");
+			throw new Exception("Twitter requires authentication.");
+		}
 		
 		ConfigurationBuilder cb = new ConfigurationBuilder();
 		cb.setJSONStoreEnabled(false)

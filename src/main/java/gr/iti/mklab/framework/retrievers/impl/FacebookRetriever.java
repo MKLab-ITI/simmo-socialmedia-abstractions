@@ -18,7 +18,6 @@ import com.restfb.exception.FacebookResponseStatusException;
 import com.restfb.types.CategorizedFacebookType;
 import com.restfb.types.Comment;
 import com.restfb.types.Page;
-import com.restfb.types.Photo;
 import com.restfb.types.User;
 
 import gr.iti.mklab.framework.Credentials;
@@ -42,10 +41,19 @@ public class FacebookRetriever extends SocialMediaRetriever {
 	
 	private Logger  logger = Logger.getLogger(FacebookRetriever.class);
 	
-	public FacebookRetriever(Credentials credentials) {
+	public FacebookRetriever(Credentials credentials) throws Exception {
 		super(credentials);
 		
-		facebookClient = new DefaultFacebookClient(credentials.getAccessToken());
+		String accessToken = credentials.getAccessToken();
+		if(accessToken == null) {
+			if (credentials.getKey() == null && credentials.getSecret() == null) {
+				logger.error("Facebook requires authentication.");
+				throw new Exception("Facebook requires authentication.");
+			}
+			accessToken = credentials.getKey() + "|" + credentials.getSecret();
+		}
+		
+		facebookClient = new DefaultFacebookClient(accessToken);
 	}
 
 	@Override
