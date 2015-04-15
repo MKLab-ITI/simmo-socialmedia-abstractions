@@ -24,6 +24,7 @@ import gr.iti.mklab.framework.Credentials;
 import gr.iti.mklab.framework.feeds.AccountFeed;
 import gr.iti.mklab.framework.feeds.GroupFeed;
 import gr.iti.mklab.framework.feeds.KeywordsFeed;
+import gr.iti.mklab.framework.retrievers.Response;
 import gr.iti.mklab.framework.retrievers.SocialMediaRetriever;
 import gr.iti.mklab.simmo.UserAccount;
 import gr.iti.mklab.simmo.documents.Post;
@@ -57,8 +58,9 @@ public class FacebookRetriever extends SocialMediaRetriever {
 	}
 
 	@Override
-	public List<Post> retrieveAccountFeed(AccountFeed feed, Integer maxRequests, Integer maxResults) {
+	public Response retrieveAccountFeed(AccountFeed feed, Integer maxRequests) {
 		
+		Response response = new Response();
 		List<Post> items = new ArrayList<Post>();
 
 		Integer totalRequests = 0;
@@ -71,7 +73,7 @@ public class FacebookRetriever extends SocialMediaRetriever {
 		String userName = feed.getUsername();
 		if(userName == null) {
 			logger.error("#Facebook : No source feed");
-			return items;
+			return response;
 		}
 		String userFeed = userName+"/feed";
 		
@@ -82,7 +84,7 @@ public class FacebookRetriever extends SocialMediaRetriever {
 			page = facebookClient.fetchObject(userName, User.class);
 		}
 		catch(Exception e) {
-			return items;
+			return response;
 		}
 		
 		FacebookAccount facebookUser = new FacebookAccount(page);
@@ -109,7 +111,7 @@ public class FacebookRetriever extends SocialMediaRetriever {
 				    }
 				 }
 				
-				if(publicationDate.before(lastItemDate) || items.size()>maxResults || totalRequests>maxRequests){
+				if(publicationDate.before(lastItemDate) || totalRequests>maxRequests){
 					isFinished = true;
 					break;
 				}
@@ -122,12 +124,15 @@ public class FacebookRetriever extends SocialMediaRetriever {
 
 		logger.info("Facebook: " + items.size() + " posts from " + userFeed + " [ " + lastItemDate + " - " + new Date(System.currentTimeMillis()) + " ]");
 		
-		return items;
+		response.setPosts(items);
+		response.setRequests(totalRequests);
+		return response;
 	}
 	
 	@Override
-	public List<Post> retrieveKeywordsFeed(KeywordsFeed feed, Integer maxRequests, Integer maxResults) {
+	public Response retrieveKeywordsFeed(KeywordsFeed feed, Integer maxRequests) {
 		
+		Response response = new Response();
 		List<Post> items = new ArrayList<Post>();
 		
 		Date lastItemDate = feed.getSinceDate();
@@ -139,7 +144,7 @@ public class FacebookRetriever extends SocialMediaRetriever {
 		
 		if(keywords == null || keywords.isEmpty()) {
 			logger.error("#Facebook : No keywords feed");
-			return items;
+			return response;
 		}
 
 		String tags = "";
@@ -153,18 +158,18 @@ public class FacebookRetriever extends SocialMediaRetriever {
 		}
 		
 		if(tags.equals(""))
-			return items;
+			return response;
 		
 		Connection<com.restfb.types.Post> connection = null;
 		try {
 			connection = facebookClient.fetchConnection("search", com.restfb.types.Post.class, Parameter.with("q", tags), Parameter.with("type", "post"));
 		}catch(FacebookResponseStatusException e) {
 			logger.error(e.getMessage());
-			return items;
+			return response;
 		}
 		catch(Exception e) {
 			logger.error(e.getMessage());
-			return items;
+			return response;
 		}
 		
 		try {
@@ -199,7 +204,7 @@ public class FacebookRetriever extends SocialMediaRetriever {
 						break;
 					}
 					
-					if(publicationDate.before(lastItemDate) || items.size()>maxResults){
+					if(publicationDate.before(lastItemDate)) {
 						isFinished = true;
 						break;
 					}
@@ -210,19 +215,19 @@ public class FacebookRetriever extends SocialMediaRetriever {
 				
 			}
 		}
-		catch(FacebookNetworkException e){
+		catch(FacebookNetworkException e) {
 			logger.error(e.getMessage());
-			return items;
 		}
 		
 		logger.info("Facebook: " + items.size() + " posts for " + tags + " [ " + lastItemDate + " - " + new Date(System.currentTimeMillis()) + " ]");
 		
-		return items;
+		response.setPosts(items);
+		return response;
 	}
 	
 	@Override
-	public List<Post> retrieveGroupFeed(GroupFeed feed, Integer maxRequests, Integer maxResults) {
-		return new ArrayList<Post>();
+	public Response retrieveGroupFeed(GroupFeed feed, Integer maxRequests) {
+		return new Response();
 	}
 
 	/*

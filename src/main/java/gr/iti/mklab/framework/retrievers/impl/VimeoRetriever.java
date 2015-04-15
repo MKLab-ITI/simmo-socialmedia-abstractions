@@ -17,6 +17,7 @@ import gr.iti.mklab.framework.feeds.AccountFeed;
 import gr.iti.mklab.framework.feeds.Feed;
 import gr.iti.mklab.framework.feeds.GroupFeed;
 import gr.iti.mklab.framework.feeds.KeywordsFeed;
+import gr.iti.mklab.framework.retrievers.Response;
 import gr.iti.mklab.framework.retrievers.SocialMediaRetriever;
 import gr.iti.mklab.simmo.UserAccount;
 import gr.iti.mklab.simmo.documents.Post;
@@ -65,18 +66,18 @@ public class VimeoRetriever extends SocialMediaRetriever {
 	*/
 	
 	@Override
-	public List<Post> retrieve(Feed feed) {
-		return new ArrayList<Post>();
+	public Response retrieve(Feed feed) {
+		return new Response();
 	}
 
 	@Override
-	public List<Post> retrieveKeywordsFeed(KeywordsFeed feed) throws Exception {
-		return new ArrayList<Post>();
+	public Response retrieveKeywordsFeed(KeywordsFeed feed) throws Exception {
+		return new Response();
 	}
 	
 	@Override
-	public List<Post> retrieveAccountFeed(AccountFeed feed) throws Exception {
-		return new ArrayList<Post>();
+	public Response retrieveAccountFeed(AccountFeed feed) throws Exception {
+		return new Response();
 	}
 
 	@Override
@@ -86,31 +87,27 @@ public class VimeoRetriever extends SocialMediaRetriever {
 	}
 
 	@Override
-	public List<Post> retrieveGroupFeed(GroupFeed feed) {
-		return new ArrayList<Post>();
+	public Response retrieveGroupFeed(GroupFeed feed) {
+		return new Response();
 	}
 
 	@Override
-	public List<Post> retrieve(Feed feed, Integer maxRequests,
-			Integer maxResults) {
+	public Response retrieve(Feed feed, Integer maxRequests) {
 		return null;
 	}
 
 	@Override
-	public List<Post> retrieveKeywordsFeed(KeywordsFeed feed,
-			Integer maxRequests, Integer maxResults) throws Exception {
+	public Response retrieveKeywordsFeed(KeywordsFeed feed, Integer maxRequests) throws Exception {
 		return null;
 	}
 
 	@Override
-	public List<Post> retrieveAccountFeed(AccountFeed feed, Integer maxRequests,
-			Integer maxResults) throws Exception {
+	public Response retrieveAccountFeed(AccountFeed feed, Integer maxRequests) throws Exception {
 		return null;
 	}
 
 	@Override
-	public List<Post> retrieveGroupFeed(GroupFeed feed, Integer maxRequests,
-			Integer maxResults) {
+	public Response retrieveGroupFeed(GroupFeed feed, Integer maxRequests) {
 		return null;
 	}
 

@@ -26,6 +26,7 @@ import gr.iti.mklab.framework.Credentials;
 import gr.iti.mklab.framework.feeds.AccountFeed;
 import gr.iti.mklab.framework.feeds.GroupFeed;
 import gr.iti.mklab.framework.feeds.KeywordsFeed;
+import gr.iti.mklab.framework.retrievers.Response;
 import gr.iti.mklab.framework.retrievers.SocialMediaRetriever;
 import gr.iti.mklab.simmo.UserAccount;
 import gr.iti.mklab.simmo.documents.Post;
@@ -64,8 +65,9 @@ public class FlickrRetriever extends SocialMediaRetriever {
 	}
 	
 	@Override
-	public List<Post> retrieveAccountFeed(AccountFeed feed, Integer maxResults, Integer maxRequests) {
+	public Response retrieveAccountFeed(AccountFeed feed, Integer maxRequests) {
 		
+		Response response = new Response();
 		List<Post> items = new ArrayList<Post>();
 		
 		Date dateToRetrieve = feed.getSinceDate();
@@ -81,7 +83,7 @@ public class FlickrRetriever extends SocialMediaRetriever {
 		
 		if(userID == null) {
 			logger.info("#Flickr : No source feed");
-			return items;
+			return response;
 		}
 		
 		PhotosInterface photosInteface = flickr.getPhotosInterface();
@@ -93,7 +95,7 @@ public class FlickrRetriever extends SocialMediaRetriever {
 		extras.remove(Extras.MACHINE_TAGS);
 		params.setExtras(extras);
 		
-		while(page<=pages && numberOfRequests<=maxRequests && numberOfResults<=maxResults) {
+		while(page<=pages && numberOfRequests<=maxRequests) {
 			
 			PhotoList<Photo> photos;
 			try {
@@ -129,17 +131,17 @@ public class FlickrRetriever extends SocialMediaRetriever {
 		//logger.info("#Flickr : Done retrieving for this session");
 //		logger.info("#Flickr : Handler fetched " + items.size() + " photos from " + userID + 
 //				" [ " + lastItemDate + " - " + new Date(System.currentTimeMillis()) + " ]");
-		
-		// The next request will retrieve only items of the last day
-		dateToRetrieve = new Date(System.currentTimeMillis() - (24*3600*1000));
-		feed.setSinceDate(dateToRetrieve);
-		
-		return items;
+
+
+		response.setPosts(items);
+		response.setRequests(numberOfRequests);
+		return response;
 	}
 	
 	@Override
-	public List<Post> retrieveKeywordsFeed(KeywordsFeed feed, Integer maxResults, Integer maxRequests) {
+	public Response retrieveKeywordsFeed(KeywordsFeed feed, Integer maxRequests) {
 		
+		Response response = new Response();
 		List<Post> items = new ArrayList<Post>();
 		
 		Date dateToRetrieve = feed.getSinceDate();
@@ -154,7 +156,7 @@ public class FlickrRetriever extends SocialMediaRetriever {
 		
 		if(keywords == null || keywords.isEmpty()) {
 			logger.error("#Flickr : Text is emtpy");
-			return items;
+			return response;
 		}
 		
 		List<String> tags = new ArrayList<String>();
@@ -172,7 +174,9 @@ public class FlickrRetriever extends SocialMediaRetriever {
 		
 		if(text.equals("")) {
 			logger.error("#Flickr : Text is emtpy");
-			return items;
+			response.setPosts(items);
+			response.setRequests(numberOfRequests);
+			return response;
 		}
 		
 		PhotosInterface photosInteface = flickr.getPhotosInterface();
@@ -184,7 +188,7 @@ public class FlickrRetriever extends SocialMediaRetriever {
 		extras.remove(Extras.MACHINE_TAGS);
 		params.setExtras(extras);
 		
-		while(page<=pages && numberOfRequests<=maxRequests && numberOfResults<=maxResults ) {
+		while(page<=pages && numberOfRequests<=maxRequests ) {
 			
 			PhotoList<Photo> photos;
 			try {
@@ -221,11 +225,11 @@ public class FlickrRetriever extends SocialMediaRetriever {
 //		logger.info("#Flickr : Done retrieving for this session");
 //		logger.info("#Flickr : Handler fetched " + items.size() + " photos from " + text + 
 //				" [ " + lastItemDate + " - " + new Date(System.currentTimeMillis()) + " ]");
+
 		
-		dateToRetrieve = new Date(System.currentTimeMillis() - (24*3600*1000));
-		feed.setSinceDate(dateToRetrieve);
-		
-		return items;
+		response.setPosts(items);
+		response.setRequests(numberOfRequests);
+		return response;
 	}
 
 	/*
@@ -295,7 +299,7 @@ public class FlickrRetriever extends SocialMediaRetriever {
 	*/
 	
 	@Override
-	public List<Post> retrieveGroupFeed(GroupFeed feed, Integer maxRequests, Integer maxResults) {
+	public Response retrieveGroupFeed(GroupFeed feed, Integer maxRequests) {
 		return null;
 	}
 	

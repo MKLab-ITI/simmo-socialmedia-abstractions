@@ -1,8 +1,5 @@
 package gr.iti.mklab.framework.retrievers.impl;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.google.api.client.http.GenericUrl;
 import com.google.api.client.http.HttpRequest;
 import com.google.api.client.http.HttpRequestFactory;
@@ -15,13 +12,12 @@ import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.util.Key;
 
 import gr.iti.mklab.framework.Credentials;
-import gr.iti.mklab.framework.abstractions.socialmedia.media.DailyMotionVideo;
 import gr.iti.mklab.framework.feeds.AccountFeed;
 import gr.iti.mklab.framework.feeds.GroupFeed;
 import gr.iti.mklab.framework.feeds.KeywordsFeed;
+import gr.iti.mklab.framework.retrievers.Response;
 import gr.iti.mklab.framework.retrievers.SocialMediaRetriever;
 import gr.iti.mklab.simmo.UserAccount;
-import gr.iti.mklab.simmo.documents.Post;
 
 /**
  * The retriever that implements the Daily Motion wrapper
@@ -83,13 +79,13 @@ public class DailyMotionRetriever extends SocialMediaRetriever {
 	*/
 
 	@Override
-	public List<Post> retrieveKeywordsFeed(KeywordsFeed feed, Integer maxRequests, Integer maxResults) throws Exception {
-		return new ArrayList<Post>();
+	public Response retrieveKeywordsFeed(KeywordsFeed feed, Integer maxRequests) throws Exception {
+		return new Response();
 	}
 
 	@Override
-	public List<Post> retrieveAccountFeed(AccountFeed feed, Integer maxRequests, Integer maxResults) throws Exception {
-		return new ArrayList<Post>();
+	public Response retrieveAccountFeed(AccountFeed feed, Integer maxRequests) throws Exception {
+		return new Response();
 	}
 
 	@Override
@@ -98,7 +94,7 @@ public class DailyMotionRetriever extends SocialMediaRetriever {
 	}
 
 	@Override
-	public List<Post> retrieveGroupFeed(GroupFeed feed, Integer maxRequests, Integer maxResults) {
-		return new ArrayList<Post>();
+	public Response retrieveGroupFeed(GroupFeed feed, Integer maxRequests) {
+		return new Response();
 	}
 }

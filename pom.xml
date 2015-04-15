@@ -47,7 +47,7 @@
         <dependency>
     		<groupId>gr.iti.mklab</groupId>
     		<artifactId>simmo</artifactId>
-    		<version>0.1-SNAPSHOT</version>
+    		<version>0.2-SNAPSHOT</version>
     	</dependency>
     	
     	<!-- Google -->
@@ -151,7 +151,17 @@
 			<artifactId>jsoup</artifactId>
 			<version>1.7.2</version>
 		</dependency>
-		
+
+		<dependency>
+			<groupId>org.apache.lucene</groupId>
+			<artifactId>lucene-core</artifactId>
+			<version>4.10.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.lucene</groupId>
+			<artifactId>lucene-analyzers-common</artifactId>
+			<version>4.10.2</version>
+		</dependency>
     </dependencies>
    	
   	<repositories>

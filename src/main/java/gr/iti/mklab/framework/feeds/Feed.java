@@ -6,7 +6,7 @@ import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
 
 @Entity(value="feeds", noClassnameStored=false)
-public class Feed {
+public class Feed extends gr.iti.mklab.simmo.Object {
 
 	@Id
 	protected String id = null;

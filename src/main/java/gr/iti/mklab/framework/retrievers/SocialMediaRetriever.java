@@ -1,14 +1,10 @@
 package gr.iti.mklab.framework.retrievers;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import gr.iti.mklab.framework.Credentials;
 import gr.iti.mklab.framework.feeds.AccountFeed;
 import gr.iti.mklab.framework.feeds.Feed;
 import gr.iti.mklab.framework.feeds.GroupFeed;
 import gr.iti.mklab.framework.feeds.KeywordsFeed;
-import gr.iti.mklab.simmo.documents.Post;
 import gr.iti.mklab.simmo.UserAccount;
 
 /**
@@ -33,11 +29,11 @@ public abstract class SocialMediaRetriever implements Retriever {
 	 * @return
 	 * @throws Exception
 	 */
-	public List<Post> retrieveKeywordsFeed(KeywordsFeed feed) throws Exception {
-		return retrieveKeywordsFeed(feed, null, null);
+	public Response retrieveKeywordsFeed(KeywordsFeed feed) throws Exception {
+		return retrieveKeywordsFeed(feed, 1);
 	}
 	
-	public abstract List<Post> retrieveKeywordsFeed(KeywordsFeed feed, Integer maxRequests, Integer maxResults) throws Exception;
+	public abstract Response retrieveKeywordsFeed(KeywordsFeed feed, Integer maxRequests) throws Exception;
 	
 	/**
 	 * Retrieves a user feed that contains the user/users in 
@@ -46,11 +42,11 @@ public abstract class SocialMediaRetriever implements Retriever {
 	 * @return
 	 * @throws Exception
 	 */
-	public List<Post> retrieveAccountFeed(AccountFeed feed) throws Exception {
-		return retrieveAccountFeed(feed, null, null);
+	public Response retrieveAccountFeed(AccountFeed feed) throws Exception {
+		return retrieveAccountFeed(feed, 1);
 	}
 	
-	public abstract List<Post> retrieveAccountFeed(AccountFeed feed, Integer maxRequests, Integer maxResults) throws Exception;
+	public abstract Response retrieveAccountFeed(AccountFeed feed, Integer maxRequests) throws Exception;
 	
 	/**
 	 * Retrieves a list feed that contains the owner of a list an a slug 
@@ -59,11 +55,11 @@ public abstract class SocialMediaRetriever implements Retriever {
 	 * @return
 	 * @throws Exception
 	 */
-	public List<Post> retrieveGroupFeed(GroupFeed feed) {
-		return retrieveGroupFeed(feed, null, null);
+	public Response retrieveGroupFeed(GroupFeed feed) {
+		return retrieveGroupFeed(feed, 1);
 	}
 	
-	public abstract List<Post> retrieveGroupFeed(GroupFeed feed, Integer maxRequests, Integer maxResults);
+	public abstract Response retrieveGroupFeed(GroupFeed feed, Integer maxRequests);
 	
 	
 	/**
@@ -75,31 +71,31 @@ public abstract class SocialMediaRetriever implements Retriever {
 	public abstract UserAccount getStreamUser(String uid);
 	
 	@Override
-	public List<Post> retrieve(Feed feed) throws Exception {
-		return retrieve(feed, null, null);
+	public Response retrieve(Feed feed) throws Exception {
+		return retrieve(feed, 1);
 	}
 	
 	@Override
-	public List<Post> retrieve (Feed feed, Integer maxRequests, Integer maxResults) throws Exception {
+	public Response retrieve (Feed feed, Integer maxRequests) throws Exception {
 	
 		switch(feed.getFeedtype()) {
 			case ACCOUNT:
 				AccountFeed userFeed = (AccountFeed) feed;				
-				return retrieveAccountFeed(userFeed, maxRequests, maxResults);
+				return retrieveAccountFeed(userFeed, maxRequests);
 			
 			case KEYWORDS:
 				KeywordsFeed keyFeed = (KeywordsFeed) feed;
-				return retrieveKeywordsFeed(keyFeed, maxRequests, maxResults);
+				return retrieveKeywordsFeed(keyFeed, maxRequests);
 			
 			case GROUP:
 				GroupFeed listFeed = (GroupFeed) feed;
-				return retrieveGroupFeed(listFeed, maxRequests, maxResults);
+				return retrieveGroupFeed(listFeed, maxRequests);
 				
 			default:
 				break;
 		}
 	
-		return new ArrayList<Post>();
+		return new Response();
 	}
 	
 }

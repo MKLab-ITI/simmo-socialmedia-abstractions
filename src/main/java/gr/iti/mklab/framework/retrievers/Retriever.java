@@ -1,8 +1,6 @@
 package gr.iti.mklab.framework.retrievers;
 
-import java.util.List;
 import gr.iti.mklab.framework.feeds.Feed;
-import gr.iti.mklab.simmo.documents.Post;
 
 public interface Retriever {
 	
@@ -12,8 +10,8 @@ public interface Retriever {
 	 * @param feed
 	 * @return
 	 */
-	public List<Post> retrieve(Feed feed) throws Exception;
+	public Response retrieve(Feed feed) throws Exception;
 	
-	public List<Post> retrieve(Feed feed, Integer maxRequests, Integer maxResults) throws Exception;
+	public Response retrieve(Feed feed, Integer maxRequests) throws Exception;
 	
 }

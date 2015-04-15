@@ -32,6 +32,7 @@ import gr.iti.mklab.framework.Credentials;
 import gr.iti.mklab.framework.feeds.AccountFeed;
 import gr.iti.mklab.framework.feeds.GroupFeed;
 import gr.iti.mklab.framework.feeds.KeywordsFeed;
+import gr.iti.mklab.framework.retrievers.Response;
 import gr.iti.mklab.framework.retrievers.SocialMediaRetriever;
 import gr.iti.mklab.simmo.UserAccount;
 import gr.iti.mklab.simmo.documents.Post;
@@ -67,9 +68,10 @@ public class YoutubeRetriever extends SocialMediaRetriever {
 
 	
 	@Override
-	public List<Post> retrieveAccountFeed(AccountFeed feed, Integer maxResults, Integer maxRequests) {
+	public Response retrieveAccountFeed(AccountFeed feed, Integer maxRequests) {
 		
-		List<Post> items = new ArrayList<Post>();
+		Response response =new Response();
+		List<Post> posts = new ArrayList<Post>();
 		
 		Date lastItemDate = feed.getSinceDate();
 		String label = feed.getLabel();
@@ -82,7 +84,7 @@ public class YoutubeRetriever extends SocialMediaRetriever {
 		
 		if(uName == null){
 			logger.error("#YouTube : No source feed");
-			return items;
+			return response;
 		}
 				
 		UserAccount streamUser = getStreamUser(uName);
@@ -94,7 +96,7 @@ public class YoutubeRetriever extends SocialMediaRetriever {
 			channelUrl = getChannelUrl(uName);
 		} catch (MalformedURLException e) {
 			logger.error("#YouTube Exception : " + e.getMessage());
-			return items;
+			return response;
 		}
 		
 		while(channelUrl != null) {
@@ -125,7 +127,7 @@ public class YoutubeRetriever extends SocialMediaRetriever {
 						
 					}
 					
-					if(items.size() > maxResults || numberOfRequests > maxRequests) {
+					if(numberOfRequests > maxRequests) {
 						isFinished = true;
 						break;
 					}
@@ -140,23 +142,26 @@ public class YoutubeRetriever extends SocialMediaRetriever {
 				
 			} catch (Exception e) {
 				logger.error("#YouTube Exception : " + e.getMessage());
-				return items;
+				break;
 			} 
 		
 		}
 	
 		if(loggingEnabled) {
-			logger.info("#YouTube : Handler fetched " + items.size() + " videos from " + uName + 
+			logger.info("#YouTube : Handler fetched " + posts.size() + " videos from " + uName + 
 					" [ " + lastItemDate + " - " + new Date(System.currentTimeMillis()) + " ]");
 		}
 	
-		return items;
+		response.setRequests(numberOfRequests);
+		response.setPosts(posts);
+		return response;
 	}
 	
 	@Override
-	public List<Post> retrieveKeywordsFeed(KeywordsFeed feed, Integer maxRequests, Integer maxResults) throws Exception {
+	public Response retrieveKeywordsFeed(KeywordsFeed feed, Integer maxRequests) throws Exception {
 		
-		List<Post> items = new ArrayList<Post>();
+		Response response =new Response();
+		List<Post> posts = new ArrayList<Post>();
 		
 		Date lastItemDate = feed.getSinceDate();
 		String label = feed.getLabel();
@@ -172,7 +177,7 @@ public class YoutubeRetriever extends SocialMediaRetriever {
 		
 		if(keywords == null || keywords.isEmpty()) {
 			logger.error("#YouTube : No keywords feed");
-			return items;
+			return response;
 		}
 	
 		String tags = "";
@@ -186,14 +191,14 @@ public class YoutubeRetriever extends SocialMediaRetriever {
 
 		//one call - 25 results
 		if(tags.equals(""))
-			return items;
+			return response;
 	
 		YouTubeQuery query;
 		try {
 			query = new YouTubeQuery(new URL(activityFeedVideoUrlPrefix));
 		} catch (MalformedURLException e1) {
 		
-			return items;
+			return response;
 		}
 		
 		query.setOrderBy(YouTubeQuery.OrderBy.PUBLISHED);
@@ -236,7 +241,7 @@ public class YoutubeRetriever extends SocialMediaRetriever {
 						*/
 					}
 					
-					if(items.size() > maxResults || numberOfRequests >= maxRequests) {
+					if(numberOfRequests >= maxRequests) {
 						isFinished = true;
 						break;
 					}
@@ -247,28 +252,31 @@ public class YoutubeRetriever extends SocialMediaRetriever {
 				e.printStackTrace();
 				logger.error("YouTube Retriever error during retrieval of " + tags);
 				logger.error("Exception: " + e.getMessage());
-				return items;
+				
+				break;
 			}
 			
-			if(maxResults>currResults || isFinished)	
+			if(isFinished)	
 				break;
 		
 		}
 	
 		if(loggingEnabled) {
-			logger.info("#YouTube : Handler fetched " + items.size() + " videos from " + tags + 
+			logger.info("#YouTube : Handler fetched " + posts.size() + " videos from " + tags + 
 					" [ " + lastItemDate + " - " + new Date(System.currentTimeMillis()) + " ]");
 		}
 		
 		Date dateToRetrieve = new Date(System.currentTimeMillis() - (24*3600*1000));
 		feed.setSinceDate(dateToRetrieve);
 		
-		return items;
+		response.setRequests(numberOfRequests);
+		response.setPosts(posts);
+		return response;
 	}
 	
 	@Override
-	public List<Post> retrieveGroupFeed(GroupFeed feed, Integer maxResults, Integer maxRequests) {
-		return new ArrayList<Post>();
+	public Response retrieveGroupFeed(GroupFeed feed, Integer maxRequests) {
+		return new Response();
 	}
 
 	public void stop(){

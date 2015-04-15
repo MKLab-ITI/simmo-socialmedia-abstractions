@@ -18,6 +18,7 @@ import com.sun.syndication.io.XmlReader;
 
 import gr.iti.mklab.framework.feeds.Feed;
 import gr.iti.mklab.framework.feeds.RssFeed;
+import gr.iti.mklab.framework.retrievers.Response;
 import gr.iti.mklab.framework.retrievers.Retriever;
 import gr.iti.mklab.simmo.documents.Post;
 
@@ -34,13 +35,14 @@ public class RssRetriever implements Retriever {
 	private long oneMonthPeriod = 2592000000L;
 	
 	@Override
-	public List<Post> retrieve(Feed feed) throws Exception {
-		return retrieve(feed, null, null);
+	public Response retrieve(Feed feed) throws Exception {
+		return retrieve(feed, 1);
 	}
 		
 	@Override
-	public List<Post> retrieve(Feed feed, Integer maxRequests, Integer maxResults) throws Exception {
+	public Response retrieve(Feed feed, Integer maxRequests) throws Exception {
 		
+		Response response = new Response();
 		List<Post> items = new ArrayList<Post>();
 		
 		RssFeed ufeed = (RssFeed) feed;
@@ -48,14 +50,14 @@ public class RssRetriever implements Retriever {
 		
 		Integer totalRetrievedItems = 0;
 		if(ufeed.getURL().equals(""))
-			return items;
+			return response;
 			
 		URL url = null;
 		try {
 			url = new URL(ufeed.getURL());
 		} catch (MalformedURLException e) {
 			logger.error(e);
-			return items;
+			return response;
 		}
 			
 		XmlReader reader;
@@ -92,13 +94,12 @@ public class RssRetriever implements Retriever {
 			}
 		} catch (IOException e) {
 			logger.error(e);
-			return items;
 		} catch (Exception e) {
 			logger.error(e);
-			return items;
 		}
 	
-		return items;
+		response.setPosts(items);
+		return response;
 	}
 	
 	public static void main(String...args) throws Exception {
