@@ -13,7 +13,7 @@ public class RssFeed extends Feed {
 	}
 
 	public RssFeed(String id, String url, Date since) {
-		super(since, Feed.FeedType.URL);
+		super(since);
 		this.url = url;
 		this.id = id;
 	}

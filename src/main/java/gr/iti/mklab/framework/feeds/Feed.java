@@ -6,14 +6,12 @@ import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
 
 @Entity(value="feeds", noClassnameStored=false)
-public class Feed extends gr.iti.mklab.simmo.Object {
+public class Feed {
 
 	@Id
 	protected String id = null;
 
 	protected Date since = null;
-
-	protected FeedType feedType;
 	
 	protected String source;
 	
@@ -23,18 +21,8 @@ public class Feed extends gr.iti.mklab.simmo.Object {
 		
 	}
 	
-	public Feed(Date since, FeedType feedType) {
+	public Feed(Date since) {
 		this.since = since;
-		this.feedType = feedType;
-		
-	}
-	
-	public  FeedType getFeedtype() {
-		return feedType;
-	}
-	
-	public  void setFeedType(FeedType feedType) {
-		this.feedType = feedType;
 	}
 	
 	public  String getId() {

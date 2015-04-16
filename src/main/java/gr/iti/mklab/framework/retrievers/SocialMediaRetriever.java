@@ -82,25 +82,22 @@ public abstract class SocialMediaRetriever implements Retriever {
 	}
 	
 	@Override
-	public Response retrieve (Feed feed, Integer maxRequests) throws Exception {
+	public Response retrieve (Feed feed, Integer requests) throws Exception {
 	
-		switch(feed.getFeedtype()) {
-			case ACCOUNT:
-				AccountFeed userFeed = (AccountFeed) feed;				
-				return retrieveAccountFeed(userFeed, maxRequests);
-			
-			case KEYWORDS:
-				KeywordsFeed keyFeed = (KeywordsFeed) feed;
-				return retrieveKeywordsFeed(keyFeed, maxRequests);
-			
-			case GROUP:
-				GroupFeed listFeed = (GroupFeed) feed;
-				return retrieveGroupFeed(listFeed, maxRequests);
-				
-			default:
-				break;
+		if(AccountFeed.class.isInstance(feed)) {
+			AccountFeed userFeed = (AccountFeed) feed;				
+			return retrieveAccountFeed(userFeed, requests);
 		}
-	
+		if(KeywordsFeed.class.isInstance(feed)) {
+			KeywordsFeed keyFeed = (KeywordsFeed) feed;				
+			return retrieveKeywordsFeed(keyFeed, requests);
+		}
+		if(GroupFeed.class.isInstance(feed)) {
+			GroupFeed listFeed = (GroupFeed) feed;
+			return retrieveGroupFeed(listFeed, requests);
+		}
+		
+		
 		return new Response();
 	}
 	

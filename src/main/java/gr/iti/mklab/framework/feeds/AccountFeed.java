@@ -1,7 +1,6 @@
 package gr.iti.mklab.framework.feeds;
 
 import java.util.Date;
-import org.mongodb.morphia.annotations.Entity;
 
 public class AccountFeed extends Feed {
 	
@@ -12,7 +11,7 @@ public class AccountFeed extends Feed {
 	}
 	
 	public AccountFeed(String id, String username, Date since) {
-		super(since, Feed.FeedType.ACCOUNT);
+		super(since);
 		this.id = id;
 		this.username = username;
 	}

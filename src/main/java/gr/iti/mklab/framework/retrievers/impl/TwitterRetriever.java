@@ -85,10 +85,9 @@ public class TwitterRetriever extends SocialMediaRetriever {
 		// TODO: Add feed label on 
 		String feedLabel = feed.getLabel();
 		
-		String userId = feed.getId();
 		String screenName = feed.getUsername();
 		
-		if(userId==null && screenName==null)
+		if(screenName == null)
 			return response;
 		
 		int page = 1;
@@ -97,17 +96,13 @@ public class TwitterRetriever extends SocialMediaRetriever {
 		while(true) {
 			try {
 				ResponseList<Status> responseList = null;
-				if(userId != null) {
-					responseList = twitter.getUserTimeline(Integer.parseInt(userId), paging);
+
+				if(loggingEnabled) {
+					logger.info("Retrieve timeline for " + screenName + ". Page: " + paging);
 				}
-				else if(screenName != null) {
-					if(loggingEnabled)
-						logger.info("Retrieve timeline for " + screenName + ". Page: " + paging);
-					responseList = twitter.getUserTimeline(screenName, paging);
-				}
-				else {
-					break;
-				}
+				
+				responseList = twitter.getUserTimeline(screenName, paging);
+				
 				numberOfRequests++;
 				
 				for(Status status : responseList) {

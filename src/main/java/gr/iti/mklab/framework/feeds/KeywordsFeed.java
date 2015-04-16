@@ -13,13 +13,13 @@ public class KeywordsFeed extends Feed {
 	}
 	
 	public KeywordsFeed(String id, String keyword, Date since) {
-		super(since, Feed.FeedType.KEYWORDS);
+		super(since);
 		this.keywords.add(keyword);
 		this.id = id;
 	}
 	
 	public KeywordsFeed(String id, List<String> keywords, Date since) {
-		super(since, Feed.FeedType.KEYWORDS);
+		super(since);
 		this.keywords.addAll(keywords);
 		this.id = id;
 	}
