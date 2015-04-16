@@ -20,7 +20,6 @@ import gr.iti.mklab.simmo.UserAccount;
 /**
  * The retriever that implements the Twitpic simplified retriever
  * @author manosetro
- * @email  manosetro@iti.gr
  */
 public class TwitpicRetriever extends SocialMediaRetriever {
 

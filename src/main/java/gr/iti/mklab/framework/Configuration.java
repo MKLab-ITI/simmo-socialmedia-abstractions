@@ -11,7 +11,6 @@ import org.mongodb.morphia.annotations.Entity;
  * reading a set of parameters
  * 
  * @author manosetro
- * @email  manosetro@iti.gr
  *
  */
 

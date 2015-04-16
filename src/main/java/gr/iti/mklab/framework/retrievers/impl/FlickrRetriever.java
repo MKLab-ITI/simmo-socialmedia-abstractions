@@ -35,7 +35,6 @@ import gr.iti.mklab.simmo.documents.Post;
  * Class responsible for retrieving Flickr content based on keywords,users or location coordinates
  * The retrieval process takes place through Flickr API.
  * @author ailiakop
- * @email  ailiakop@iti.gr
  */
 public class FlickrRetriever extends SocialMediaRetriever {
 

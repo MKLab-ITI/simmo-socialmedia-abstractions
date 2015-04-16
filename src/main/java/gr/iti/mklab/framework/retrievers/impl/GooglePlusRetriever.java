@@ -42,7 +42,6 @@ import gr.iti.mklab.simmo.documents.Post;
  * Class responsible for retrieving Google+ content based on keywords or google+ users
  * The retrieval process takes place through Google API
  * @author ailiakop
- * @email  ailiakop@iti.gr
  */
 public class GooglePlusRetriever extends SocialMediaRetriever {
 	

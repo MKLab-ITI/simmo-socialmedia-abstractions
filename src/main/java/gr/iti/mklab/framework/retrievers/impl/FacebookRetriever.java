@@ -33,7 +33,6 @@ import gr.iti.mklab.simmo.documents.Post;
  * Class responsible for retrieving facebook content based on keywords or facebook users/facebook pages
  * The retrieval process takes place through facebook graph API.
  * @author ailiakop
- * @email  ailiakop@iti.gr
  * 
  */
 public class FacebookRetriever extends SocialMediaRetriever {

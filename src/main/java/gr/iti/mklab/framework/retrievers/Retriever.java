@@ -8,7 +8,7 @@ public interface Retriever {
 	 * Retrieves a feed that is inserted into the system (Feeds currently supported
 	 * by the platform are: KeywordFeeds,LocationFeeds,SourceFeeds,ListFeeds,URLFeeds)
 	 * @param feed
-	 * @return
+	 * @return gr.iti.mklab.framework.retrievers.Response
 	 */
 	public Response retrieve(Feed feed) throws Exception;
 	

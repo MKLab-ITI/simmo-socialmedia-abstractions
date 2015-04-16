@@ -35,7 +35,6 @@ import gr.iti.mklab.simmo.documents.Post;
  * Class responsible for retrieving Instagram content based on keywords or instagram users or locations
  * The retrieval process takes place through Instagram API
  * @author manosetro
- * @email  manosetro@iti.gr
  */
 public class InstagramRetriever extends SocialMediaRetriever {
 	

@@ -25,7 +25,6 @@ import gr.iti.mklab.simmo.documents.Post;
 /**
  * The retriever that implements the Vimeo simplified retriever 
  * @author manosetro
- * @email  manosetro@iti.gr
  */
 public class VimeoRetriever extends SocialMediaRetriever {
 

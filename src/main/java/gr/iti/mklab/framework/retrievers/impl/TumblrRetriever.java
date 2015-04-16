@@ -33,7 +33,6 @@ import gr.iti.mklab.simmo.documents.Post;
  * Class responsible for retrieving Tumblr content based on keywords or tumblr users
  * The retrieval process takes place through Tumblr API (Jumblr)
  * @author ailiakop
- * @email  ailiakop@iti.gr
  */
 public class TumblrRetriever extends SocialMediaRetriever {
 	

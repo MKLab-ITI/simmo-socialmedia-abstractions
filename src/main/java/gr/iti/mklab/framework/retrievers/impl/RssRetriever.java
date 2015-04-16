@@ -26,7 +26,6 @@ import gr.iti.mklab.simmo.documents.Post;
  * Class for retrieving rss feeds from official sources
  * The retrieval process takes place through ROME API. 
  * @author ailiakop
- * @email ailiakop@iti.gr
  */
 public class RssRetriever implements Retriever {
 	

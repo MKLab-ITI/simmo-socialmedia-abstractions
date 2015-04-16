@@ -8,7 +8,7 @@ import org.mongodb.morphia.annotations.Entity;
 
 /**
  * Class that holds the information of an RSS feed
- * @author ailiakop, kandreadou
+ * @author manosetro, kandreadou
  */
 @Entity("Post")
 public class RSSPost extends Post {

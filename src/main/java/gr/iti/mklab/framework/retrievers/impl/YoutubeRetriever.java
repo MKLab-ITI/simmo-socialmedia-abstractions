@@ -42,7 +42,6 @@ import gr.iti.mklab.simmo.items.Video;
  * Class responsible for retrieving YouTube content based on keywords and YouTube users 
  * The retrieval process takes place through Google API 
  * @author ailiakop
- * @email  ailiakop@iti.gr
  */
 public class YoutubeRetriever extends SocialMediaRetriever {
 

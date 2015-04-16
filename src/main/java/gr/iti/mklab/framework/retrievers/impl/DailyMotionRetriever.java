@@ -22,7 +22,6 @@ import gr.iti.mklab.simmo.UserAccount;
 /**
  * The retriever that implements the Daily Motion wrapper
  * @author manosetro
- * @email  manosetro@iti.gr
  */
 public class DailyMotionRetriever extends SocialMediaRetriever {
 

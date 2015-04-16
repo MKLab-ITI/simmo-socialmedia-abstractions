@@ -30,7 +30,6 @@ import twitter4j.UserMentionEntity;
  * Class that holds the information of a twitter status
  *
  * @author manosetro, kandreadou
- * @email manosetro@iti.gr
  */
 @Entity("Post")
 public class TwitterPost extends Post {
