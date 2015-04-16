@@ -7,6 +7,7 @@ import java.util.List;
 import gr.iti.mklab.framework.abstractions.socialmedia.posts.TwitterPost;
 import gr.iti.mklab.framework.abstractions.socialmedia.users.TwitterAccount;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
 import twitter4j.Paging;
@@ -170,23 +171,12 @@ public class TwitterRetriever extends SocialMediaRetriever {
 			logger.error("#Twitter : No keywords feed");
 			return response;
 		}
-		
-		
-		String tags = "";
-		for(String key : keywords){
-			String [] words = key.split(" ");
-			for(String word : words)
-				if(!tags.contains(word) && word.length()>1)
-					tags += word.toLowerCase()+" ";
-		}
-		
-		if(tags.equals("")) 
-			return response;
+
 		
 		//Set the query
-		if(loggingEnabled)
-			logger.info("Query String: " + tags);
-		Query query = new Query(tags);
+		String queryText = StringUtils.join(keywords, " OR ");
+		logger.info("Query String: " + queryText);
+		Query query = new Query(queryText);
 	
 		query.count(count);
 		query.setResultType(Query.RECENT); //do not set last item date-causes problems!
