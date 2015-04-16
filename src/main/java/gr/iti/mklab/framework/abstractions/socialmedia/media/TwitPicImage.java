@@ -64,7 +64,6 @@ public class TwitPicImage extends Image {
      * Class that holds the information regarding the twitpic image
      *
      * @author manosetro
-     * @email manosetro@iti.gr
      */
     public static class TwitPicImageItem {
         @Key

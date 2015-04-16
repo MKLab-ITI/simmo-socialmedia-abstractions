@@ -20,6 +20,7 @@ public class FacebookAccount extends UserAccount {
 
     /**
      * Maps the information of a facebook user
+     * @param user - Facebook's user
      */
     public FacebookAccount(User user) {
 
@@ -73,6 +74,8 @@ public class FacebookAccount extends UserAccount {
 
     /**
      * Maps the information of a facebook page
+     * 
+     * @param page - Facebook's page
      *
      */
     public FacebookAccount(Page page) {
@@ -118,10 +121,6 @@ public class FacebookAccount extends UserAccount {
 
     }
 
-    /**
-     * Maps the information of a categorized facebook user
-     *
-     */
     public FacebookAccount(CategorizedFacebookType user) {
 
         if (user == null) return;
